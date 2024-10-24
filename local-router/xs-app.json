@@ -1,0 +1,58 @@
+{
+    "welcomeFile": "/index.html",
+    "authenticationMethod": "route",
+    "routes": [
+        {
+            "source": "^/apimcf(.*)$",
+            "target": "$1",
+            "csrfProtection": false,
+            "destination": "ext_mcc_apim_cf"
+        },
+        {
+            "source": "^/apim(.*)$",
+            "target": "$1",
+            "csrfProtection": false,
+            "destination": "ext_mcc_apim"
+        },
+        {
+            "source": "^/mccauth(.*)$",
+            "target": "$1",
+            "csrfProtection": false,
+            "destination": "ext_mcc_auth"
+          },
+        {
+            "source": "^/int_scpmcsdbmanager(.*)$",
+            "target": "$1",
+            "csrfProtection": false,
+            "destination": "int_scpmcsdbmanager"
+        },
+        {
+            "source": "^/casechecker(.*)$",
+            "target": "$1",
+            "csrfProtection": false,
+            "destination": "int_casecheckerservice"
+        },
+        {
+            "source": "^/cfdocservice(.*)$",
+            "target": "$1",
+            "csrfProtection": false,
+            "destination": "ext_mcc_documentservice"
+        },
+        {
+            "source": "^/sapit-employee-data",
+            "target": "/",
+            "csrfProtection": false,
+            "destination": "sapit-employee-data"
+        },
+        {
+            "source": "^/user-api(.*)",
+            "target": "$1",
+            "service": "sap-approuter-userapi"
+        },
+        {
+            "source": "^(.*)$",
+            "target": "$1",
+            "destination": "local"
+        }
+    ]
+}
