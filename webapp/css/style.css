@@ -1,0 +1,610 @@
+/* Enter your custom styles here */
+.DA_Overview{
+	max-width: 1200px !important;
+}
+
+table{
+	 table-layout: fixed;
+}
+
+.SAPLogo .sapMBtnInner .sapMBtnIcon.sapMImg {
+	height: 2.375rem !important;
+	max-width: 5rem !important;
+	width: 5rem !important;
+}
+
+.SAPLogo .sapMBtnInner{
+	padding-right: 5px !important;
+	border: none !important;
+}
+
+.SAPLogo .sapMBtnIcon{
+	padding-right: 5px !important;
+	border: none !important;
+	width: 5rem !important;
+}
+
+.SAPLogo1 .sapMBtnInner {
+	padding-left: 3px !important;
+	border: none !important;
+	width: 5.2rem !important;
+	height: 42px !important;
+}
+
+.SAPLogo1 .sapMBtnIcon {
+	padding-top: 2px !important;
+	padding-left: 10px !important;
+	padding-right: 5px !important;
+	border: none !important;
+	width: 5rem !important;
+	max-width: 5rem !important;
+}
+
+.SAPLogo2 .sapMBtnInner .sapMBtnIcon.sapMImg  {
+	padding-top: 2px !important;
+	padding-left: 10px !important;
+	padding-right: 5px !important;
+	padding-bottom: 2px !important;
+	border: none !important;
+	width: 5rem !important;
+	max-width: 5rem !important;
+	height: 2.2rem !important;
+}
+
+.title {
+	overflow: hidden !important;
+	text-overflow: ellipsis !important;
+	font-weight: bold;
+	color: RGBA(0,157,224,1);  /*blue*/
+}
+
+.titleDark {
+	overflow: hidden !important;
+	text-overflow: ellipsis !important;
+	font-weight: bold;
+	color: white;
+}
+
+.titleBox {
+	overflow: hidden !important;
+	padding-right: 10px;
+}
+
+.titleBox2 {
+	width: 500px !important;
+	padding-right: 1px !important;
+}
+
+.title2 {
+	font-size: 1.5rem;
+	width: 90%;
+	overflow: hidden !important;
+	text-overflow: ellipsis !important;
+	font-weight: bold;
+}
+
+.titleMarquee {
+	font-weight: normal;
+	text-overflow: ellipsis !important;
+	overflow: hidden !important;
+}
+
+.titleMarquee,
+.titleH{
+	font-weight:bold;
+	padding-left:10px;
+	color: RGBA(0,157,224,1); 
+	text-overflow: ellipsis !important;
+	overflow: hidden !important;
+}
+
+.titleMarqueeDark {
+	font-weight: normal;
+	text-overflow: ellipsis !important;
+	overflow: hidden !important;
+	color: white;
+}
+
+.titleMarqueeDark,
+.titleH{
+	font-weight:bold;
+	padding-left:10px;
+	color: white; 
+	text-overflow: ellipsis !important;
+	overflow: hidden !important;
+}
+
+.dark .titleH{
+	font-weight:bold;
+	padding-left:10px;
+	color: white;
+}
+
+.refresh{
+	padding-left: 1rem !important;
+}
+
+.SAPIcon1{
+	padding-left: 1rem !important;
+}
+
+.SAPIconLast{
+	padding-right: 1rem !important;
+}
+
+.noData{
+	width: 100px !important;
+	margin-left: 200%; 
+	margin-top: 10%;
+}
+
+.Engagement{
+	font-size: 0.8rem;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	min-height: 18px;
+}
+
+.EngagementMAX{
+	font-size: 0.9rem;
+	font-weight: bold;
+	color: RGBA(0,157,224,1);  /*blue*/
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.refLink{
+	padding-top: 5px;
+}
+
+.delUnit{
+	padding-top: 3px;
+}
+
+.Employee_NA {
+	color: RGBA(185,20,20,1);  /*red*/
+	font-weight: bold;
+}
+
+.Employee_NA_Normal {
+	color: RGBA(185,20,20,1);  /*red*/
+	font-weight: normal;
+}
+
+.sapUiTableTdFirst .sapUiTableCell{
+	padding:0;
+}
+
+.sapUiTableTr>td.sapUiTableTdFirst{
+	padding:0 !important;
+}
+
+.sapMFlexBoxBGTransparent .sapMFlexItem .sapMFlexItemAlignAuto {
+	width: auto;
+}
+
+/*Style for new version ui5, 1.69.1 begin*/
+.sapUiTableCellFirst .sapUiTableCellInner{
+	padding:0;
+}
+.sapUiTableTr>td.sapUiTableCellFirst{
+	padding:0 !important;
+}
+/*Style for new version ui5, 1.69.1 begin*/
+
+.colorIndicator{
+	width: 40px;
+	height: 40px;
+	overflow: hidden;
+	margin-left: -20px
+}
+
+.redIndicator{
+	background:#b00;
+}
+.greenIndicator{
+	background:#2b7c2b;
+}
+.yellowIndicator{
+ /*	background:#e78c07; */
+ /*	background: RGBA(228,183,35,1); */
+	background: RGBA(228,200,35,1);
+}
+.darkgreenIndicator{
+	background: RGBA(0,80,0,1);
+}
+
+.numberStyle1,
+.numberStyle1 .sapMNCLargeFontSize:not(.sapMNCIconImage),
+.numberStyle1 .sapMNCValue{
+	font-size: 20px;
+	font-weight: bold;
+	padding-left: 15px;
+}
+.numberStyle2,
+.numberStyle2 .sapMNCLargeFontSize:not(.sapMNCIconImage),
+.numberStyle2 .sapMNCValue{
+	font-size: 20px;
+	font-weight: bold;
+	margin-top: 4px;
+	padding-right: 10px;
+}
+
+.numberStyle3,
+.numberStyle3 .sapMNCLargeFontSize:not(.sapMNCIconImage),
+.numberStyle3 .sapMNCValue{
+	font-size: 20px;
+	font-weight: bold;
+	padding-right: 10px;
+	margin-top: 0px !important;
+}
+
+.numberStyle4,
+.numberStyle4 .sapMNCLargeFontSize:not(.sapMNCIconImage),
+.numberStyle4 .sapMNCValue{
+	font-size: 20px;
+	font-weight: bold;
+	padding-right: 10px;
+	margin-top: 4px !important;
+}
+
+.redNumber{
+	color: #b00;
+	font-weight: bold;
+}
+.yellowNumber{
+	color: RGBA(228,200,35,1);
+	font-weight: bold;
+}	
+.greenNumber{
+	color: #2b7c2b;
+	font-weight: bold;
+}
+.blackNumber{
+	color: black;
+	font-weight: bold;
+	overflow: hidden !important;
+	text-overflow: ellipsis !important;
+	white-space: nowrap !important;
+}
+.whiteNumber{
+	color: white;
+	font-weight: bold;
+	overflow: hidden !important;
+	text-overflow: ellipsis !important;
+	white-space: nowrap !important;
+}
+.blackNumberUnderlined{
+	color: black;
+	font-weight: bold;
+	text-decoration: underline;
+	overflow: hidden !important;
+	text-overflow: ellipsis !important;
+	white-space: nowrap !important;
+}
+.whiteNumberUnderlined{
+	color: white;
+	font-weight: bold;
+	text-decoration: underline;
+	overflow: hidden !important;
+	text-overflow: ellipsis !important;
+	white-space: nowrap !important;
+}
+.blueNumber{
+	color: RGBA(0,157,224,1);  /*blue*/
+	font-weight: bold;
+	overflow: hidden !important;
+	text-overflow: ellipsis !important;
+	white-space: nowrap !important;
+}
+
+.sapMNCValue.Critical, .sapMNCIndicator.Critical, .sapMNCScale.Critical{
+ /* color:#e78c07; */
+ 	color: RGBA(228,183,35,1);
+ /* color: RGBA(228,200,35,1); */
+}
+
+.overdueIconHeader{
+	padding-left: 20px;
+	padding-right: 0px !important;
+	margin-right: -19px !important;
+}
+
+.worldmap {
+	margin-top: -13px !important;
+}
+
+.labelCountry {
+    position: absolute;
+    z-index: 999;
+    font-size: 5em;
+    color: orange;
+    font-family: Arial,Helvetica,sans-serif;
+}
+
+.labelNotAssigned {
+    position: absolute;
+    z-index: 999;
+    font-size: 2em;
+    color: orange;
+    font-family: Arial,Helvetica,sans-serif;
+}
+
+.colon .sapMIBar .sapMTB .sapMBarChild{
+	padding-left: 0px !important;
+	padding-right: 0px !important;
+	margin-left: 0px !important;
+	margin-right: 0px !important;
+}
+
+.sapUiTableVScr .sapUiTableCtrlScr{
+	margin-right: 0px !important;
+}
+
+.sapUiTableVScr .sapUiTableVSbBg{
+/*	display: none !important; */
+}
+
+.sapUiTableVScr .sapUiTableVSb{
+/*	display: none !important; */
+}
+
+.sapUiTableVScr .sapUiTableVSb, .sapUiTableVScr .sapUiTableVSbBg {
+/*	display: none !important; */
+}
+
+.sapMObjectIdentifierTextBellow{
+	margin-top:0 !important;
+}
+
+.titleText{
+	font-weight: bold;
+	font-size: 1rem;
+	overflow: hidden !important;
+	text-overflow: ellipsis !important;
+}
+
+.titleText2{
+	font-size: 1rem;
+	overflow: hidden !important;
+	text-overflow: ellipsis !important;
+}
+
+.titleTextRed{
+	font-weight: bold;
+	font-size: 1rem;
+	color: RGBA(185,20,20,1);  /*red*/
+	overflow: hidden !important;
+	text-overflow: ellipsis !important;
+}
+
+.titleTextBlue{
+	font-weight: bold;
+	font-size: 1rem;
+	color: RGBA(0,157,224,1);  /*blue*/
+	overflow: hidden !important;
+	text-overflow: ellipsis !important;
+}
+
+.titleTextGrey{
+	font-weight: bold;
+	font-size: 1rem;
+	color: grey;
+	overflow: hidden !important;
+	text-overflow: ellipsis !important;
+}
+
+.textGrey{
+	color: grey;
+	overflow: hidden !important;
+	text-overflow: ellipsis !important;
+}
+
+.textRed{
+	color: RGBA(185,20,20,1);  /*red*/
+	overflow: hidden !important;
+	text-overflow: ellipsis !important;
+}
+
+.textBlue{
+	font-size: 0.875rem;
+	color: RGBA(0,157,224,1);  /*blue*/
+	overflow: hidden !important;
+	text-overflow: ellipsis !important;
+}
+
+.textBlueBold{
+	font-size: 0.875rem;
+	font-weight: bold;
+	color: RGBA(0,157,224,1);  /*blue*/
+	overflow: hidden !important;
+	text-overflow: ellipsis !important;
+}
+
+.caseIDLink{
+	font-size:1rem;
+	font-weight:bold;
+	text-decoration:underline;
+}
+
+.caseIDLink0{
+	font-size:1rem;
+	font-weight:normal;
+	text-decoration:underline;
+}
+
+.caseIDLink1{
+	font-size:1rem;
+	font-weight:bold;
+	text-decoration:underline;
+	color: RGBA(0,157,224,1);  /*blue*/
+}
+
+.caseIDLink2{
+	text-decoration:underline;
+}
+
+.caseIDLink3{
+	font-size:1.2rem;
+	font-weight:bold;
+	text-decoration:underline;
+	color: RGBA(0,157,224,1);  /*blue*/
+}
+
+.paddingLeft {
+	padding-left: 8px;
+	font-weight: bold;
+}
+
+/* pagination start*/
+.pagination {
+    display: inline-block;
+    padding-left: 0;
+    margin: 20px 0;
+    border-radius: 4px;
+    font-size: 24px;
+}
+
+.pagination>li {
+    display: inline;
+}
+
+.pagination > li > a {
+	margin-right: 5px;
+	border-radius: 2px;
+	background: #fff;
+	color: #333;
+	border-color: #ccc;
+	padding: 6px 12px;
+	border: 1px solid #ddd;
+    margin-left: -1px;
+    text-decoration: none;
+}
+.pagination > li > a:hover,
+.pagination > li > a:focus {
+	color: #fff;
+	background: #00679e;
+	border-color: #00679e;
+}
+.pagination > .active > a,
+.pagination > .active > a:hover,
+.pagination > .active > a:focus {
+	color: RGBA(0,157,224,1);
+	background: #fff;
+	border-color: #ddd;
+}
+.pagination > .disabled > a,
+.pagination > .disabled > a:hover,
+.pagination > .disabled > a:focus {
+	color: #999;
+	background: #fff;
+	border-color: #ddd;
+	cursor: not-allowed;
+}
+
+.dark .pagination > li > a {
+	background: RGBA(100, 100, 100, 1);
+	color: #fff;
+	border-color: RGBA(100, 100, 100, 1);
+}
+.dark .pagination > .active > a,
+.dark .pagination > .active > a:hover,
+.dark .pagination > .active > a:focus {
+	color: RGBA(0,157,224,1);
+	background: #fff;
+	border-color: #ddd;
+}
+.dark .pagination > .disabled > a,
+.dark .pagination > .disabled > a:hover,
+.dark .pagination > .disabled > a:focus {
+	color: #999;
+	background: RGBA(100, 100, 100, 1);
+	border-color: RGBA(100, 100, 100, 1);
+}
+/* pagination end*/
+
+.dark .sapUiTableCnt{
+	background-color:RGBA(90, 90, 90, 1);
+}
+.dark .sapUiTableCtrl tr:nth-child(odd){
+	background-color:RGBA(90, 90, 90, 1);
+}
+.dark .sapUiTableCtrl .sapUiTableCtrl tr:nth-child(even){
+	background-color:RGBA(100, 100, 100, 1);
+}
+.dark .sapUiTableTr{
+	color:RGBA(249, 249, 249, 1);
+}
+.dark .sapUiTableTr>td{
+	border-right:none;
+}
+.dark .sapUiTableCell .sapMText{
+	color:RGBA(249, 249, 249, 1);
+}
+.dark .sapUiTableCtrl tr.sapUiTableRowHvr{
+	background-color:RGBA(90, 90, 90, 1);
+}
+.dark .sapUiTableTr.sapUiTableRowHvr>td:not(.sapUiTableTDDummy) {
+    background-color: RGBA(90, 90, 90, 1);
+    color:#fff;
+}
+.dark .sapMLnk{
+	color:#fff;
+}
+.dark{
+	background-image:url('../images/background3.jpg');
+}
+.dark .sapUiTableCtrl tr:nth-child(even) {
+	background-color:RGBA(100,100,100,1) !important; /*dark grey*/
+}
+.dark .sapUiTableCtrl tr:nth-child(odd) {
+	background-color:RGBA(90,90,90,1) !important; /*dark grey*/
+}
+.dark .sapUiTableFtr{
+	background-color:transparent;
+	border-right:none;
+	border-left:none;
+	border-bottom:none;
+}
+.dark .toolbarH{
+	background-color:RGBA(90, 90, 90, 1);
+	color:#fff;
+}
+.dark .toolbarH .sapMText{
+	color:#fff;
+}
+.dark .sapMTitle,
+.dark .sapMLabel,
+.dark .sapMNCValue.Neutral, 
+.dark .sapMNCIndicator.Neutral, 
+.dark .sapMNCScale.Neutral{
+	color:#fff;
+}
+.dark .sapMBtnInner{
+	background-color:RGBA(90, 90, 90, 1);
+	border-color:RGBA(90, 90, 90, 1);
+}
+.dark .sapMBtnIcon{
+	color:#fff !important;
+}
+.dark .sapMBtn:hover>.sapMBtnHoverable{
+	background-color:RGBA(100, 100, 100, 1);
+}
+.dark .sapMIBar{
+	box-shadow:inset 0 -0.0625rem #fff;
+}
+.dark .sapMIBar.sapMHeader-CTX{
+	background-color:RGBA(90, 90, 90, 1);
+}
+
+/*Style for new version ui5, 1.69.1 begin*/
+.dark .sapUiTableHeaderCell {
+	background-color: #f7f7f7;
+	color: #333;
+}
+.dark .sapUiTableHeaderCell .sapMText {
+	color: #333;
+}
+/*Style for new version ui5, 1.69.1 end*/
+
+

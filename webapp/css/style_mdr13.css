@@ -1,0 +1,33 @@
+.sapUiTableTr{
+	height: 40px !important;
+}
+
+/*
+.sapUiTableCtrl tr{
+	height: calc(2rem + 1px) !important;
+	height: 0px !important;
+}
+*/
+
+.textRed {
+	color: RGBA(185,20,20,1);  /*red*/
+}
+
+.text {
+	overflow: hidden !important;
+	text-overflow: ellipsis !important;
+	text-weight: normal;
+}
+
+.titleTextBlue {
+	font-weight: bold;
+	font-size: 1rem;
+	overflow: hidden !important;
+	text-overflow: ellipsis !important;
+	color: RGBA(0,157,224,1);  /*blue*/
+}
+
+.ratingLED{
+	padding-top: 3px !important;
+	padding-left: 22px;
+}

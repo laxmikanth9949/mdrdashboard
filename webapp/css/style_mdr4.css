@@ -1,0 +1,94 @@
+.sapMFlexBoxBGTransparent .sapMFlexItem .sapMFlexItemAlignAuto {
+	width: auto;
+}
+
+.sapUiTableCtrl{
+	min-height: 62px !important;
+}
+
+/*
+.sapUiTableCtrl tr{
+	height: calc(2rem + 1px) !important;
+	height: 0px !important;
+}
+*/
+
+.numberStyle1,
+.numberStyle1 .sapMNCValue{
+	font-size:20px;
+	font-weight:bold;
+}
+
+.cell{
+	padding-top: 0px !important;
+	vertical-align: text-top !important;
+}
+
+.innerCell{
+	max-height: 35px !important;
+	padding-top: 0px !important;
+	vertical-align: text-top !important;
+}
+
+.outerCell{
+	height: 60px !important;
+	padding-top: 2px !important;
+	vertical-align: text-top !important;
+}
+
+.dateBox0Bold{
+	width: 60px;
+	font-weight: bold;
+}
+
+.dateBox1Bold{
+	width: 67px;
+	font-weight: bold;
+}
+
+.dateBox2Bold{
+	padding-left: 5px;
+	font-weight: bold;
+}
+
+.dateBox0{
+	width: 60px;
+}
+
+.dateBox1{
+	width: 67px;
+}
+
+.dateBox2{
+	padding-left: 5px;
+}
+
+.titleTextSmall{
+	font-weight: bold;
+}
+
+.titleTextSmallRed{
+	font-weight: bold;
+	color: RGBA(185,20,20,1);  /*red*/
+}
+
+.textRed{
+	color: RGBA(185,20,20,1);  /*red*/
+}
+
+.redIndicatorMDR4{
+	height: 60px;
+	background:#b00; /*red*/
+}
+
+.greenIndicatorMDR4{
+	height: 60px;
+	background:#2b7c2b; /*green*/
+}
+
+.yellowIndicatorMDR4{
+	height: 60px;
+ /*	background: #e78c07; */
+ /*	background: RGBA(228,183,35,1); */
+	background: RGBA(228,200,35,1); /*yellow*/
+}

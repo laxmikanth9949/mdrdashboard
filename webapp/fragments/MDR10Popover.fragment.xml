@@ -1,0 +1,13 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" controllerName="corp/sap/mdrdashboards.controller.MDR10">
+	<Popover id="helloPopover" placement="Horizontal" busy="{toolTipModel>/busy}" busyIndicatorDelay="0" class="sapUiContentPadding">
+		<customHeader>
+			<Toolbar>
+				<ObjectStatus icon="{toolTipModel>/imageSrc}" state="{toolTipModel>/state}"/>
+				<ToolbarSpacer/>
+				<Title text="{toolTipModel>/title}" level="H3"/>
+				<ToolbarSpacer/>
+			</Toolbar>
+		</customHeader>
+		<core:HTML content="{toolTipModel>/text}"/>
+	</Popover>
+</core:FragmentDefinition>

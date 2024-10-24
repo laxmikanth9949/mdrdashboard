@@ -1,0 +1,23 @@
+/*
+.sapUiTableCtrl tr{
+	height: calc(2rem + 1px) !important;
+	height: 0px !important;
+}
+*/
+
+.cell{
+	padding-top: 0px !important;
+	vertical-align: text-top !important;
+}
+
+.titleTextRed{
+	font-size: 1rem;
+	font-weight: bold;
+	color: RGBA(185,20,20,1);  /*red*/
+}
+
+.titleTextBlue{
+	font-size: 1rem;
+	font-weight: bold;
+	color: RGBA(0,157,224,1);  /*blue*/
+}

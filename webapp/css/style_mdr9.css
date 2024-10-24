@@ -1,0 +1,22 @@
+.sapUiTableTr{
+	height: 40px !important;
+}
+
+/*
+.sapUiTableCtrl tr{
+	height: calc(2rem + 1px) !important;
+	height: 0px !important;
+}
+*/
+
+.innerCell{
+	max-height: 35px !important;
+	padding-top: 0px !important;
+	vertical-align: text-top !important;
+}
+
+.outerCell{
+	height: 40px !important;
+	padding-top: 2px !important;
+	vertical-align: text-top !important;
+}

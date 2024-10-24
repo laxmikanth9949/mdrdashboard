@@ -1,0 +1,238 @@
+[
+	{
+		"name": "Standard Parameters",
+		"desc": "Prefills Parameters with Settings suitable for all Dashboards",
+		"options": [
+			{
+				"filter": "Refresh Interval (min)",
+				"desc": "&refreshInterval",
+				"value": "30"
+			},
+			{
+				"filter": "Flip Interval (sec)",
+				"desc": "&flipInterval",
+				"value": "30"
+			},
+			{
+				"filter": "Mask Data",
+				"desc": "&MaskData",
+				"value": "No"
+			},
+			{
+				"filter": "Layout",
+				"desc": "&layout",
+				"value": "dark"
+			},
+			{
+				"filter": "Run Title",
+				"desc": "&run_title",
+				"value": "No"
+			}
+		]
+	}, 
+	{
+		"name": "MDR2 - Activities",
+		"desc": "Prefills Parameters with Settings suitable for MDR2",
+		"options": [
+			{
+				"filter": "Refresh Interval (min)",
+				"desc": "&refreshInterval",
+				"value": "30"
+			},
+			{
+				"filter": "Flip Interval (sec)",
+				"desc": "&flipInterval",
+				"value": "30"
+			},
+			{
+				"filter": "Mask Data",
+				"desc": "&MaskData",
+				"value": "No"
+			},
+			{
+				"filter": "Layout",
+				"desc": "&layout",
+				"value": "dark"
+			},
+			{
+				"filter": "Run Title",
+				"desc": "&run_title",
+				"value": "No"
+			},
+			{
+				"filter": "Disp Date",
+				"desc": "&disp_date",
+				"value": "gl"
+			},
+			{
+				"filter": "Service Team Visible",
+				"desc": "&ServiceTeamVisible",
+				"value": "true"
+			}
+		]
+	}, 
+	{
+		"name": "MDR3 for CrossIssues",
+		"desc": "Prefills Parameters with Settings suitable to display CrossIssues",
+		"options": [
+			{
+				"filter": "Refresh Interval (min)",
+				"desc": "&refreshInterval",
+				"value": "30"
+			},
+			{
+				"filter": "Flip Interval (sec)",
+				"desc": "&flipInterval",
+				"value": "30"
+			},
+			{
+				"filter": "Show Dashboard in CrossIssue View",
+				"desc": "&crossIssue",
+				"value": "yes"
+			},
+			{
+				"filter": "Mask Data",
+				"desc": "&MaskData",
+				"value": "No"
+			},
+			{
+				"filter": "Layout",
+				"desc": "&layout",
+				"value": "dark"
+			},
+			{
+				"filter": "Run Title",
+				"desc": "&run_title",
+				"value": "No"
+			},
+			{
+				"filter": "Number of rolling Weeks",
+				"desc": "&rolling",
+				"value": "13"
+			}
+		]
+	},
+	{
+		"name": "MDR3 for TopIssues",
+		"desc": "Prefills Parameters with Settings suitable to display TopIssues",
+		"options": [
+			{
+				"filter": "Refresh Interval (min)",
+				"desc": "&refreshInterval",
+				"value": "30"
+			},
+			{
+				"filter": "Flip Interval (sec)",
+				"desc": "&flipInterval",
+				"value": "30"
+			},
+			{
+				"filter": "Show Dashboard in CrossIssue View",
+				"desc": "&crossIssue",
+				"value": "no"
+			},
+			{
+				"filter": "Mask Data",
+				"desc": "&MaskData",
+				"value": "No"
+			},
+			{
+				"filter": "Layout",
+				"desc": "&layout",
+				"value": "dark"
+			},
+			{
+				"filter": "Run Title",
+				"desc": "&run_title",
+				"value": "No"
+			},
+			{
+				"filter": "Number of rolling Weeks",
+				"desc": "&rolling",
+				"value": "13"
+			}
+		]
+	}, 
+	{
+		"name": "MDR7 - Cases",
+		"desc": "Prefills Parameters with Settings suitable for MDR7",
+		"options": [
+			{
+				"filter": "Refresh Interval (min)",
+				"desc": "&refreshInterval",
+				"value": "30"
+			},
+			{
+				"filter": "Flip Interval (sec)",
+				"desc": "&flipInterval",
+				"value": "30"
+			},
+			{
+				"filter": "Mask Data",
+				"desc": "&MaskData",
+				"value": "No"
+			},
+			{
+				"filter": "Layout",
+				"desc": "&layout",
+				"value": "dark"
+			},
+			{
+				"filter": "List View",
+				"desc": "&listView",
+				"value": "yes"
+			},
+			{
+				"filter": "Service Team",
+				"desc": "&ServiceTeamVisible",
+				"value": "true"
+			},
+			{
+				"filter": "Run Title",
+				"desc": "&run_title",
+				"value": "No"
+			}
+		]
+	}, 
+	{
+		"name": "MDR13 - Complaints",
+		"desc": "Prefills Parameters with Settings suitable for MDR13",
+		"options": [
+			{
+				"filter": "Refresh Interval (min)",
+				"desc": "&refreshInterval",
+				"value": "30"
+			},
+			{
+				"filter": "Flip Interval (sec)",
+				"desc": "&flipInterval",
+				"value": "30"
+			},
+			{
+				"filter": "Mask Data",
+				"desc": "&MaskData",
+				"value": "No"
+			},
+			{
+				"filter": "Layout",
+				"desc": "&layout",
+				"value": "dark"
+			},
+			{
+				"filter": "Run Title",
+				"desc": "&run_title",
+				"value": "No"
+			},
+			{
+				"filter": "Disp Date",
+				"desc": "&disp_date",
+				"value": "gl"
+			},
+			{
+				"filter": "Service Team Visible",
+				"desc": "&ServiceTeamVisible",
+				"value": "true"
+			}
+		]
+	}
+]

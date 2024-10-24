@@ -1,0 +1,17 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" controllerName="corp/sap/mdrdashboards.controller.MDR3"
+	xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form">
+	<Dialog title="CONFIDENTIAL" contentWidth="600px">
+		<content>
+			<FormattedText class="sapUiSmallMargin"
+				htmlText="&lt;p&gt;Dear colleague, &lt;br/&gt; please keep following in mind when downloading this data:&lt;/p&gt; &lt;ul&gt; &lt;li&gt; &lt;p&gt;This data is classified as CONFIDENTIAL: Highly sensitive SAP Information that is accessible to only a limited number of specific individuals who have a defined 'need to know'. For more information, please review &lt;a href='https://portal.wdf.sap.corp/go/security' target='_blank'&gt; SAP's Global Security Standard&lt;/a&gt;.&lt;/p&gt; &lt;/li&gt; &lt;li&gt; &lt;p&gt;You should only keep personal data as long as it is necessary for the specified business purpose. For more information, please review &lt;a href='https://portal.wdf.sap.corp/go/dataprotection' target='_blank'&gt; SAP's Data Protection &amp; Privacy Policy&lt;/a&gt;.&lt;/p&gt; &lt;/li&gt; &lt;li&gt; &lt;p&gt;You must delete any information or documents older than three (3) years. For more information, please review &lt;a href='https://portal.wdf.sap.corp/go/igrm' target='_blank' &gt; SAP's Information Governance &amp; Records Management Policy&lt;/a&gt;.&lt;/p&gt; &lt;/li&gt; &lt;/ul&gt;"/>
+		</content>
+		<beginButton>
+			<Button text="{i18n>Confirm}" 
+				press="downloadXLS" type="Emphasized"/>
+		</beginButton>
+		<endButton>
+			<Button text="{i18n>Cancel}" 
+				press="Cancel"/>
+		</endButton>
+	</Dialog>
+</core:FragmentDefinition>

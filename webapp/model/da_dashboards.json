@@ -1,0 +1,47 @@
+[
+	{
+		"name": "MDR2 - Activities",
+		"key": "mdr2",
+		"id": "2"
+	},
+	{
+		"name": "MDR3 - Top Issues",
+		"key": "mdr3",
+		"id": "3"
+	},
+	{
+		"name": "MDR4 - Service Orders",
+		"key": "mdr4",
+		"id": "4"
+	},
+	{
+		"name": "MDR6 - Q-Gates",
+		"key": "mdr6",
+		"id": "6"
+	},
+	{
+		"name": "MDR6A - Q-Gate List",
+		"key": "mdr6A",
+		"id": "6A"
+	},
+	{
+		"name": "MDR7 - Cases",
+		"key": "mdr7",
+		"id": "7"
+	},
+	{
+		"name": "MDR8 - Case Map",
+		"key": "mdr8",
+		"id": "8"
+	},
+	{
+		"name": "MDR9_NOW - ServiceNow Cases",
+		"key": "mdr9_now",
+		"id": "10"
+	},
+	{
+		"name": "MDR13 - Open Complaints",
+		"key": "mdr13",
+		"id": "13"
+	}
+]

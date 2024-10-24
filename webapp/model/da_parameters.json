@@ -1,0 +1,1204 @@
+[{
+	"key": "mdr2",
+	"name": "Refresh Interval (min) (Mandatory)",
+	"filter": "refreshInterval",
+	"type": "Single Input",
+	"info": "Parameter"
+}, {
+	"key": "mdr2",
+	"name": "Flip Interval (sec)",
+	"filter": "flipInterval",
+	"type": "Single Input",
+	"info": "Parameter"
+}, {
+	"key": "mdr2",
+	"name": "Title",
+	"filter": "title",
+	"type": "Single Input",
+	"info": "Parameter"
+}, {
+	"key": "mdr2",
+	"name": "Mask Data",
+	"filter": "MaskData",
+	"options": [{
+		"name": "Yes",
+		"value": "Yes"
+	}, {
+		"name": "No",
+		"value": "No"
+	}],
+	"type": "Single Select",
+	"info": "Parameter"
+}, {
+	"key": "mdr2",
+	"name": "Layout",
+	"filter": "layout",
+	"options": [{
+		"name": "Blue",
+		"value": "blue"
+	}, {
+		"name": "Dark",
+		"value": "dark"
+	}],
+	"type": "Single Select",
+	"info": "Parameter"
+}, {
+	"key": "mdr2",
+	"name": "Hide Priority",
+	"filter": "hidePrio",
+	"options": [{
+		"name": "Yes",
+		"value": "Yes"
+	}, {
+		"name": "No",
+		"value": "No"
+	}],
+	"type": "Single Select",
+	"info": "Parameter"
+}, {
+	"key": "mdr2",
+	"name": "Sorter",
+	"filter": "sorter",
+	"options": [{
+		"name": "Priority Descending",
+		"value": "prioKey/desc"
+	}, {
+		"name": "Priority Ascending",
+		"value": "prioKey/asc"
+	}, {
+		"name": "Reference Customer Descending",
+		"value": "refCustSort/desc"
+	}, {
+		"name": "Reference Customer Ascending",
+		"value": "refCustSort/asc"
+	}, {
+		"name": "Customer Descending",
+		"value": "customer/desc"
+	}, {
+		"name": "Customer Ascending",
+		"value": "customer/asc"
+	}, {
+		"name": "Issue Descending",
+		"value": "issue/desc"
+	}, {
+		"name": "Issue Ascending",
+		"value": "issue/asc"
+	}, {
+		"name": "Due Time Descending",
+		"value": "dueTimeKey/desc"
+	}, {
+		"name": "Due Time Ascending",
+		"value": "dueTimeKey/asc"
+	}, {
+		"name": "Rating Descending",
+		"value": "ratingKey/desc"
+	}, {
+		"name": "Rating Ascending",
+		"value": "ratingKey/asc"
+	}, {
+		"name": "Status Descending",
+		"value": "statusKey/desc"
+	}, {
+		"name": "Status Ascending",
+		"value": "statusKey/asc"
+	}, {
+		"name": "Employee Descending",
+		"value": "employee/desc"
+	}, {
+		"name": "Employee Ascending",
+		"value": "employee/asc"
+	}, {
+		"name": "Country Descending",
+		"value": "country/desc"
+	}, {
+		"name": "Country Ascending",
+		"value": "country/asc"
+	}, {
+		"name": "Delivery Unit Descending",
+		"value": "delUnitText/desc"
+	}, {
+		"name": "Delivery Unit Ascending",
+		"value": "delUnitText/asc"
+	}, {
+		"name": "Activity ID Descending",
+		"value": "activity_id/desc"
+	}, {
+		"name": "Activity ID Ascending",
+		"value": "activity_id/asc"
+	}],
+	"type": "Single Select",
+	"info": "Parameter"
+}, {
+	"key": "mdr2",
+	"name": "Service Team Visible",
+	"filter": "ServiceTeamVisible",
+	"options": [{
+		"name": "True",
+		"value": "true"
+	}, {
+		"name": "False",
+		"value": "false"
+	}],
+	"type": "Single Select",
+	"info": "Parameter"
+}, {
+	"key": "mdr2",
+	"name": "Display Market Unit",
+	"filter": "disp_MU",
+	"options": [{
+		"name": "Yes",
+		"value": "yes"
+	}, {
+		"name": "No",
+		"value": "no"
+	}],
+	"type": "Single Select",
+	"info": "Parameter"
+}, {
+	"key": "mdr2",
+	"name": "Display Date",
+	"filter": "disp_date",
+	"options": [{
+		"name": "Go Live",
+		"value": "gl"
+	}],
+	"type": "Single Select",
+	"info": "Parameter"
+}, {
+	"key": "mdr2",
+	"name": "Display only Activities without Responsible",
+	"filter": "resp_empty_only",
+	"options": [{
+		"name": "Yes",
+		"value": "yes"
+	}, {
+		"name": "No",
+		"value": "no"
+	}],
+	"type": "Single Select",
+	"info": "Parameter"
+}, {
+	"key": "mdr2",
+	"name": "Due Date expired",
+	"filter": "due_date_expired",
+	"options": [{
+		"name": "Yes",
+		"value": "yes"
+	}, {
+		"name": "No",
+		"value": "no"
+	}],
+	"type": "Single Select",
+	"info": "Parameter"
+}, {
+	"key": "mdr2",
+	"name": "Due Date",
+	"filter": "due_date",
+	"type": "Rolling Date Input",
+	"info": "Parameter"
+}, {
+	"key": "mdr2",
+	"name": "Display Category/Reason/Result",
+	"filter": "disp_cat",
+	"options": [{
+		"name": "Display Category + Result",
+		"value": " "
+	},{
+		"name": "Display Category + Reason",
+		"value": "reason"
+	}, {
+		"name": "Display Result + Reason",
+		"value": "result"
+	}, {
+		"name": "Display Category + Result + Reason",
+		"value": "all"
+	}],
+	"type": "Single Select",
+	"info": "Parameter"
+}, {
+	"key": "mdr2",
+	"name": "Run Title",
+	"filter": "run_title",
+	"options": [{
+		"name": "Yes",
+		"value": "yes"
+	}, {
+		"name": "No",
+		"value": "no"
+	}],
+	"type": "Single Select",
+	"info": "Parameter"
+},
+
+
+
+{
+	"key": "mdr3",
+	"name": "Refresh Interval (min) (Mandatory)",
+	"filter": "refreshInterval",
+	"type": "Single Input",
+	"info": "Parameter"
+}, {
+	"key": "mdr3",
+	"name": "Flip Interval (sec)",
+	"filter": "flipInterval",
+	"type": "Single Input",
+	"info": "Parameter"
+}, {
+	"key": "mdr3",
+	"name": "Show Dashboard in Cross Issue View",
+	"filter": "crossIssue",
+	"options": [{
+		"name": "Yes",
+		"value": "yes"
+	}, {
+		"name": "No",
+		"value": "no"
+	}],
+	"type": "Single Select",
+	"info": "Parameter"
+}, {
+	"key": "mdr3",
+	"name": "Title",
+	"filter": "title",
+	"type": "Single Input",
+	"info": "Parameter"
+}, {
+	"key": "mdr3",
+	"name": "Mask Data",
+	"filter": "MaskData",
+	"options": [{
+		"name": "Yes",
+		"value": "Yes"
+	}, {
+		"name": "No",
+		"value": "No"
+	}],
+	"type": "Single Select",
+	"info": "Parameter"
+}, {
+	"key": "mdr3",
+	"name": "Layout",
+	"filter": "layout",
+	"options": [{
+		"name": "Blue",
+		"value": "blue"
+	}, {
+		"name": "Dark",
+		"value": "dark"
+	}],
+	"type": "Single Select",
+	"info": "Parameter"
+}, {
+	"key": "mdr3",
+	"name": "Number of rolling Weeks (Start = today - x week / End = today)",
+	"filter": "rolling",
+	"type": "Rolling Date Input",
+	"info": "Parameter"
+}, {
+	"key": "mdr3",
+	"name": "Run Title",
+	"filter": "run_title",
+	"options": [{
+		"name": "Yes",
+		"value": "yes"
+	}, {
+		"name": "No",
+		"value": "no"
+	}],
+	"type": "Single Select",
+	"info": "Parameter"
+}, 
+
+
+
+{
+	"key": "mdr4",
+	"name": "Refresh Interval (min) (Mandatory)",
+	"filter": "refreshInterval",
+	"type": "Single Input",
+	"info": "Parameter"
+}, {
+	"key": "mdr4",
+	"name": "Flip Interval (sec)",
+	"filter": "flipInterval",
+	"type": "Single Input",
+	"info": "Parameter"
+}, {
+	"key": "mdr4",
+	"name": "Title",
+	"filter": "title",
+	"type": "Single Input",
+	"info": "Parameter"
+}, {
+	"key": "mdr4",
+	"name": "Mask Data",
+	"filter": "MaskData",
+	"options": [{
+		"name": "Yes",
+		"value": "Yes"
+	}, {
+		"name": "No",
+		"value": "No"
+	}],
+	"type": "Single Select",
+	"info": "Parameter"
+}, {
+	"key": "mdr4",
+	"name": "Layout",
+	"filter": "layout",
+	"options": [{
+		"name": "Blue",
+		"value": "blue"
+	}, {
+		"name": "Dark",
+		"value": "dark"
+	}],
+	"type": "Single Select",
+	"info": "Parameter"
+}, {
+	"key": "mdr4",
+	"name": "Run Title",
+	"filter": "run_title",
+	"options": [{
+		"name": "Yes",
+		"value": "yes"
+	}, {
+		"name": "No",
+		"value": "no"
+	}],
+	"type": "Single Select",
+	"info": "Parameter"
+}, 
+
+
+
+{
+	"key": "mdr6",
+	"name": "Refresh Interval (min) (Mandatory)",
+	"filter": "refreshInterval",
+	"type": "Single Input",
+	"info": "Parameter"
+}, {
+	"key": "mdr6",
+	"name": "Flip Interval (sec)",
+	"filter": "flipInterval",
+	"type": "Single Input",
+	"info": "Parameter"
+}, {
+	"key": "mdr6",
+	"name": "Title",
+	"filter": "title",
+	"type": "Single Input",
+	"info": "Parameter"
+}, {
+	"key": "mdr6",
+	"name": "Mask Data",
+	"filter": "MaskData",
+	"options": [{
+		"name": "Yes",
+		"value": "Yes"
+	}, {
+		"name": "No",
+		"value": "No"
+	}],
+	"type": "Single Select",
+	"info": "Parameter"
+}, {
+	"key": "mdr6",
+	"name": "Layout",
+	"filter": "layout",
+	"options": [{
+		"name": "Blue",
+		"value": "blue"
+	}, {
+		"name": "Dark",
+		"value": "dark"
+	}],
+	"type": "Single Select",
+	"info": "Parameter"
+}, {
+	"key": "mdr6",
+	"name": "Display Date",
+	"filter": "disp_date",
+	"options": [{
+		"name": "Go Live Date",
+		"value": "gl"
+	}, {
+		"name": "Last Changed Date",
+		"value": "lc"
+	}, {
+		"name": "Creation Date",
+		"value": "cr"
+	}],
+	"type": "Single Select",
+	"info": "Parameter"
+}, {
+	"key": "mdr6",
+	"name": "Display Name",
+	"filter": "disp_name",
+	"options": [{
+		"name": "Person Responsible",
+		"value": "resp"
+	}, {
+		"name": "Processor",
+		"value": "proc"
+	}],
+	"type": "Single Select",
+	"info": "Parameter"
+}, {
+	"key": "mdr6",
+	"name": "Created (now-xdays)",
+	"filter": "created",
+	"type": "Rolling Date Input",
+	"info": "Parameter"
+}, {
+	"key": "mdr6",
+	"name": "Created (now-xweeks)",
+	"filter": "created",
+	"type": "Rolling Date Input",
+	"info": "Parameter"
+}, {
+	"key": "mdr6",
+	"name": "GoLive Start (now-x) (weeks) - To be used together with GoLive End",
+	"filter": "golivestart",
+	"type": "Rolling Date Input",
+	"info": "Parameter"
+}, {
+	"key": "mdr6",
+	"name": "GoLive End (now+y) (weeks) - To be used together with GoLive Start",
+	"filter": "goliveend",
+	"type": "Rolling Date Input",
+	"info": "Parameter"
+}, {
+	"key": "mdr6",
+	"name": "Follow Up Date (now-xdays/now+ydays)",
+	"filter": "followup",
+	"type": "Rolling Date Input",
+	"info": "Parameter"
+}, {
+	"key": "mdr6",
+	"name": "Follow Up Date (now-xmonth/now+ymonth)",
+	"filter": "followup",
+	"type": "Rolling Date Input",
+	"info": "Parameter"
+}, {
+	"key": "mdr6",
+	"name": "Change Time (now-xdays/now+ydays)",
+	"filter": "changetime",
+	"type": "Rolling Date Input",
+	"info": "Parameter"
+}, {
+	"key": "mdr6",
+	"name": "Change Time (now-xmonth/now+ymonth)",
+	"filter": "changetime",
+	"type": "Rolling Date Input",
+	"info": "Parameter"
+}, {
+	"key": "mdr6",
+	"name": "Create Time (now-xdays/now+ydays)",
+	"filter": "createtime",
+	"type": "Rolling Date Input",
+	"info": "Parameter"
+}, {
+	"key": "mdr6",
+	"name": "Create Time (now-xmonth/now+ymonth)",
+	"filter": "createtime",
+	"type": "Rolling Date Input",
+	"info": "Parameter"
+}, {
+	"key": "mdr6",
+	"name": "Q-Gate Start (now-xdays/now+ydays)",
+	"filter": "qgstart",
+	"type": "Rolling Date Input",
+	"info": "Parameter"
+}, {
+	"key": "mdr6",
+	"name": "Q-Gate Start (now-xmonth/now+ymonth)",
+	"filter": "qgstart",
+	"type": "Rolling Date Input",
+	"info": "Parameter"
+}, {
+	"key": "mdr6",
+	"name": "Q-Gate Finish (now-xdays/now+ydays)",
+	"filter": "qgfinish",
+	"type": "Rolling Date Input",
+	"info": "Parameter"
+}, {
+	"key": "mdr6",
+	"name": "Q-Gate Finish (now-xmonth/now+ymonth)",
+	"filter": "qgfinish",
+	"type": "Rolling Date Input",
+	"info": "Parameter"
+}, {
+	"key": "mdr6",
+	"name": "Run Title",
+	"filter": "run_title",
+	"options": [{
+		"name": "Yes",
+		"value": "yes"
+	}, {
+		"name": "No",
+		"value": "no"
+	}],
+	"type": "Single Select",
+	"info": "Parameter"
+},
+
+
+
+{
+	"key": "mdr6a",
+	"name": "Refresh Interval (min) (Mandatory)",
+	"filter": "refreshInterval",
+	"type": "Single Input",
+	"info": "Parameter"
+}, {
+	"key": "mdr6a",
+	"name": "Flip Interval (sec)",
+	"filter": "flipInterval",
+	"type": "Single Input",
+	"info": "Parameter"
+}, {
+	"key": "mdr6a",
+	"name": "Title",
+	"filter": "title",
+	"type": "Single Input",
+	"info": "Parameter"
+}, {
+	"key": "mdr6a",
+	"name": "Mask Data",
+	"filter": "MaskData",
+	"options": [{
+		"name": "Yes",
+		"value": "Yes"
+	}, {
+		"name": "No",
+		"value": "No"
+	}],
+	"type": "Single Select",
+	"info": "Parameter"
+}, {
+	"key": "mdr6a",
+	"name": "Layout",
+	"filter": "layout",
+	"options": [{
+		"name": "Blue",
+		"value": "blue"
+	}, {
+		"name": "Dark",
+		"value": "dark"
+	}],
+	"type": "Single Select",
+	"info": "Parameter"
+}, {
+	"key": "mdr6a",
+	"name": "Display Name",
+	"filter": "disp_name",
+	"options": [{
+		"name": "Person Responsible",
+		"value": "resp"
+	}, {
+		"name": "Processor",
+		"value": "proc"
+	}],
+	"type": "Single Select",
+	"info": "Parameter"
+}, {
+	"key": "mdr6a",
+	"name": "Created (now-xdays)",
+	"filter": "created",
+	"type": "Rolling Date Input",
+	"info": "Parameter"
+}, {
+	"key": "mdr6a",
+	"name": "Created (now-xweeks)",
+	"filter": "created",
+	"type": "Rolling Date Input",
+	"info": "Parameter"
+}, {
+	"key": "mdr6a",
+	"name": "GoLive Start (now-x) (weeks) - To be used together with GoLive End",
+	"filter": "golivestart",
+	"type": "Rolling Date Input",
+	"info": "Parameter"
+}, {
+	"key": "mdr6a",
+	"name": "GoLive End (now+y) (weeks) - To be used together with GoLive Start",
+	"filter": "goliveend",
+	"type": "Rolling Date Input",
+	"info": "Parameter"
+}, {
+	"key": "mdr6a",
+	"name": "Follow Up Date (now-xdays/now+ydays)",
+	"filter": "followup",
+	"type": "Rolling Date Input",
+	"info": "Parameter"
+}, {
+	"key": "mdr6a",
+	"name": "Follow Up Date (now-xmonth/now+ymonth)",
+	"filter": "followup",
+	"type": "Rolling Date Input",
+	"info": "Parameter"
+}, {
+	"key": "mdr6a",
+	"name": "Change Time (now-xdays/now+ydays)",
+	"filter": "changetime",
+	"type": "Rolling Date Input",
+	"info": "Parameter"
+}, {
+	"key": "mdr6a",
+	"name": "Change Time (now-xmonth/now+ymonth)",
+	"filter": "changetime",
+	"type": "Rolling Date Input",
+	"info": "Parameter"
+}, {
+	"key": "mdr6a",
+	"name": "Create Time (now-xdays/now+ydays)",
+	"filter": "createtime",
+	"type": "Rolling Date Input",
+	"info": "Parameter"
+}, {
+	"key": "mdr6a",
+	"name": "Create Time (now-xmonth/now+ymonth)",
+	"filter": "createtime",
+	"type": "Rolling Date Input",
+	"info": "Parameter"
+}, {
+	"key": "mdr6a",
+	"name": "Q-Gate Start (now-xdays/now+ydays)",
+	"filter": "qgstart",
+	"type": "Rolling Date Input",
+	"info": "Parameter"
+}, {
+	"key": "mdr6a",
+	"name": "Q-Gate Start (now-xmonth/now+ymonth)",
+	"filter": "qgstart",
+	"type": "Rolling Date Input",
+	"info": "Parameter"
+}, {
+	"key": "mdr6a",
+	"name": "Q-Gate Finish (now-xdays/now+ydays)",
+	"filter": "qgfinish",
+	"type": "Rolling Date Input",
+	"info": "Parameter"
+}, {
+	"key": "mdr6a",
+	"name": "Q-Gate Finish (now-xmonth/now+ymonth)",
+	"filter": "qgfinish",
+	"type": "Rolling Date Input",
+	"info": "Parameter"
+}, {
+	"key": "mdr6a",
+	"name": "Run Title",
+	"filter": "run_title",
+	"options": [{
+		"name": "Yes",
+		"value": "yes"
+	}, {
+		"name": "No",
+		"value": "no"
+	}],
+	"type": "Single Select",
+	"info": "Parameter"
+}, 
+
+
+
+{
+	"key": "mdr7",
+	"name": "Refresh Interval (min) (Mandatory)",
+	"filter": "refreshInterval",
+	"type": "Single Input",
+	"info": "Parameter"
+}, {
+	"key": "mdr7",
+	"name": "Flip Interval (sec)",
+	"filter": "flipInterval",
+	"type": "Single Input",
+	"info": "Parameter"
+}, {
+	"key": "mdr7",
+	"name": "Title",
+	"filter": "title",
+	"type": "Single Input",
+	"info": "Parameter"
+}, {
+	"key": "mdr7",
+	"name": "Mask Data",
+	"filter": "MaskData",
+	"options": [{
+		"name": "Yes",
+		"value": "Yes"
+	}, {
+		"name": "No",
+		"value": "No"
+	}],
+	"type": "Single Select",
+	"info": "Parameter"
+}, {
+	"key": "mdr7",
+	"name": "Layout",
+	"filter": "layout",
+	"options": [{
+		"name": "Blue",
+		"value": "blue"
+	}, {
+		"name": "Dark",
+		"value": "dark"
+	}],
+	"type": "Single Select",
+	"info": "Parameter"
+}, {
+	"key": "mdr7",
+	"name": "List View",
+	"filter": "listView",
+	"options": [{
+		"name": "Yes",
+		"value": "yes"
+	}, {
+		"name": "No",
+		"value": "no"
+	}],
+	"type": "Single Select",
+	"info": "Parameter"
+}, {
+	"key": "mdr7",
+	"name": "Display Date",
+	"filter": "disp_date",
+	"options": [{
+		"name": "Go Live Date",
+		"value": "gl"
+	}, {
+		"name": "Last Changed Date",
+		"value": "lc"
+	}, {
+		"name": "Creation Date",
+		"value": "cr"
+	}],
+	"type": "Single Select",
+	"info": "Parameter"
+}, {
+	"key": "mdr7",
+	"name": "Display Name",
+	"filter": "disp_name",
+	"options": [{
+		"name": "Person Responsible",
+		"value": "resp"
+	}, {
+		"name": "Processor",
+		"value": "proc"
+	}],
+	"type": "Single Select",
+	"info": "Parameter"
+}, {
+	"key": "mdr7",
+	"name": "Display Phase",
+	"filter": "disp_phase",
+	"options": [{
+		"name": "Display Phase",
+		"value": "yes"
+	}, {
+		"name": "Display Case Status",
+		"value": "no"
+	}],
+	"type": "Single Select",
+	"info": "Parameter"
+}, {
+	"key": "mdr7",
+	"name": "Service Team Visible",
+	"filter": "ServiceTeamVisible",
+	"options": [{
+		"name": "True",
+		"value": "true"
+	}, {
+		"name": "False",
+		"value": "false"
+	}],
+	"type": "Single Select",
+	"info": "Parameter"
+}, {
+	"key": "mdr7",
+	"name": "Display Top Issues",
+	"filter": "top_issues",
+	"options": [{
+		"name": "Yes",
+		"value": "yes"
+	}, {
+		"name": "No",
+		"value": "no"
+	}],
+	"type": "Single Select",
+	"info": "Parameter"
+}, {
+	"key": "mdr7",
+	"name": "Display Reason",
+	"filter": "disp_reason",
+	"options": [{
+		"name": "Display Reason",
+		"value": "yes"
+	}, {
+		"name": "Display SAP Product",
+		"value": "no"
+	}],
+	"type": "Single Select",
+	"info": "Parameter"
+}, {
+	"key": "mdr7",
+	"name": "Created (now-xdays)",
+	"filter": "created",
+	"type": "Rolling Date Input",
+	"info": "Parameter"
+}, {
+	"key": "mdr7",
+	"name": "Created (now-xweeks)",
+	"filter": "created",
+	"type": "Rolling Date Input",
+	"info": "Parameter"
+}, {
+	"key": "mdr7",
+	"name": "GoLive Start (now-x) (weeks) - To be used together with GoLive End",
+	"filter": "golivestart",
+	"type": "Rolling Date Input",
+	"info": "Parameter"
+}, {
+	"key": "mdr7",
+	"name": "GoLive End (now+y) (weeks) - To be used together with GoLive Start",
+	"filter": "goliveend",
+	"type": "Rolling Date Input",
+	"info": "Parameter"
+}, {
+	"key": "mdr7",
+	"name": "Follow Up Date (now-xdays/now+ydays)",
+	"filter": "followup",
+	"type": "Rolling Date Input",
+	"info": "Parameter"
+}, {
+	"key": "mdr7",
+	"name": "Follow Up Date (now-xmonth/now+ymonth)",
+	"filter": "followup",
+	"type": "Rolling Date Input",
+	"info": "Parameter"
+}, {
+	"key": "mdr7",
+	"name": "Change Time (now-xdays/now+ydays)",
+	"filter": "changetime",
+	"type": "Rolling Date Input",
+	"info": "Parameter"
+}, {
+	"key": "mdr7",
+	"name": "Change Time (now-xmonth/now+ymonth)",
+	"filter": "changetime",
+	"type": "Rolling Date Input",
+	"info": "Parameter"
+}, {
+	"key": "mdr7",
+	"name": "Create Time (now-xdays/now+ydays)",
+	"filter": "createtime",
+	"type": "Rolling Date Input",
+	"info": "Parameter"
+}, {
+	"key": "mdr7",
+	"name": "Create Time (now-xmonth/now+ymonth)",
+	"filter": "createtime",
+	"type": "Rolling Date Input",
+	"info": "Parameter"
+}, {
+	"key": "mdr7",
+	"name": "Q-Gate Start (now-xdays/now+ydays)",
+	"filter": "qgstart",
+	"type": "Rolling Date Input",
+	"info": "Parameter"
+}, {
+	"key": "mdr7",
+	"name": "Q-Gate Start (now-xmonth/now+ymonth)",
+	"filter": "qgstart",
+	"type": "Rolling Date Input",
+	"info": "Parameter"
+}, {
+	"key": "mdr7",
+	"name": "Q-Gate Finish (now-xdays/now+ydays)",
+	"filter": "qgfinish",
+	"type": "Rolling Date Input",
+	"info": "Parameter"
+}, {
+	"key": "mdr7",
+	"name": "Q-Gate Finish (now-xmonth/now+ymonth)",
+	"filter": "qgfinish",
+	"type": "Rolling Date Input",
+	"info": "Parameter"
+}, {
+	"key": "mdr7",
+	"name": "Run Title",
+	"filter": "run_title",
+	"options": [{
+		"name": "Yes",
+		"value": "yes"
+	}, {
+		"name": "No",
+		"value": "no"
+	}],
+	"type": "Single Select",
+	"info": "Parameter"
+}, 
+
+
+
+{
+	"key": "mdr8",
+	"name": "Refresh Interval (min) (Mandatory)",
+	"filter": "refreshInterval",
+	"type": "Single Input",
+	"info": "Parameter"
+}, {
+	"key": "mdr8",
+	"name": "Title",
+	"filter": "title",
+	"type": "Single Input",
+	"info": "Parameter"
+}, {
+	"key": "mdr8",
+	"name": "Layout",
+	"filter": "layout",
+	"options": [{
+		"name": "Blue",
+		"value": "blue"
+	}, {
+		"name": "Dark",
+		"value": "dark"
+	}],
+	"type": "Single Select",
+	"info": "Parameter"
+}, {
+	"key": "mdr8",
+	"name": "Created (now-xdays)",
+	"filter": "created",
+	"type": "Rolling Date Input",
+	"info": "Parameter"
+}, {
+	"key": "mdr8",
+	"name": "Created (now-xweeks)",
+	"filter": "created",
+	"type": "Rolling Date Input",
+	"info": "Parameter"
+}, {
+	"key": "mdr8",
+	"name": "GoLive Start (now-x) (weeks) - To be used together with GoLive End",
+	"filter": "golivestart",
+	"type": "Rolling Date Input",
+	"info": "Parameter"
+}, {
+	"key": "mdr8",
+	"name": "GoLive End (now+y) (weeks) - To be used together with GoLive Start",
+	"filter": "goliveend",
+	"type": "Rolling Date Input",
+	"info": "Parameter"
+}, {
+	"key": "mdr8",
+	"name": "Follow Up Date (now-xdays/now+ydays)",
+	"filter": "followup",
+	"type": "Rolling Date Input",
+	"info": "Parameter"
+}, {
+	"key": "mdr8",
+	"name": "Follow Up Date (now-xmonth/now+ymonth)",
+	"filter": "followup",
+	"type": "Rolling Date Input",
+	"info": "Parameter"
+}, {
+	"key": "mdr8",
+	"name": "Change Time (now-xdays/now+ydays)",
+	"filter": "changetime",
+	"type": "Rolling Date Input",
+	"info": "Parameter"
+}, {
+	"key": "mdr8",
+	"name": "Change Time (now-xmonth/now+ymonth)",
+	"filter": "changetime",
+	"type": "Rolling Date Input",
+	"info": "Parameter"
+}, {
+	"key": "mdr8",
+	"name": "Create Time (now-xdays/now+ydays)",
+	"filter": "createtime",
+	"type": "Rolling Date Input",
+	"info": "Parameter"
+}, {
+	"key": "mdr8",
+	"name": "Create Time (now-xmonth/now+ymonth)",
+	"filter": "createtime",
+	"type": "Rolling Date Input",
+	"info": "Parameter"
+}, {
+	"key": "mdr8",
+	"name": "Q-Gate Start (now-xdays/now+ydays)",
+	"filter": "qgstart",
+	"type": "Rolling Date Input",
+	"info": "Parameter"
+}, {
+	"key": "mdr8",
+	"name": "Q-Gate Start (now-xmonth/now+ymonth)",
+	"filter": "qgstart",
+	"type": "Rolling Date Input",
+	"info": "Parameter"
+}, {
+	"key": "mdr8",
+	"name": "Q-Gate Finish (now-xdays/now+ydays)",
+	"filter": "qgfinish",
+	"type": "Rolling Date Input",
+	"info": "Parameter"
+}, {
+	"key": "mdr8",
+	"name": "Q-Gate Finish (now-xmonth/now+ymonth)",
+	"filter": "qgfinish",
+	"type": "Rolling Date Input",
+	"info": "Parameter"
+}, {
+	"key": "mdr8",
+	"name": "Run Title",
+	"filter": "run_title",
+	"options": [{
+		"name": "Yes",
+		"value": "yes"
+	}, {
+		"name": "No",
+		"value": "no"
+	}],
+	"type": "Single Select",
+	"info": "Parameter"
+},  
+
+
+
+{
+	"key": "mdr9_now",
+	"name": "Refresh Interval (min) (Mandatory)",
+	"filter": "refreshInterval",
+	"type": "Single Input",
+	"info": "Parameter"
+}, {
+	"key": "mdr9_now",
+	"name": "Flip Interval (sec)",
+	"filter": "flipInterval",
+	"type": "Single Input",
+	"info": "Parameter"
+}, {
+	"key": "mdr9_now",
+	"name": "Title",
+	"filter": "title",
+	"type": "Single Input",
+	"info": "Parameter"
+}, {
+	"key": "mdr9_now",
+	"name": "Mask Data",
+	"filter": "MaskData",
+	"options": [{
+		"name": "Yes",
+		"value": "Yes"
+	}, {
+		"name": "No",
+		"value": "No"
+	}],
+	"type": "Single Select",
+	"info": "Parameter"
+}, {
+	"key": "mdr9_now",
+	"name": "Layout",
+	"filter": "layout",
+	"options": [{
+		"name": "Blue",
+		"value": "blue"
+	}, {
+		"name": "Dark",
+		"value": "dark"
+	}],
+	"type": "Single Select",
+	"info": "Parameter"
+}, {
+	"key": "mdr9_now",
+	"name": "Run Title",
+	"filter": "run_title",
+	"options": [{
+		"name": "Yes",
+		"value": "yes"
+	}, {
+		"name": "No",
+		"value": "no"
+	}],
+	"type": "Single Select",
+	"info": "Parameter"
+},
+
+
+
+{
+	"key": "mdr13",
+	"name": "Refresh Interval (min) (Mandatory)",
+	"filter": "refreshInterval",
+	"type": "Single Input",
+	"info": "Parameter"
+}, {
+	"key": "mdr13",
+	"name": "Flip Interval (sec)",
+	"filter": "flipInterval",
+	"type": "Single Input",
+	"info": "Parameter"
+}, {
+	"key": "mdr13",
+	"name": "Title",
+	"filter": "title",
+	"type": "Single Input",
+	"info": "Parameter"
+}, {
+	"key": "mdr13",
+	"name": "Mask Data",
+	"filter": "MaskData",
+	"options": [{
+		"name": "Yes",
+		"value": "Yes"
+	}, {
+		"name": "No",
+		"value": "No"
+	}],
+	"type": "Single Select",
+	"info": "Parameter"
+}, {
+	"key": "mdr13",
+	"name": "Layout",
+	"filter": "layout",
+	"options": [{
+		"name": "Blue",
+		"value": "blue"
+	}, {
+		"name": "Dark",
+		"value": "dark"
+	}],
+	"type": "Single Select",
+	"info": "Parameter"
+}, {
+	"key": "mdr13",
+	"name": "Run Title",
+	"filter": "run_title",
+	"options": [{
+		"name": "Yes",
+		"value": "yes"
+	}, {
+		"name": "No",
+		"value": "no"
+	}],
+	"type": "Single Select",
+	"info": "Parameter"
+}, {
+	"key": "mdr13",
+	"name": "Service Team Visible",
+	"filter": "ServiceTeamVisible",
+	"options": [{
+		"name": "True",
+		"value": "true"
+	}, {
+		"name": "False",
+		"value": "false"
+	}],
+	"type": "Single Select",
+	"info": "Parameter"
+}]

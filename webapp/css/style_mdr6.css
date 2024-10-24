@@ -1,0 +1,167 @@
+.numberStyle1,
+.numberStyle1 .sapMNCValue{
+	font-size:20px;
+	font-weight:bold;
+	height: 52px;
+}
+
+.numberStyle2 {
+	font-size:20px;
+	font-weight:bold;
+}
+
+.refresh {
+	height: 18px;
+}
+
+/*
+.sapUiTableCtrl tr{
+	height: calc(2rem + 1px) !important;
+	height: 0px !important;
+}
+*/
+
+.sapUiTableCtrl{
+	min-height: 60px !important;
+}
+
+.sapUiTableCell {
+    padding: 0px;
+    position: relative !important;
+    height: 60px !important; 
+    overflow: visible !important;
+}
+
+.sapUiTableCell .cell {
+	padding-top: 5px;
+	padding-left: 5px;
+}
+
+.dark .sapUiTableCell {
+	border-left-style: solid !important;
+	border-color: grey !important;
+	border-width: 1px !important;
+}
+
+.Month {
+    font-weight: bold;
+    padding-left: 33% !important;
+}
+
+.colorIndicator {
+	width: 0.9rem;
+	height: 60px;
+	overflow: hidden;
+	width: 25px;
+}
+
+.colorIndicatorMDR6A {
+	width: 0.9rem;
+	height: 40px;
+	overflow: hidden;
+	width: 25px;
+}
+
+.download {
+	padding-top: 5px !important;
+/*	padding-left: 5px !important; */
+}
+
+.TodayLine {
+    background-color: RGBA(0, 158, 223, 1); /*blue*/
+	height: 125% !important;
+    width: 3px !important;
+	position: absolute;
+    top: 0px;
+    z-index: 1;
+    overflow: visible;
+}
+
+.Today {
+	color: RGBA(0, 158, 223, 1); /*blue*/
+	padding-top: 15%;
+	font-weight: bold;
+}
+
+.DaysAgo {
+	font-family: Arial !important;
+	font-size: 10pt !important;
+	font-style: normal !important;
+	font-variant: normal !important;
+	font-weight: normal !important;
+	font-color: black !important;
+}
+
+.NA {
+	background-color: RGBA(200, 200, 200, 1);
+    height: 100%;
+}
+
+.Image {
+    position: absolute;
+    top: 30%;
+    height: 40px;
+}
+
+.titleText {
+	overflow: hidden !important;
+	text-overflow: ellipsis !important;
+	font-weight: bold;
+}
+
+.titleTextBlue {
+	overflow: hidden !important;
+	text-overflow: ellipsis !important;
+	font-weight: bold !important;
+	color: RGBA(0, 157, 224, 1); /*blue*/;
+}
+
+.titleTextRed {
+	overflow: hidden !important;
+	text-overflow: ellipsis !important;
+	font-weight: bold !important;
+	color: RGBA(185, 20, 20, 1); /*red*/;
+}
+
+.text {
+	overflow: hidden !important;
+	text-overflow: ellipsis !important;
+	text-weight: normal;
+}
+
+.textRed {
+	overflow: hidden !important;
+	text-overflow: ellipsis !important;
+	text-weight: normal;
+	color: RGBA(185, 20, 20, 1); /*red*/;	
+}
+
+.overdueIcon {
+	padding-top: 8px !important;
+	padding-left: 5px !important;
+}
+
+.Start_MS1_G {
+    height: 7px !important;
+    background: RGBA(0, 129, 50, 1) !important; /*green*/
+    position: absolute;
+}
+
+.Start_MS1_Y {
+    height: 7px !important;
+    background: RGBA(229, 180, 36, 1) !important; /*yellow*/
+    position: absolute;
+}
+
+.Start_MS1_R {
+    height: 7px !important;
+    background: RGBA(185, 20, 20, 1) !important; /*red*/
+    position: absolute;
+}
+
+.Start_MS1_N {
+    height: 7px !important;
+    background: RGBA(199, 196, 190, 1) !important; /*grey*/
+    position: absolute;
+}
+
