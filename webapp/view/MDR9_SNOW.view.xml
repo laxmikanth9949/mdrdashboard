@@ -1,0 +1,386 @@
+<mvc:View xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:l="sap.ui.layout" xmlns:tb="sap.ui.table" xmlns:f="sap.f"
+	xmlns:grid="sap.ui.layout.cssgrid" xmlns:html="http://www.w3.org/1999/xhtml" xmlns:si="sap.suite.ui.commons.statusindicator"
+	xmlns:custom="corp.sap.mdrdashboards.controls" controllerName="corp.sap.mdrdashboards.controller.MDR9_SNOW">
+	<Page id="dashboardPage" title="{= 'MDR9 ServiceNow - ' +  ${MDRVersion>/version}}" titleAlignment="Center" showNavButton="false" enableScrolling="false">
+		<content>
+			<!-- Header Bar Definition -->
+			<VBox class="toolbarH">
+				<Toolbar class="sapUiSmallMarginBottom">
+					<Image
+						class="SAPLogo" 
+						src="{imageModel>/path}/images/SAPLogo.gif" >
+					</Image>
+					<HBox id="titleBox" class="titleBox" width="65%" wrap="Wrap">
+						<core:HTML content="{path: 'UIModel>/title', formatter:'.formatterMDR9_SNOW.title'}"></core:HTML>
+					</HBox>
+					<ToolbarSpacer/>
+					<VBox height="1.08rem">
+						<Label text="All:" class="numberStyle1">
+							<layoutData>
+								<ToolbarLayoutData shrinkable="false"/>
+							</layoutData>
+						</Label>
+					</VBox>
+					<VBox height="3.6rem">
+						<NumericContent tooltip="No. of all Incidents" withMargin="false" class="numberStyle2" value="{UIModel>/allNumber}"/>
+					</VBox>
+					<Image
+						class="overdueIconHeader"
+						width="1.5rem" 
+						height="1.5rem" 
+						tooltip="No. of escalated Cases"
+						src="{parts: [{path:'UIModel>/theme'}], formatter:'.formatterMDR9_SNOW.overdueIconHeader'}">
+					</Image>
+					<VBox height="1.2rem">
+						<Label class="numberStyle1" text=":">
+							<layoutData>
+								<ToolbarLayoutData shrinkable="false"/>
+							</layoutData>
+						</Label>
+					</VBox>
+					<VBox height="3.6rem">
+						<NumericContent tooltip="No. of escalated Cases" withMargin="false" class="numberStyle4" value="{UIModel>/EscNumber1}"/>
+					</VBox>
+					<Image
+						class="overdueIconHeader"
+						width="1.5rem" 
+						height="1.5rem" 
+						tooltip="No. of Cases with Escalation Request"
+						src="{parts: [{path:'UIModel>/theme'}], formatter:'.formatterMDR9_SNOW.overdueIconHeader2'}">
+					</Image>
+					<VBox height="1.2rem">
+						<Label class="numberStyle1" text=":">
+							<layoutData>
+								<ToolbarLayoutData shrinkable="false"/>
+							</layoutData>
+						</Label>
+					</VBox>
+					<VBox height="3.6rem">
+						<NumericContent tooltip="No. of Cases with Escalation Request" withMargin="false" class="numberStyle4" value="{UIModel>/EscNumber2}"/>
+					</VBox>
+					<VBox height="1.08rem">
+						<Label text="VH:" class="numberStyle1">
+							<layoutData>
+								<ToolbarLayoutData shrinkable="false"/>
+							</layoutData>
+						</Label>
+					</VBox>
+					<VBox height="3.6rem">
+						<NumericContent tooltip="No. of Incidents with Priority 'Very High'" withMargin="false" class="numberStyle2" value="{UIModel>/VHNumber}" valueColor="Error"/>
+					</VBox>
+					<VBox height="1.08rem">
+						<Label text="H:" class="numberStyle1">
+							<layoutData>
+								<ToolbarLayoutData shrinkable="false"/>
+							</layoutData>
+						</Label>
+					</VBox>
+					<VBox height="3.6rem">
+						<NumericContent tooltip="No. of Incidents with Priority 'High'" value="{UIModel>/HNumber}" class="numberStyle2" withMargin="false" valueColor="Critical"/>
+					</VBox>
+					<VBox height="0.8rem">
+						<core:Icon class= "refresh" src="sap-icon://synchronize"/>
+					</VBox>
+					<VBox height="1.12rem">
+						<Text class="numberStyle1" tooltip="Last Refresh Time" text="{UIModel>/refreshTime}" />
+					</VBox>
+					<Button class="SAPIcon1" 
+							icon="{= ${UIModel>/pauseFlip} ? 'sap-icon://play' : 'sap-icon://pause'}" 
+							press="pauseFlip"
+							tooltip="Start / Stop Paging"
+							ariaLabelledBy="Pause"/>
+					<Button class="SAPIcon" 
+							icon="sap-icon://download" 
+							tooltip="Download to Excel File" 
+							press="Download" 
+							ariaLabelledBy="Download"/>
+					<Button class="SAPIcon" 
+							icon="sap-icon://detail-view"
+							tooltip="Open Dashboard Builder and Analyzer" 
+							press="openDashboardAnalyzer" 
+							ariaLabelledBy="DashboardAnalyzer" 
+							visible="{path:'UIModel>da_test', formatter:'.formatterMDR9_SNOW.dashboardAnalyzerHeader'}"/>		
+					<Button class="SAPIconLast" 
+							icon="sap-icon://question-mark" 
+							tooltip="Click for more Information" 
+							press="openInfoPage" 
+							ariaLabelledBy="Help"/>
+				</Toolbar>
+			</VBox>
+			<HBox height="18px">
+				<Text 
+					text="{path:'UIModel>/runtime', formatter:'.formatterMDR9_SNOW.runtimeTest'}"	
+					class="sapUiTinyMarginBegin">
+				</Text>	
+			</HBox>
+			<!-- Table Definition -->
+			<tb:Table id="caseTable" class="tableMDR6A" rows="{caseModel>/results}" visible="{= !${UIModel>/viewCard}}" visibleRowCount="{UIModel>/numPerPage}"
+				filter=".filters" sort=".sort" minAutoRowCount="2" selectionMode="None">
+				<tb:columns>
+					<!-- Case Priority -->
+					<tb:Column width="3px" tooltip="Case Priority" sortProperty="priority" filterProperty="PrioTxt">
+						<tb:template>
+							<VBox tooltip="{path:'caseModel>priority', formatter:'.formatterMDR9_SNOW.colorValueTooltip'}">
+								<core:HTML content="{parts:[{path:'caseModel>priority'}, {path:'caseModel>PrioTxt'}], formatter:'.formatterMDR9_SNOW.colorValue'}">
+								</core:HTML>
+							</VBox>	
+						</tb:template>
+					</tb:Column>
+					<!-- Escalation -->
+					<tb:Column width="1.3em" tooltip="Escalation Type" sortProperty="active_escalation_state" filterProperty="active_escalation_state_txt">
+						<ObjectIdentifier title="ESC" text=" "/>
+						<tb:template>
+							<VBox>
+								<Image 
+									tooltip="{parts: [{path:'caseModel>active_escalation_type_txt'}, 
+													  {path:'caseModel>u_escalation_reason'},
+													  {path:'caseModel>active_escalation_opened_at'},
+													  {path:'caseModel>active_escalation_state_txt'},
+													  {path:'caseModel>active_escalation_short_desc'}], formatter:'.formatterMDR9_SNOW.escalation'}"
+									class="dueDate" 
+									width="1.8rem" 
+									height="1.8rem" 
+									src="{parts: [{path:'caseModel>active_escalation_state'},
+												  {path:'caseModel>active_escalation_opened_at'}], formatter:'.formatterMDR9_SNOW.overdueIcon'}">
+								</Image>
+							</VBox>
+						</tb:template>
+					</tb:Column>
+					<!-- Customer Name -->
+					<tb:Column width="12%" sortProperty="account_name" filterProperty="account_name">
+						<ObjectIdentifier title="CUSTOMER NAME" text="Contract Type / Country"/>
+						<tb:template>
+							<VBox class="cell">
+								<Text 
+									text="{parts:[{path:'caseModel>account_name'}, 
+												  {path:'caseModel>account_number'},
+												  {path:'UIModel>/MaskData'}], formatter:'.formatterMDR9_SNOW.customerName'}" 
+									tooltip="{parts:[{path:'caseModel>account_name'}, 
+													 {path:'caseModel>account_number'}, 
+													 {path:'UIModel>/MaskData'}], formatter:'.formatterMDR9_SNOW.customer'}" 
+									class="titleText" 
+									maxLines="1">
+								</Text>
+								<Text 
+									text="{path:'caseModel>u_contract_type_list', formatter:'.formatterMDR9_SNOW.contractType'} / {caseModel>account_country}" 
+									tooltip="Contract Type: {path:'caseModel>u_contract_type_list', formatter:'.formatterMDR9_SNOW.contractType'} - Country: {caseModel>account_country}" 
+									class="text" 
+									maxLines="1">
+								</Text>
+							</VBox>
+						</tb:template>
+					</tb:Column>
+					<!-- System -->
+					<tb:Column width="10%" sortProperty="u_install_base_item_u_sid" filterProperty="u_install_base_item_u_sid">
+						<ObjectIdentifier title="SYSTEM" text="System ID / Inst. No." tooltip="Productive Systems are highlighted in blue"/>
+						<tb:template>
+							<VBox class="cell">
+								<Text 
+									text="{caseModel>u_sold_product_name}" 
+									tooltip="System: {caseModel>u_sold_product_name}" 
+									class="titleText" 
+									maxLines="1">
+								</Text>
+								<core:HTML
+									content="{parts: [{path: 'caseModel>u_install_base_item_u_sid'}, 
+													  {path: 'caseModel>installation_number'},	
+													  {path: 'caseModel>environment'}], formatter:'.formatterMDR9_SNOW.systemType'}">
+								</core:HTML>
+							</VBox>
+						</tb:template>
+					</tb:Column>
+					<!-- Description / Business Impact -->
+					<tb:Column width="12%" sortProperty="short_description" filterProperty="short_description">
+						<ObjectIdentifier title="CASE DESCRIPTION" text="Business Impact" tooltip="Case Short Description / Business Impact"/>
+						<tb:template>
+							<VBox class="cell"> 
+								<Text 
+									text="{parts:[{path:'caseModel>short_description'}, {path:'UIModel>/MaskData'}], formatter:'.formatterMDR9_SNOW.description1'}" 
+									tooltip="{parts:[{path:'caseModel>short_description'}, 
+													 {path:'caseModel>description'},
+													 {path:'UIModel>/MaskData'}], formatter:'.formatterMDR9_SNOW.description2'}" 
+									class="titleText" 
+									maxLines="1">
+								</Text>
+								<Text 
+								text="{parts:[{path: 'caseModel>business_impact'}, {path:'UIModel>/MaskData'}], formatter:'.formatterMDR9_SNOW.businessImpact'}" 
+								tooltip="Business Impact: {parts:[{path: 'caseModel>business_impact'}, 
+																  {path:'UIModel>/MaskData'}], formatter:'.formatterMDR9_SNOW.businessImpact'}"
+								class="text" 
+								maxLines="1">
+								</Text>
+							</VBox>
+						</tb:template>
+					</tb:Column>
+					<!-- Opened at Date -->
+					<tb:Column width="4em" sortProperty="opened_at" filterProperty="opened_at_string" tooltip="Case opened at / Last User updated on">
+						<ObjectIdentifier title="OPENED AT" text="Last Update"/>
+						<tb:template>
+							<VBox class="cell">
+								<VBox>
+									<core:HTML
+										content="{parts: [
+												 {path: 'caseModel>opened_at'}, 
+												 {path: 'caseModel>u_last_user_updated_on'}, 
+												 {path: 'caseModel>active'}], formatter:'.formatterMDR9_SNOW.displayDate1'}">
+									</core:HTML>
+								</VBox>
+								<VBox>
+									<core:HTML
+										content="{path: 'caseModel>u_last_user_updated_on', formatter:'.formatterMDR9_SNOW.displayDate2'}">
+									</core:HTML>
+								</VBox>
+							</VBox>
+						</tb:template>
+					</tb:Column>
+					<!-- State -->
+					<tb:Column width="7%" sortProperty="stateSort" filterProperty="stateSort" tooltip="Case State">
+						<ObjectIdentifier title="CASE STATE" text="Action Status "/>
+						<tb:template>
+							<VBox class="cell">
+								<core:HTML
+									content="{parts: [{path: 'caseModel>state'},
+													  {path: 'caseModel>actionStatusText'},
+													  {path: 'caseModel>resolution_code'},
+													  {path: 'caseModel>resolved_by'},
+													  {path: 'caseModel>resolved_at'}], formatter:'.formatterMDR9_SNOW.state'}">
+								</core:HTML>
+								<!--
+								<core:HTML
+									content="{parts: [{path: 'caseModel>state'},
+													  {path: 'caseModel>actionStatusText'}], formatter:'.formatterMDR9_SNOW.actionStatus'}">
+								</core:HTML>
+								-->
+								<Text 
+									text="{caseModel>actionStatusText}" 
+									tooltip= "Action Status: {caseModel>actionStatusText}" 
+									class="text" 
+									maxLines="1">
+								</Text>
+							</VBox>
+						</tb:template>
+					</tb:Column>
+					<!-- Due Date -->
+					<tb:Column width="5em" sortProperty="u_next_action_due" filterProperty="u_next_action_due_string" tooltip="Due Date for next Action">
+						<ObjectIdentifier title="NEXT ACTION DUE" text="Next Action Reason"/>
+						<tb:template>
+							<VBox class="cell">
+								<VBox>
+									<core:HTML
+										content="{parts: [{path: 'caseModel>u_next_action_due'}], formatter:'.formatterMDR9_SNOW.displayDate3'}">
+									</core:HTML>
+								</VBox>
+								<VBox>
+									<Text 
+										text="{caseModel>u_reason}" 
+										tooltip= "Next Action Reason: {caseModel>u_reason}" 
+										class="text" 
+										maxLines="1">
+									</Text>
+								</VBox>
+							</VBox>
+						</tb:template>
+					</tb:Column>
+					<!-- Component -->
+					<tb:Column width="11%" sortProperty="u_app_component" filterProperty="u_app_component" tooltip="Case Component">
+						<ObjectIdentifier title="CASE COMPONENT" text="Case Comp. Description" tooltip="Case Component + Short Description"/>
+						<tb:template>
+							<VBox class="cell">
+								<Text 
+									text="{caseModel>u_app_component}" 
+									tooltip="Case Component: {caseModel>u_app_component}" 
+									class="titleText" 
+									maxLines="1">
+								</Text>
+								<Text 
+									text="{caseModel>u_app_component_desc}" 
+									tooltip="Case Component Short Description: {caseModel>u_app_component_desc}"  
+									class="text" 
+									maxLines="1">
+								</Text>
+							</VBox>
+						</tb:template>
+					</tb:Column>
+					<!--Assignment-->
+					<tb:Column width="10%" sortProperty="assigned_to_name" filterProperty="assigned_to_name" tooltip="Case assigned to (Name) / Case assigned to (Group)">
+						<ObjectIdentifier title="CASE ASSIGNED TO" text=" Group Assignment"/>
+						<tb:template>
+							<VBox class="cell">
+								<core:HTML
+									content="{parts: [{path:'caseModel>assigned_to_name'}, 
+													  {path:'caseModel>contact_name'}, 
+													  {path:'UIModel>/MaskData'}], formatter:'.formatterMDR9_SNOW.processor'}">
+								</core:HTML>
+								<Text 
+									text="{caseModel>assignment_group_name}" 
+									tooltip="Group: {caseModel>assignment_group_name}" 
+									class="text" 
+									maxLines="1">
+								</Text>
+							</VBox>
+						</tb:template>
+					</tb:Column>
+					<!-- Times -->
+					<tb:Column width="{path:'caseModel>number', formatter:'.formatterMDR9_SNOW.timesColWidth'}" sortProperty="timeAgentMS" filterProperty="timeAgent">
+						<ObjectIdentifier 
+							title="{path:'caseModel>number', formatter:'.formatterMDR9_SNOW.timesColTitle'}" 
+							text="{path:'caseModel>number', formatter:'.formatterMDR9_SNOW.timesColText'}"
+							tooltip="{path:'caseModel>number', formatter:'.formatterMDR9_SNOW.timesColTooltip'}"/>
+						<tb:template>
+							<VBox class="cell" tooltip="Click opens Case {caseModel>caseID}">
+								<Text text="{caseModel>timeAgent}" tooltip="{caseModel>timeAgent}" class="titleText" maxLines="1"></Text>
+								<Text text="{caseModel>timeCustomer}" tooltip="{caseModel>timeCustomer}" class="text" maxLines="1"></Text>
+							</VBox>
+						</tb:template>
+					</tb:Column>
+					<!-- Major Case -->
+					<tb:Column width="1.3em" sortProperty="parent" filterProperty="parent" tooltip="An 'X' in this Column indicates that a Case has a Major Case">
+						<ObjectIdentifier title="MC" text=" "/>
+						<tb:template>
+							<VBox class="cell">
+								<Text text="{caseModel>parent}" tooltip="Case {caseModel>number} has a Major Case ({caseModel>parent_number})" class="paddingLeft" maxLines="1"></Text>
+								<Text text=" " class="text" maxLines="1"></Text>
+							</VBox>
+						</tb:template>
+					</tb:Column>
+					<!-- Case ID -->
+					<tb:Column width="8%" sortProperty="number" filterProperty="number" tooltip="Case ID">
+						<ObjectIdentifier 
+							title="CASE ID" 
+							text="SAP Case Number" 
+							tooltip="{path:'Test', formatter:'.formatterMDR9_SNOW.caseColTooltip'}"/>
+						<tb:template>
+							<VBox class="cell">
+								<Link 
+									text="{caseModel>number}"
+									tooltip="Click opens ServiceNow Case {caseModel>number}"
+									class="caseIDLink" 
+									href="{path:'caseModel>url'}" 
+									target="_blank">
+								</Link>
+								<!--
+								<Link 
+									visible="{path:'caseModel>u_responsible_party', formatter:'.formatterMDR9_SNOW.ServiceNowID'}"
+									text="{caseModel>SAPCaseNumber}"
+									tooltip="Click opens SAP Case {caseModel>SAPCaseNumber}"
+									class="caseIDLink0" 
+									href="{path:'caseModel>urlSAPCase'}" 
+									target="_blank">
+								</Link>
+								-->
+								<Text 
+									tooltip="SAP Case Number: {caseModel>SAPCaseNumber} "
+									text="{caseModel>SAPCaseNumber}"
+									class="text" 
+									maxLines="1">
+								</Text>	
+							</VBox>
+						</tb:template>
+					</tb:Column>
+				</tb:columns>
+			</tb:Table>
+			<custom:CustomPaginator id="pagerForCardView" visible="{= ${UIModel>/viewCard}}" currentPage="{UIModel>/currentPageForCardView}"
+				numberOfPages="{UIModel>/numberOfPagesForCardView}" page=".onPageChangeForCardView"/>
+		</content>
+	</Page>
+</mvc:View>

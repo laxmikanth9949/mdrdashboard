@@ -1,0 +1,480 @@
+<mvc:View xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:l="sap.ui.layout" xmlns:tb="sap.ui.table" xmlns:f="sap.f" xmlns:grid="sap.ui.layout.cssgrid"
+	xmlns:html="http://www.w3.org/1999/xhtml" xmlns:si="sap.suite.ui.commons.statusindicator" xmlns:custom="corp.sap.mdrdashboards.controls" controllerName="corp.sap.mdrdashboards.controller.MDR7">
+	<Page id="dashboardPage" title="{= 'MDR7 - ' +  ${MDRVersion>/version}}" titleAlignment="Center" showNavButton="false" enableScrolling="false">
+		<content>
+			<VBox class="toolbarH">
+				<Toolbar class="sapUiSmallMarginBottom">
+					<Image
+						class="SAPLogo" 
+						src="{imageModel>/path}/images/SAPLogo.gif" >
+					</Image>
+					<HBox id="titleBox" class="titleBox" width="60%" wrap="Wrap">
+						<core:HTML content="{parts:[{path: 'UIModel>/title'},{path:'UIModel>/runTitle'}], formatter:'.formatter.titleMarquee'}"></core:HTML> 
+					</HBox>
+					<ToolbarSpacer/>
+					<VBox height="1.2rem">
+						<Label text="All:" class="numberStyle1">
+							<layoutData>
+								<ToolbarLayoutData shrinkable="false"/>
+							</layoutData>
+						</Label>
+					</VBox>
+					<VBox height="3.8rem">
+						<NumericContent tooltip="No. of all selected Cases" withMargin="false" class="numberStyle2" value="{UIModel>/caseNumber}"/>
+					</VBox>
+					<VBox height="1.2rem">
+						<Label text="R:" class="numberStyle1">
+							<layoutData>
+								<ToolbarLayoutData shrinkable="false"/>
+							</layoutData>
+						</Label>
+					</VBox>
+					<VBox height="3.8rem">
+						<NumericContent tooltip="No. of Cases with Rating Red" withMargin="false" class="numberStyle2" value="{UIModel>/redNumber}" valueColor="Error"/>
+					</VBox>
+					<VBox height="1.2rem">
+						<Label text="Y:" class="numberStyle1">
+							<layoutData>
+								<ToolbarLayoutData shrinkable="false"/>
+							</layoutData>
+						</Label>
+					</VBox>
+					<VBox height="3.8rem">
+						<NumericContent tooltip="No. of Cases with Rating Yellow" value="{UIModel>/yellowNumber}" class="numberStyle2" withMargin="false" valueColor="Critical"/>
+					</VBox>
+					<VBox height="1.2rem">
+						<Label text="G:" class="numberStyle1">
+							<layoutData>
+								<ToolbarLayoutData shrinkable="false"/>
+							</layoutData>
+						</Label>
+					</VBox>
+					<VBox height="3.8rem">
+						<NumericContent tooltip="No. of Cases with Rating Green" value="{UIModel>/greenNumber}" class="numberStyle2" withMargin="false" valueColor="Good"/>
+					</VBox>
+					<VBox height="0.8rem">
+						<core:Icon class= "refresh" src="sap-icon://synchronize"/>
+					</VBox>
+					<VBox height="1.15rem">
+						<Text class="numberStyle3" tooltip="Last Refresh Time" text="{UIModel>/refreshTime}" />
+					</VBox>
+					<Button class="SAPIcon1" 
+							icon="{= ${UIModel>/pauseFlip} ? 'sap-icon://play' : 'sap-icon://pause'}" 
+							press="pauseFlip" 
+							tooltip="Start / Stop Paging" 
+							ariaLabelledBy="Pause"/>
+					<Button class="SAPIcon" 
+							icon="sap-icon://ppt-attachment" 
+							tooltip="Generate PPT Report of all Cases" 
+							press="download" 
+							ariaLabelledBy="Download"/>
+					<Button class="SAPIcon" 
+							icon="sap-icon://heatmap-chart"
+							tooltip="Open MDR6"
+							press="openMDR6" 
+							ariaLabelledBy="OpenQ-GateList"/>		
+					<Button class="SAPIcon" 
+							icon="sap-icon://switch-views" 
+							tooltip="Switch between Cardview / Listview" 
+							press="switchView" 
+							ariaLabelledBy="CardView_ListView"/>
+					<Button class="SAPIcon" 
+							icon="sap-icon://detail-view"
+							tooltip="Open Dashboard Builder and Analyzer" 
+							press="openDashboardAnalyzer" 
+							ariaLabelledBy="DashboardAnalyzer" 
+							visible="{path:'UIModel>da_test', formatter:'.formatter.dashboardAnalyzerHeader'}"/>			
+					<Button class="SAPIconLast" 
+							icon="sap-icon://question-mark" 
+							tooltip="Click for more Information" 
+							press="openInfoPage" 
+							ariaLabelledBy="Help"/>							
+				</Toolbar>
+			</VBox>
+			<tb:Table id="caseTable" 
+				rows="{caseModel>/results}"
+				visible="{= !${UIModel>/viewCard}}"
+				visibleRowCount="{UIModel>/numPerPage}"
+				showNoData="true"
+				filter=".filters"
+				sort=".sort"
+				minAutoRowCount="2"
+				selectionMode="None" >
+				<tb:columns>
+					<tb:Column width="20px" tooltip="Case Rating">
+						<tb:template>
+							<core:HTML content="{path:'caseModel>rating_text', formatter:'.formatter.colorValue'}" >
+							</core:HTML>
+						</tb:template>
+					</tb:Column>
+					<tb:Column width="2.2rem" tooltip="Open this Case in MCC Workbench">
+						<tb:template>
+							<core:Icon src="sap-icon://add-activity" press="openMCCWorkbench" tooltip="Open this Case in MCC Workbench"/>
+						</tb:template>
+					</tb:Column>
+					<tb:Column width="2.2rem" tooltip="More Options, like PPT Generation, etc.">
+						<tb:template>
+							<core:Icon src="sap-icon://menu" press="singleCaseDownload" tooltip="More"/>
+						</tb:template>
+					</tb:Column>
+					<tb:Column sortProperty="customer_key" filterProperty="customer_key" width="18%">
+						<ObjectIdentifier title="CUSTOMER" text="Category"/>
+						<tb:template>
+							<VBox>
+								<Text 
+									text="{parts:[{path:'caseModel>customer_name'},{path:'UIModel>/maskData'}], formatter:'.formatter.customerNameFormatter'}" 
+									tooltip="Customer Name: {parts:[{path:'caseModel>customer_name'},{path:'UIModel>/maskData'}], formatter:'.formatter.customerNameFormatter'}" 
+									class="titleText" 
+									maxLines="1">
+								</Text>
+								<Text text="{caseModel>category_text}" tooltip="Category: {caseModel>category_text}" maxLines="1"></Text>
+							</VBox>
+						</tb:template>
+					</tb:Column>
+					<tb:Column width="20%" sortProperty="product_key" filterProperty="product_key">
+						<ObjectIdentifier title="DESCRIPTION" text="{= ${UIModel>/showReason} ? 'Reason' : 'Main Product'}"/>
+						<tb:template>
+							<VBox> 
+								<Text 
+									text="{parts:[{path:'caseModel>case_title'},{path:'UIModel>/maskData'}], formatter:'.formatter.caseTitleFormatter'}" 
+									tooltip="Description: {parts:[{path:'caseModel>case_title'},{path:'UIModel>/maskData'}], formatter:'.formatter.caseTitleFormatter'}" 
+									class="titleText" 
+									maxLines="1">
+								</Text>
+								<Text 
+									visible="{= !${UIModel>/showReason}}" 
+									text="{caseModel>main_product_description}" 
+									tooltip="Product(s): {caseModel>product_list} / Reason: {caseModel>reason_text}" 
+									maxLines="1">
+								</Text>
+								<Text 
+									visible="{= ${UIModel>/showReason}}" 
+									text="{caseModel>reason_text}" 
+									tooltip="Reason: {caseModel>reason_text} / Product(s): {caseModel>product_list}" 
+									maxLines="1">
+								</Text>
+							</VBox>
+						</tb:template>
+					</tb:Column>
+					<tb:Column width="9rem" sortProperty="sortDate" filterProperty="displaySortDate">
+						<ObjectIdentifier title="{path:'test', formatter: '.formatter.dateHeader'}" text=" "/>
+						<tb:template>
+							<VBox>
+								<core:HTML
+									content="{parts:[
+												{path:'caseModel>go_live', formatter: '.formatter.getFullDateFormat'},
+												{path:'caseModel>change_time', formatter: '.formatter.stringTime'},
+												{path:'caseModel>create_time', formatter: '.formatter.stringTime'},
+												{path:'UIModel>/layout'}], formatter:'.formatter.displayDate'}">
+								</core:HTML>	
+								<Text text="" class="text" maxLines="1"/>
+							</VBox>
+						</tb:template>
+					</tb:Column>
+					<tb:Column width="9.5rem" sortProperty="caseStatus" filterProperty="caseStatus">
+						<ObjectIdentifier 
+							title="{path: 'UIModel>/showPhase', formatter: '.formatter.statusPhaseHeader'}" 
+							text="{path: 'UIModel>/showTopIssues', formatter: '.formatter.topIssueHeader'}"/>
+						<tb:template>
+							<VBox>
+								<core:HTML
+									content="{parts:[
+												{path:'UIModel>/showPhase'},
+												{path:'caseModel>status_text'},
+												{path:'caseModel>project_phase_text'},
+												{path:'UIModel>/layout'}], formatter:'.formatter.statusPhase'}">
+								</core:HTML>
+								<HBox>	
+									
+									<core:HTML 
+										content="{parts:[
+											{path:'caseModel>numberOfTopIssues'},
+											{path:'caseModel>highestRatingOfTopIssues'},
+											{path:'caseModel>number_open_activities'}, 
+											{path:'caseModel>case_id'}, 
+											{path:'caseModel>url'}, 
+											{path:'UIModel>/showTopIssues'},
+											{path:'UIModel>/layout'}
+											], formatter:'.formatter.topIssueColor'}" >
+									</core:HTML>
+									<HBox >
+										<Button  
+										class="buttonMDR2"
+										type="Transparent"
+										visible="{= ${caseModel>number_open_activities} > 0 ? true : false}"
+										tooltip="Click here opens List of open ZS46 Activities for Case {caseModel>case_id}" 
+										press="openMDR2(${caseModel>case_id},${caseModel>url})"
+										ariaLabelledBy="MDR2">
+										</Button>	
+									</HBox>
+								</HBox>
+							</VBox>
+						</tb:template>
+					</tb:Column>
+					<tb:Column width="12rem" visible="{= !${UIModel>/showProcessor}}" sortProperty="employee_key" filterProperty="employee_key">
+						<ObjectIdentifier title="EMPLOYEE RESP." text="Customer Type"/>
+						<tb:template>
+							<VBox>
+								<Text 
+									text="{path:'caseModel>responsible_person', formatter:'.formatter.nameText'}" 
+									tooltip="Empl. Resp.: {caseModel>responsible_person} / Processor: {caseModel>processor_person}" 
+									class="titleText" 
+									maxLines="1"/>
+								<Text 
+									text="{caseModel>customer_type_text}" 
+									tooltip="Customer Type: {caseModel>customer_type_text}" 
+									class="text" 
+									maxLines="1"/>
+							</VBox>
+						</tb:template>
+					</tb:Column>
+					<tb:Column width="12rem" visible="{UIModel>/showProcessor}" sortProperty="processor_key" filterProperty="processor_key">
+						<ObjectIdentifier title="PROCESSOR" text="Customer Type"/>
+						<tb:template>
+							<VBox>
+								<Text 
+									text="{path:'caseModel>processor_person', formatter:'.formatter.nameText'}" 
+									tooltip="Processor: {caseModel>processor_person} / Empl. Resp.: {caseModel>responsible_person}" 
+									class="titleText" 
+									maxLines="1"/>
+								<Text 
+									text="{caseModel>customer_type_text}" 
+									tooltip="Customer Type: {caseModel>customer_type_text}" 
+									class="text" 
+									maxLines="1"/>
+							</VBox>
+						</tb:template>
+					</tb:Column>
+					<tb:Column width="{path:'test', formatter:'.formatter.serviceTeam'}"  sortProperty="serviceTeam_key" filterProperty="serviceTeam_key">
+						<ObjectIdentifier title="{path:'test', formatter:'.formatter.serviceTeamColHeader'}" text="{path:'test', formatter:'.formatter.MCCTagColHeader'}"/>
+						<tb:template>
+							<VBox>
+								<Text 
+									text="{caseModel>service_team_name}" 
+									tooltip="Service Team: {caseModel>service_team_name}" 
+									class="titleText" 
+									maxLines="1"/>
+								<Text 
+									text="{caseModel>case_tag}" 
+									tooltip="MCC Tags: {caseModel>case_tag}" 
+									class="text" 
+									maxLines="1"/>
+							</VBox>
+						</tb:template>
+					</tb:Column>
+					<tb:Column width="6.3rem" tooltip="Country / Case ID" sortProperty="country_key" filterProperty="country_key">
+						<ObjectIdentifier title="COUNTRY" text="Case ID"/>
+						<tb:template>
+							<VBox>
+								<Text text="{caseModel>customer_country}" tooltip="Country: {caseModel>customer_country}" class="titleText" maxLines="1"></Text>
+								<Link 
+									text="{caseModel>case_id}" 
+									tooltip="Click opens Case {caseModel>case_id}"
+									class="caseIDLink" 
+									href="{parts:[{path:'UIModel>/sourceIC'}, {path:'caseModel>case_id'}], formatter:'.formatter.caseLink'}" 
+									target="_blank">
+								</Link>
+							</VBox>
+						</tb:template>
+					</tb:Column>
+					<tb:Column width="5rem" tooltip="Delivery Unit" sortProperty="delUnitText" filterProperty="delUnitText">
+						<ObjectIdentifier title="D.Unit" text=" "/>
+						<tb:template>
+							<Image
+								width="3rem"
+								height="30px"
+								src="{parts:[{path:'caseModel>delivery_unit'},{path:'UIModel>/theme'}], formatter:'.formatter.DelUnitIcon'}"
+								tooltip="{path:'caseModel>delivery_unit', formatter:'.formatter.DelUnitText'}"
+								densityAware="false">
+							</Image>
+						</tb:template>
+					</tb:Column>
+				</tb:columns>
+			</tb:Table>
+			<l:Grid 
+				id="placeholder"
+				class="placeholder"
+				visible="{= ${UIModel>/viewCard}}">
+				<Text class="noData" text="{path:'cvCaseModel>/results', formatter:'.formatter.noData'}" visible="{= ${UIModel>/viewCard}}"></Text>
+			</l:Grid>
+			<l:Grid class="cardview" id="cardview"
+				visible="{= ${UIModel>/viewCard}}" 
+				containerQuery="true" 
+				content="{cvCaseModel>/results}"
+				defaultSpan="XL4 L6 M12 S12">
+				<HBox class="card sapUiTinyMarginTop">
+					<core:HTML content="{path:'cvCaseModel>rating_text', formatter:'.formatter.colorValue'}" >
+					</core:HTML>
+					<VBox class="cardContent">
+						<Title 
+							text="{parts:[{path:'cvCaseModel>customer_name'},{path:'UIModel>/maskData'}], formatter:'.formatter.customerNameFormatter'}" 
+							tooltip="Customer Name: {parts:[{path:'cvCaseModel>customer_name'},{path:'UIModel>/maskData'}], formatter:'.formatter.customerNameFormatter'}" 
+							class="title2 sapUiSmallMarginBegin sapUiSmallMarginTop"
+							wrapping="false"/>
+						<FlexBox class="cardContentInner paddingTopBottom categoryText">
+							<Text text="{cvCaseModel>category_text}" tooltip="Category: {cvCaseModel>category_text}" class="midFont" wrapping="false" maxLines="1">
+									<layoutData>
+										<FlexItemData growFactor="1" maxWidth="43%" />
+									</layoutData>
+								</Text>
+							<Text text="{cvCaseModel>service_team_name}" tooltip="Service Team: {cvCaseModel>service_team_name} / MCC Tags: {cvCaseModel>case_tag}" class="midFont" wrapping="false" maxLines="1">
+									<layoutData>
+										<FlexItemData growFactor="1" maxWidth="57%" />
+									</layoutData>
+								</Text>
+						</FlexBox>
+						<HBox class="cardContentInner spliterLine paddingBottom paddingTop caseCustomerCountryLine">
+							<FlexBox class="country">
+								<core:Icon size="1.3rem" src="sap-icon://globe" class="sapUiTinyMarginEnd" tooltip="Country"></core:Icon>
+								<Text text="{cvCaseModel>customer_country}" tooltip="Country: {cvCaseModel>customer_country}" class="midFont" wrapping="false" maxLines="1">
+									<layoutData>
+										<FlexItemData growFactor="1" maxWidth="100%" />
+									</layoutData>
+								</Text>
+							</FlexBox>
+							<FlexBox class="person">
+								<core:Icon 
+									size="1.3rem" 
+									src="sap-icon://employee" 
+									class="sapUiSmallMarginBegin" 
+									tooltip="{path:'UIModel>/dispName', formatter:'.formatter.personNameHeader'}">
+								</core:Icon>
+								<Text text="{parts:[{path:'UIModel>/dispName'}, {path:'cvCaseModel>processor_person'}, {path:'cvCaseModel>responsible_person'}], formatter:'.formatter.personName'}"
+									class="midFont boldText sapUiTinyMarginBegin" wrapping="false" maxLines="1"
+									tooltip="{parts:[{path:'UIModel>/dispName'}, {path:'cvCaseModel>processor_person'}, {path:'cvCaseModel>responsible_person'}], formatter:'.formatter.personNameTooltip'}">
+									<layoutData>
+										<FlexItemData growFactor="1" maxWidth="100%" />
+									</layoutData>
+								</Text>
+							</FlexBox>
+						</HBox>
+						<HBox class="cardContentInner spliterLine paddingTopBottom" justifyContent="SpaceBetween">
+							<VBox class="caseTitleID">
+								<Text 
+									text="{parts:[{path:'cvCaseModel>case_title'},{path:'UIModel>/maskData'}], formatter:'.formatter.caseTitleFormatter'}" 
+									tooltip="Description: {parts:[{path:'cvCaseModel>case_title'},{path:'UIModel>/maskData'}], formatter:'.formatter.caseTitleFormatter'}"
+									class="midFont boldText" wrapping="false" maxLines="1"/>
+								<HBox class="IDDescLine">
+									<Link 
+										text="ID:{cvCaseModel>case_id}" 
+										tooltip="Click opens Case {cvCaseModel>case_id}"
+										class="caseIDLink3 sapUiSmallMarginEnd" 
+										href="{parts:[{path:'UIModel>/sourceIC'}, {path:'cvCaseModel>case_id'}], formatter:'.formatter.caseLink'}" 
+										target="_blank">
+									</Link>
+									<Text 
+										visible="{= !${UIModel>/showReason}}" 
+										text="{cvCaseModel>main_product_description}" 
+										class="midFont sapUiMediumMarginBegin" 
+										tooltip="Product(s): {cvCaseModel>product_list} / Reason: {cvCaseModel>reason_text}" 
+										wrapping="false"
+										maxLines="1">
+									</Text>
+									<Text 
+										visible="{= ${UIModel>/showReason}}" 
+										text="{cvCaseModel>reason_text}" 
+										class="midFont sapUiMediumMarginBegin" 
+										tooltip="Reason: {cvCaseModel>reason_text} / Product: {cvCaseModel>product_list}" 
+										wrapping="false"
+										maxLines="1">
+									</Text>
+								</HBox>
+								<layoutData>
+									<FlexItemData growFactor="0" maxWidth="90%" minWidth="90%" />
+								</layoutData>
+							</VBox>
+							<core:Icon size="1.6rem" src="sap-icon://menu" tooltip="More" press="singleCaseDownload"/>
+						</HBox>
+						<HBox class="cardContentInner paddingTopBottom statusCon" backgroundDesign="Solid" justifyContent="SpaceBetween">
+							<customData>
+								<core:CustomData 
+									key="style-MDR7CardviewBottom" 
+									value="{parts:[
+												{path:'cvCaseModel>status_text'},
+												{path:'UIModel>/layout'}], formatter:'.formatter.statusCardBottom'}" 
+									writeToDom="true"/>
+							</customData>
+							<VBox class="caseStatusLine sapUiSmallMarginEnd">
+								<Text text="{= ${UIModel>/showPhase} ? 'PROJECT PHASE' : 'STATUS'}" wrapping="false" maxLines="1"/>
+								<core:HTML
+									content="{parts:[
+												{path:'UIModel>/showPhase'},
+												{path:'cvCaseModel>status_text'},
+												{path:'cvCaseModel>project_phase_text'},
+												{path:'UIModel>/layout'}], formatter:'.formatter.statusPhaseCardview'}">
+								</core:HTML>
+							</VBox>
+							<VBox class="caseStatusLine sapUiTinyMarginEnd">
+								<Text text="{path:'test', formatter: '.formatter.dateHeader'}" wrapping="false" class=" sapUiTinyMarginEnd" maxLines="1"/>
+								<core:HTML
+									content="{parts:[
+												{path:'cvCaseModel>go_live', formatter: '.formatter.getFullDateFormat'},
+												{path:'cvCaseModel>change_time', formatter: '.formatter.stringTime'},
+												{path:'cvCaseModel>create_time', formatter: '.formatter.stringTime'},
+												{path:'UIModel>/layout'}], formatter:'.formatter.displayDateCV'}">
+								</core:HTML>	
+							</VBox>
+							<Image
+								height="40px"
+								src="{parts:[{path:'cvCaseModel>delivery_unit'},{path:'UIModel>/theme'}], formatter:'.formatter.DelUnitIcon'}"
+								tooltip="{path:'cvCaseModel>delivery_unit', formatter:'.formatter.DelUnitText'}"
+								class="sapUiTinyMarginEnd"
+								densityAware="false">
+							</Image>
+							<VBox class="caseStatusLine">
+								<Text 
+									text="{= ${UIModel>/showTopIssues} ? 'TOP ISS. / ACT.' : 'ACTIVITIES'}" 
+									wrapping="false" 
+									tooltip="{path:'UIModel>/showTopIssues', formatter:'.formatter.topIssueHeader'}"
+									maxLines="1"/>
+								<HBox class="topIssues">
+								
+									<core:HTML 
+										content="{parts:[
+											{path:'cvCaseModel>numberOfTopIssues'},
+											{path:'cvCaseModel>highestRatingOfTopIssues'},
+											{path:'cvCaseModel>number_open_activities'}, 
+											{path:'cvCaseModel>case_id'}, 
+											{path:'cvCaseModel>url'}, 
+											{path:'UIModel>/showTopIssues'},
+											{path:'UIModel>/layout'}
+											], formatter:'.formatter.topIssueColorCardview'}" >
+									</core:HTML>
+									<HBox >
+										<Button  
+										class="buttonMDR2CV"
+										type="Transparent"
+										visible="{= ${cvCaseModel>number_open_activities} > 0 ? true : false}"
+										tooltip="Click here opens List of open ZS46 Activities for Case {cvCaseModel>case_id}" 
+										press="openMDR2(${cvCaseModel>case_id},${cvCaseModel>url})"  
+										ariaLabelledBy="MDR2">
+										</Button>	
+									</HBox>
+									<!--
+									<core:HTML 
+										content="{parts:[
+											{path:'cvCaseModel>numberOfTopIssues'},
+											{path:'cvCaseModel>highestRatingOfTopIssues'},
+											{path:'cvCaseModel>number_open_activities'}, 
+											{path:'cvCaseModel>case_id'}, 
+											{path:'cvCaseModel>url'}, 
+											{path:'cvCaseModel>CaseActivities'}, 
+											{path:'cvCaseModel>customer_bp_id'}, 
+											{path:'UIModel>/showTopIssues'},
+											{path:'UIModel>/layout'}
+											], formatter:'.formatter.topIssuesAndActivitiesCardview'}" >
+									</core:HTML>
+									-->
+								</HBox>
+							</VBox>
+						</HBox>
+					</VBox>
+				</HBox>
+			</l:Grid>
+			<custom:CustomPaginator id="pagerForCardView" visible="{= ${UIModel>/viewCard}}" 
+				currentPage="{UIModel>/currentPageForCardView}" 
+				numberOfPages="{UIModel>/numberOfPagesForCardView}"
+				page=".onPageChangeForCardView"/>
+		</content>
+	</Page>
+</mvc:View>

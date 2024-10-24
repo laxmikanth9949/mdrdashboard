@@ -1,0 +1,280 @@
+<mvc:View xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:l="sap.ui.layout" xmlns:tb="sap.ui.table" xmlns:f="sap.f"
+	xmlns:grid="sap.ui.layout.cssgrid" xmlns:html="http://www.w3.org/1999/xhtml" xmlns:si="sap.suite.ui.commons.statusindicator"
+	xmlns:custom="corp.sap.mdrdashboards.controls" controllerName="corp.sap.mdrdashboards.controller.MDR13">
+	<Page id="dashboardPage" title="{= 'MDR13 - ' +  ${MDRVersion>/version}}" titleAlignment="Center" showNavButton="false" enableScrolling="false">
+		<content>
+			<!-- Header Bar Definition -->
+			<VBox class="toolbarH">
+				<Toolbar class="sapUiSmallMarginBottom">
+					<Image
+						class="SAPLogo" 
+						src="{imageModel>/path}/images/SAPLogo.gif" >
+					</Image>
+					<HBox id="titleBox" class="titleBox" width="60%" wrap="Wrap">
+						<core:HTML content="{path: 'UIModel>/title', formatter:'.formatterMDR13.title'}"></core:HTML>
+					</HBox>
+					<ToolbarSpacer/>
+					<VBox height="1.2rem">
+						<Label text="All:" class="numberStyle1">
+							<layoutData>
+								<ToolbarLayoutData shrinkable="false"/>
+							</layoutData>
+						</Label>
+					</VBox>
+					<VBox height="3.8rem">
+						<NumericContent tooltip="No. of all Complaints" withMargin="false" class="numberStyle2" value="{UIModel>/allNumber}"/>
+					</VBox>
+					<VBox height="1.2rem">
+						<Label text="VH:" class="numberStyle1">
+							<layoutData>
+								<ToolbarLayoutData shrinkable="false"/>
+							</layoutData>
+						</Label>
+					</VBox>
+					<VBox height="3.8rem">
+						<NumericContent tooltip="No. of Complaints with Priority 'Very High'" withMargin="false" class="numberStyle2" value="{UIModel>/VHNumber}" valueColor="Error"/>
+					</VBox>
+					<VBox height="1.2rem">
+						<Label text="H:" class="numberStyle1">
+							<layoutData>
+								<ToolbarLayoutData shrinkable="false"/>
+							</layoutData>
+						</Label>
+					</VBox>
+					<VBox height="3.8rem">
+						<NumericContent tooltip="No. of Complaints with Priority 'High'" value="{UIModel>/HNumber}" class="numberStyle2" withMargin="false" valueColor="Critical"/>
+					</VBox>
+					<Image
+						class="overdueIconHeader"
+						width="1.5rem" 
+						height="1.5rem" 
+						tooltip="Number of overdue Complaints"
+						src="{parts: [{path:'UIModel>/theme'}], formatter:'.formatterMDR13.overdueIconHeader'}">
+					</Image>
+					<VBox height="1.2rem">
+						<Label class="numberStyle1" text=":">
+							<layoutData>
+								<ToolbarLayoutData shrinkable="false"/>
+							</layoutData>
+						</Label>
+					</VBox>
+					<VBox height="3.75rem">
+						<NumericContent tooltip="Number of overdue Complaints" withMargin="false" class="numberStyle2" value="{UIModel>/OverdueNumber}"/>
+					</VBox>
+					<VBox height="0.8rem">
+						<core:Icon class= "refresh" src="sap-icon://synchronize"/>
+					</VBox>
+					<VBox height="1.15rem">
+						<Text class="numberStyle1" tooltip="Last Refresh Time" text="{UIModel>/refreshTime}" />
+					</VBox>
+					<Button class="SAPIcon1" 
+							icon="{= ${UIModel>/pauseFlip} ? 'sap-icon://play' : 'sap-icon://pause'}" 
+							press="pauseFlip"
+							tooltip="Start / Stop Paging"
+							ariaLabelledBy="Pause"/>
+					<Button class="SAPIcon" 
+							icon="sap-icon://download" 
+							tooltip="Download to Excel File" 
+							press="Download" 
+							ariaLabelledBy="Download"/>
+					<Button class="SAPIcon" 
+							icon="sap-icon://detail-view"
+							tooltip="Open Dashboard Builder and Analyzer" 
+							press="openDashboardAnalyzer" 
+							ariaLabelledBy="DashboardAnalyzer" 
+							visible="{path:'UIModel>da_test', formatter:'.formatterMDR13.dashboardAnalyzerHeader'}"/>	
+					<Button class="SAPIconLast" 
+							icon="sap-icon://question-mark" 
+							tooltip="Click for more Information" 
+							press="openInfoPage" 
+							ariaLabelledBy="Help"/>
+				</Toolbar>
+			</VBox>
+			<!-- Table Definition -->
+			<tb:Table id="caseTable" class="tableMDR6A" rows="{caseModel>/results}" visible="{= !${UIModel>/viewCard}}" visibleRowCount="{UIModel>/numPerPage}"
+				filter=".filters" sort=".sort" minAutoRowCount="2" selectionMode="None">
+				<tb:columns>
+					<!-- Complaint Priority -->
+					<tb:Column width="13px" tooltip="Complaint Priority" sortProperty="Priority" filterProperty="PriorityTxt">
+						<tb:template>
+							<VBox tooltip="{path:'caseModel>Priority', formatter:'.formatterMDR13.colorValueTooltip'}">
+								<core:HTML content="{path:'caseModel>Priority', formatter:'.formatterMDR13.colorValue'}"></core:HTML>
+							</VBox>	
+						</tb:template>
+					</tb:Column>
+					<!-- Complaint ID -->
+					<tb:Column width="7%" sortProperty="ObjectId" filterProperty="ObjectId">
+					<ObjectIdentifier title="COMPL. ID" text=" " tooltip="Complaint ID"/>
+					<tb:template>
+						<VBox class="cell" tooltip="Click opens Complaint {caseModel>ObjectId}">
+							<Link text="{caseModel>ObjectId}" 
+								class="caseIDLink" 
+								href="{parts:[{path:'UIModel>/sourceBC'}, {path:'caseModel>ObjectId'}], formatter:'.formatterMDR13.complaintLink'}"
+								target="_blank">
+							</Link>
+							<Text text="" class="text" maxLines="1"></Text>
+						</VBox>
+					</tb:template>
+					</tb:Column>
+					<!-- Customer Name -->
+					<tb:Column width="18%" sortProperty="SoldToPartyName" filterProperty="SoldToPartyName">
+						<ObjectIdentifier title="CUSTOMER NAME" text="Contract Type"/>
+						<tb:template>
+							<VBox class="cell">
+								<Text text="{parts:[{path:'caseModel>SoldToPartyName'}, {path:'UIModel>/maskData'}], formatter:'.formatterMDR13.customerName'}" 
+									tooltip="Customer Name: {parts:[{path:'caseModel>SoldToPartyName'}, {path:'UIModel>/maskData'}], formatter:'.formatterMDR13.customerName'}" 
+									class="titleText" maxLines="1">
+								</Text>
+								<Text text="{caseModel>ContractType}" tooltip="Contract Type: {caseModel>ContractType}" class="text" maxLines="1"></Text>
+							</VBox>
+						</tb:template>
+					</tb:Column>
+					<!-- Description -->
+					<tb:Column width="18%" sortProperty="Description" filterProperty="Description">
+					<ObjectIdentifier title="DESCRIPTION" text="Outcome "/>
+					<tb:template class="cell">
+						<VBox class="outerCell">
+							<VBox class="innerCell">
+								<Text 
+									text="{parts:[{path:'caseModel>Description'},{path:'UIModel>/maskData'}], formatter:'.formatterMDR13.description'}" 
+									tooltip="Description: {parts:[{path:'caseModel>Description'},{path:'UIModel>/maskData'}], formatter:'.formatterMDR13.description'}" 
+									class="titleText" 
+									maxLines="1">
+								</Text>
+								<Text text="{caseModel>OutcomeTxt}" tooltip="Outcome: {caseModel>OutcomeTxt}" class="text" maxLines="1"></Text>
+							</VBox>
+						</VBox>
+					</tb:template>
+					</tb:Column>
+					<!-- Business Unit -->
+					<tb:Column 
+						width="{path:'test', formatter:'.formatterMDR13.businessUnit'}" 
+						tooltip="Business Unit" sortProperty="BusinessUnit" filterProperty="BusinessUnit">
+					<ObjectIdentifier title="{path:'test', formatter:'.formatterMDR13.businessUnitColHeader'}" text=" "/>
+					<tb:template class="cell">
+						<VBox class="outerCell">
+							<VBox class="innerCell">
+								<Text 
+									text="{caseModel>BusinessUnit}" 
+									tooltip="Business Unit: {caseModel>BusinessUnitText}" 
+									class="titleText" 
+									maxLines="1">
+								</Text>
+								<Text text="" class="text" maxLines="1"></Text>
+							</VBox>
+						</VBox>
+					</tb:template>
+					</tb:Column>
+					<!-- Overdue Icon -->
+					<tb:Column width="40px" tooltip="Icon indicates: Complaint is overdue" sortProperty="overdueIcon" filterProperty="overdueIcon">
+						<tb:template>
+							<VBox>
+								<Image 
+									tooltip="Complaint is overdue"
+									class="dueDate" 
+									width="1.5rem" 
+									height="1.5rem" 
+									src="{path:'caseModel>overdueIcon', formatter:'.formatterMDR13.overdueIcon'}">
+								</Image>
+							</VBox>
+						</tb:template>
+					</tb:Column>
+					<!-- Due Date -->
+					<tb:Column width="120px" tooltip="Due Date (Planned End Date) / Creation Date" sortProperty="PlanEndDate" filterProperty="PlanEndDateString">
+						<ObjectIdentifier title="DUE DATE" text="Creation Date"/>
+						<tb:template>
+							<VBox>
+								<core:HTML
+									content="{parts: [
+										{path:'caseModel>overdueIcon'}, 
+										{path: 'caseModel>dueDate'}, 
+										{path: 'caseModel>dueTime'}], formatter:'.formatterMDR13.displayDate1'}">
+								</core:HTML>
+								<Text 
+									text="{path: 'caseModel>creationDate'}" 
+									tooltip="Creation Date: {path: 'caseModel>creationDate'}" 
+									class="text" 
+									maxLines="1"></Text>
+							</VBox>
+						</tb:template>
+					</tb:Column>
+					<!-- Rating -->
+					<tb:Column width="80px" sortProperty="Rating" filterProperty="RatingTxt">
+					<ObjectIdentifier title="RATING" text=" "/>
+						<tb:template>
+							<VBox>
+								<Image 
+									class="ratingLED" 
+									tooltip="Rating: {path:'caseModel>RatingTxt'}"
+									src="{path:'caseModel>Rating', formatter:'.formatterMDR13.ratingLED'}">
+								</Image>
+							</VBox>
+						</tb:template>
+					</tb:Column>
+					<!-- Status -->
+					<tb:Column width="13%" sortProperty="Concatstatuser" filterProperty="Concatstatuser">
+					<ObjectIdentifier title="STATUS" text=" " tooltip="Status = User Status + Substatus"/>
+					<tb:template class="cell">
+						<VBox class="outerCell">
+							<VBox class="innerCell">
+								<core:HTML
+									content="{path:'caseModel>Concatstatuser', formatter:'.formatterMDR13.status'}">
+								</core:HTML>
+								<Text 
+									text="{path:'caseModel>Codetext'}" 
+									tooltip="Substatus: {path:'caseModel>Codetext'}" 
+									class="text" 
+									maxLines="1">
+								</Text>
+							</VBox>
+						</VBox>
+					</tb:template>
+					</tb:Column>
+					<!-- Complaint Manager -->
+					<tb:Column width="12%" sortProperty="ComplMngrDesc" filterProperty="ComplMngrDesc">
+					<ObjectIdentifier title="COMPL. MANAGER" text="Person Responsible" tooltip="Complaint Manager"/>
+					<tb:template>
+						<VBox class="cell">
+							<core:HTML
+								content="{parts: [{path:'UIModel>/theme'}, {path:'caseModel>ComplMngrDesc'}], formatter:'.formatterMDR13.complMngr'}">
+							</core:HTML>
+							<core:HTML
+								content="{parts: [{path:'UIModel>/theme'}, {path:'caseModel>PersonRespName'}], formatter:'.formatterMDR13.personResp'}">
+							</core:HTML>
+						</VBox>
+					</tb:template>
+					</tb:Column>
+					<!-- Country -->
+					<tb:Column width="9%" sortProperty="SoldToCtryTxt" filterProperty="SoldToCtryTxt">
+					<ObjectIdentifier title="COUNTRY" text=" "/>
+					<tb:template>
+						<VBox class="cell">
+							<Text text="{caseModel>SoldToCtryTxt}" tooltip="Country: {caseModel>SoldToCtryTxt}" class="titleText" maxLines="1"></Text>
+							<Text text=" " class="text" maxLines="1"></Text>
+						</VBox>
+					</tb:template>
+					</tb:Column>
+					<!-- Service Team -->
+					<tb:Column width="{path:'test', formatter:'.formatterMDR13.serviceTeam'}" sortProperty="ServiceTeamList" filterProperty="ServiceTeamList">
+					<ObjectIdentifier title="{path:'', formatter:'.formatterMDR13.serviceTeamColHeader'}" text=" "/>
+					<tb:template class="cell">
+						<VBox class="outerCell">
+							<VBox class="innerCell">
+								<Text 
+									text="{caseModel>ServiceTeamList}" 
+									tooltip="Service Team Name: {caseModel>ServiceTeamList} - Service Team ID: {caseModel>ServiceTeam}" 
+									class="titleText sapUiTinyMarginEnd" 
+									maxLines="1">
+								</Text>
+								<Text text=" " class="text" maxLines="1"></Text>
+							</VBox>
+						</VBox>
+					</tb:template>
+					</tb:Column>
+				</tb:columns>
+			</tb:Table>
+			<custom:CustomPaginator id="pagerForCardView" visible="{= ${UIModel>/viewCard}}" currentPage="{UIModel>/currentPageForCardView}"
+				numberOfPages="{UIModel>/numberOfPagesForCardView}" page=".onPageChangeForCardView"/>
+		</content>
+	</Page>
+</mvc:View>

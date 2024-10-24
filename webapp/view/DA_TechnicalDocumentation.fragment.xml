@@ -1,0 +1,81 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" displayBlock="true">
+	<Dialog 
+		title="News and Updates" 
+		id="technicalDocumentation" 
+		verticalScrolling="true" 
+		horizontalScrolling="true"
+		class="sapUiSizeLarge">
+		<content>
+			<VBox class="sapUiMediumMargin">
+				<FormattedText htmlText="19-03-2024: Version 24.3.3"/>
+				<FormattedText htmlText="- Layout Enhancement on Overview Page"/>
+				<FormattedText htmlText="&lt;br&gt;"/>
+				<FormattedText htmlText="20-06-2023: Version 23.6.2"/>
+				<FormattedText htmlText="- MDR2, MDR3, MDR6-MDR8: Add new market units ME_N, ME_S, APJ_SEA."/>
+				<FormattedText htmlText="&lt;br&gt;"/>
+				<FormattedText htmlText="01-12-2022: Version 22.11.1"/>
+				<FormattedText htmlText="- Remove links to JAM pages by Workzone links."/>
+				<FormattedText htmlText="- MDR6-MDR8: Rename filter 'Case Tag' by 'MCC Tag'."/>
+				<FormattedText htmlText="&lt;br&gt;"/>
+				<FormattedText htmlText="02-11-2022: Version 22.10.4"/>
+				<FormattedText htmlText="- MDR1: Complete removal of MDR1 from MDR Dashboard Builder and Analyzer."/>
+				<FormattedText htmlText="&lt;br&gt;"/>
+				<FormattedText htmlText="29-08-2022: Version 22.8.1"/>
+				<FormattedText htmlText="- MDR7: Add template for parameters."/>
+				<FormattedText htmlText="- MDR6-MDR8: Add customer type ZSCUSTYP06 (TC2)."/>
+				<FormattedText htmlText="- MDR6-MDR8: Add customer type ZSCUSTYP07 (Taskforce)."/>
+				<FormattedText htmlText="- MDR6-MDR8: Add all (old and new) case categories (ZS01 + ZS02)."/>
+				<FormattedText htmlText="- Correct errors in URL generation."/>
+				<FormattedText htmlText="&lt;br&gt;"/>
+				<FormattedText htmlText="01-08-2022: Version 22.7.1"/>
+				<FormattedText htmlText="- All Dashboards: Remove service team 33792482 from filter list."/>
+				<FormattedText htmlText="- MDR6-MDR8: Provide filtering with MCC tags."/>
+				<FormattedText htmlText="- Correct errors in URL generation and for manual input."/>
+				<FormattedText htmlText="&lt;br&gt;"/>
+				<FormattedText htmlText="23-05-2022: Version 22.5.1"/>
+				<FormattedText htmlText="- All Dashboards: Remove service teams 33767454 and 33792483 from filter list."/>
+				<FormattedText htmlText="- MDR2: Remove PERC activities (ZS88) from filter list."/>
+				<FormattedText htmlText="&lt;br&gt;"/>
+				<FormattedText htmlText="28-03-2022: Version 22.3.2"/>
+				<FormattedText htmlText="- All Dashboards: Rename service teams in filter list."/>
+				<FormattedText htmlText="&lt;br&gt;"/>
+				<FormattedText htmlText="26-02-2022: Version 22.2.1"/>
+				<FormattedText htmlText="- MDR2: Add parameter dispcat to display Category - Result - Reason."/>
+				<FormattedText htmlText="- MDR9: Remove filters and parameters for MDR9 from MDR Dashboard Builder and Analyzer due to retirement of this dashboard."/>
+				<FormattedText htmlText="&lt;br&gt;"/>
+				<FormattedText htmlText="22-11-2021: Version 21.11.8"/>
+				<FormattedText htmlText="- MDR1/MDR2: Renaming of ZS46 category filters (Removal of 'AGS' + 'DBS')."/>
+				<FormattedText htmlText="- MDR6-MDR8: New values for SAP Involvement filter."/>
+				<FormattedText htmlText="&lt;br&gt;"/>
+				<FormattedText htmlText="25-10-2021: Version 784"/>
+				<FormattedText htmlText="- Allow '&amp;' in dashboard titles."/>
+				<FormattedText htmlText="- MDR3: Additional status values for cross issues: In Evaluation (E0016), Addressed (E0017), Completed (E0018)."/>
+				<FormattedText htmlText="&lt;br&gt;"/>
+				<FormattedText htmlText="30-08-2021: Version 767"/>
+				<FormattedText htmlText="- MDR1/MDR2: Include display parameter disp_MU (display market unit)."/>
+				<FormattedText htmlText="&lt;br&gt;"/>
+				<FormattedText htmlText="14-07-2021: Version 756"/>
+				<FormattedText htmlText="- MDR1/MDR2: Rename ZS46 activity status from 'In MCC Dep Rooms' into 'In MCC Focus Teams'."/>
+				<FormattedText htmlText="- MDR3: New Z-status filter values."/>
+				<FormattedText htmlText="- MDR3: New product related filtes."/>
+				<FormattedText htmlText="&lt;br&gt;"/>
+				<FormattedText htmlText="26-04-2021: Version 671"/>
+				<FormattedText htmlText="- New look and feel."/>
+				<FormattedText htmlText="- Error correction on 'Analyze' tab."/>
+				<FormattedText htmlText="- Error correction for switch between user-friendly and technical view on 'Analyze' tab."/>
+				<FormattedText htmlText="- Error correction on 'Build' tab."/>
+				<FormattedText htmlText="- Enhancement of URL check in 'Analyze' tab."/>
+				<FormattedText htmlText="- All MDRs: Adoption of service team and market unit filters."/>
+				<FormattedText htmlText="- MDR1/MDR2/MDR3: Adoption of process type filters and related status filters."/>
+				<FormattedText htmlText="&lt;br&gt;"/>				
+				<FormattedText htmlText="01-03-2021:"/>
+				<FormattedText htmlText="- First version of MDR Dashboard Builder and Analyzer."/>
+				<FormattedText htmlText="&lt;br&gt;"/>
+				<FormattedText htmlText="&lt;br&gt;"/>
+			</VBox>
+		</content>
+		<endButton>
+			<Button id="closeButton" text="Close" press="closeGuideBuild"/>
+		</endButton>
+	</Dialog>
+</core:FragmentDefinition>

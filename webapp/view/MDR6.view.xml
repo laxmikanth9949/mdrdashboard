@@ -1,0 +1,376 @@
+<mvc:View xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:l="sap.ui.layout" xmlns:tb="sap.ui.table" xmlns:f="sap.f"
+	xmlns:grid="sap.ui.layout.cssgrid" xmlns:html="http://www.w3.org/1999/xhtml" xmlns:si="sap.suite.ui.commons.statusindicator"
+	xmlns:custom="corp.sap.mdrdashboards.controls" controllerName="corp.sap.mdrdashboards.controller.MDR6">
+	<Page id="dashboardPage" title="{= 'MDR6 - ' + ${MDRVersion>/version}}" titleAlignment="Center" showNavButton="false" enableScrolling="false">
+		<content>
+			<!-- Header Bar Definition -->
+			<VBox class="toolbarH">
+				<Toolbar class="sapUiSmallMarginBottom">
+					<Image
+						class="SAPLogo" 
+						src="{imageModel>/path}/images/SAPLogo.gif" >
+					</Image>
+					<HBox id="titleBox" class="titleBox" width="50%" wrap="Wrap">
+						<core:HTML id="HTLM" class="HTML" content="{parts:[{path: 'UIModel>/title'},{path:'UIModel>/runTitle'}], formatter:'.formatterMDR6.title'}"></core:HTML> 
+					</HBox>
+					<ToolbarSpacer/>
+					<HBox width="10px"></HBox>
+					<VBox height="1.2rem">
+						<Label text="All:" class="numberStyle1">
+							<layoutData>
+								<ToolbarLayoutData shrinkable="false"/>
+							</layoutData>
+						</Label>
+					</VBox>
+					<VBox height="3.8rem">
+						<NumericContent tooltip="All" withMargin="false" class="numberStyle2" value="{UIModel>/caseNumber}"/>
+					</VBox>
+					<VBox height="1.2rem">
+						<Label text="R:" class="numberStyle1">
+							<layoutData>
+								<ToolbarLayoutData shrinkable="false"/>
+							</layoutData>
+						</Label>
+					</VBox>
+					<VBox height="3.8rem">
+						<NumericContent tooltip="Red" withMargin="false" class="numberStyle2" value="{UIModel>/redNumber}" valueColor="Error"/>
+					</VBox>
+					<VBox height="1.2rem">
+						<Label text="Y:" class="numberStyle1">
+							<layoutData>
+								<ToolbarLayoutData shrinkable="false"/>
+							</layoutData>
+						</Label>
+					</VBox>
+					<VBox height="3.8rem">
+						<NumericContent tooltip="Yellow" value="{UIModel>/yellowNumber}" class="numberStyle2" withMargin="false" valueColor="Critical"/>
+					</VBox>
+					<VBox height="1.2rem">
+						<Label text="G:" class="numberStyle1">
+							<layoutData>
+								<ToolbarLayoutData shrinkable="false"/>
+							</layoutData>
+						</Label>
+					</VBox>
+					<VBox height="3.8rem">
+						<NumericContent tooltip="Green" value="{UIModel>/greenNumber}" class="numberStyle2" withMargin="false" valueColor="Good"/>
+					</VBox>	
+					<VBox height="0.8rem">
+						<core:Icon class= "refresh" src="sap-icon://synchronize"/>
+					</VBox>
+					<VBox height="1.15rem">
+						<Text class="numberStyle2" tooltip="Last Refresh Time" text="{UIModel>/refreshTime}" />
+					</VBox>
+					<Button class="SAPIcon1" 
+							icon="{= ${UIModel>/pauseFlip} ? 'sap-icon://play' : 'sap-icon://pause'}" 
+							press="pauseFlip"
+							tooltip="Start / Stop Paging"
+							ariaLabelledBy="Pause"/>
+					<Button class="SAPIcon" 
+							icon="sap-icon://ppt-attachment" 
+							tooltip="Generate PPT Report of all Cases" 
+							press="download" 
+							ariaLabelledBy="Download"/>
+					<Button class="SAPIcon" 
+							icon="sap-icon://heatmap-chart"
+							tooltip="Switch between MDR6 and MDR6A"
+							press="openMDR6A" 
+							ariaLabelledBy="OpenQ-GateList"/>
+					<Button class="SAPIcon" 
+							icon="sap-icon://text-align-justified" 
+							tooltip="Open MDR7 - Cases"
+							press="openMDR7" 
+							ariaLabelledBy="OpenCaseList1"/>
+					<Button class="SAPIcon" 
+							icon="sap-icon://detail-view"
+							tooltip="Open Dashboard Builder and Analyzer" 
+							press="openDashboardAnalyzer" 
+							ariaLabelledBy="DashboardAnalyzer" 
+							visible="{path:'UIModel>da_test', formatter:'.formatterMDR6.dashboardAnalyzerHeader'}"/>			
+					<Button class="SAPIconLast" 
+							icon="sap-icon://question-mark" 
+							tooltip="Click for more Information" 
+							press="openInfoPage" 
+							ariaLabelledBy="Help"/>		
+				</Toolbar>
+			</VBox>
+			<!-- Table Definition -->
+			<tb:Table id="caseTable" class="tableMDR6" rows="{caseModel>/results}" visible="{= !${UIModel>/viewCard}}" visibleRowCount="{UIModel>/numPerPage}"
+				filter=".filters" sort=".sort" minAutoRowCount="2" selectionMode="None">
+				<tb:columns>
+					<!-- Rating -->
+					<tb:Column width="12px" tooltip="Rating" sortProperty="rating" filterProperty="rating_text">
+						<tb:template>
+							<core:HTML content="{parts:[{path:'caseModel>rating_text'}, {path:'caseModel>status_text'}, {path:'caseModel>project_phase_text'}], formatter:'.formatterMDR6.colorValue'}"></core:HTML>
+						</tb:template>
+					</tb:Column>
+					<!-- MCC Workbench -->
+					<!--
+					<tb:Column width="35px" tooltip="Open this Case in MCC Workbench">
+						<tb:template>
+							<core:Icon src="sap-icon://add-activity" press="openMCCWorkbench" tooltip="Open this Case in MCC Workbench"/>
+						</tb:template>
+					</tb:Column>
+					-->
+					<!-- Download Tool -->
+					<tb:Column width="35px" tooltip="More Options, like PPT Generation, etc.">
+						<tb:template>
+							<VBox class="download" visible="{path:'caseModel>rating_text', formatter:'.formatterMDR6.todayRow'}">
+								<core:Icon class="download" height="30px" src="sap-icon://menu" press="singleCaseDownload" tooltip="More"/>
+							</VBox>
+						</tb:template>
+					</tb:Column>
+					<!-- Reference Customer -->
+					<!--
+					<tb:Column width="32px">
+						<tb:template>
+							<VBox class="cell">
+								<Image
+									src="{path:'caseModel>ref_cust', formatter:'.formatterMDR6.referenceCustomer'}"
+									tooltip="Reference Customer">
+								</Image>
+							</VBox>
+						</tb:template>
+					</tb:Column>
+					-->
+					<!-- Customer / Employee Responsible / Processor -->
+					<tb:Column width="20%" sortProperty="customer_key" filterProperty="customer_key">
+						<ObjectIdentifier title="CUSTOMER" text="{path:'UIModel>/disp_name', formatter:'.formatterMDR6.colHeaderCustomer'}"/>
+						<tb:template>
+							<VBox class="cell">
+								<Text text="{parts:[{path:'caseModel>customer_name'},{path:'UIModel>/maskData'}], formatter:'.formatterMDR6.customerNameFormatter'}"
+									tooltip="{parts:[{path:'caseModel>customer_name'},{path:'UIModel>/maskData'}], formatter:'.formatterMDR6.customerNameFormatter'}"
+									class="titleText" maxLines="1">
+								</Text>
+								<Text text="{parts:[{path:'caseModel>processor_person'}, {path:'caseModel>responsible_person'}], formatter:'.formatterMDR6.processor'}"
+									tooltip="{parts:[{path:'caseModel>processor_person'}, {path:'caseModel>responsible_person'}], formatter:'.formatterMDR6.processorMouseover'}"
+									class="text" maxLines="1">
+								</Text>
+							</VBox>
+						</tb:template>
+					</tb:Column>
+					<!-- Country / Case ID -->
+					<tb:Column width="8%" sortProperty="customer_country" filterProperty="customer_country">
+						<ObjectIdentifier title="COUNTRY" text="Case ID"/>
+						<tb:template>
+							<VBox class="cell">
+								<Text text="{caseModel>customer_country}" class="titleText" maxLines="1"></Text>
+								<Link tooltip="Category: {caseModel>category_text} / Description: {parts:[{path:'caseModel>case_title'},{path:'UIModel>/maskData'}], formatter:'.formatterMDR6.description'} - Click opens Details of Case {path:'caseModel>case_id'}" 
+									text="{caseModel>case_id}" 
+									class="caseIDLink" 
+									href="{parts:[{path:'UIModel>/sourceIC'}, {path:'caseModel>case_id'}], formatter:'.formatterMDR6.caseLink'}" target="_blank">
+								</Link>
+							</VBox>
+						</tb:template>
+					</tb:Column>					
+					<!-- GoLive Date  / Last Change Date / Creation Date -->
+					<tb:Column width="10%" sortProperty="date" filterProperty="displaySortDate">
+						<ObjectIdentifier title="{path: 'text', formatter:'.formatterMDR6.colHeaderDate'}" text="Main Product"/>
+						<tb:template>
+							<VBox class="cell" visible="{path:'caseModel>rating_text', formatter:'.formatterMDR6.todayRow'}">
+								<core:HTML 
+									content="{parts: [{path: 'caseModel>go_live', type: 'sap.ui.model.type.Date', formatOptions: {pattern: 'dd MMM yyyy'}}, 
+													  {path: 'caseModel>create_time'}, 
+													  {path: 'caseModel>change_time'}], formatter:'.formatterMDR6.caseDate'}">
+								</core:HTML>
+								<Text 
+									text="{path:'caseModel>main_product_description'}" maxLines="1"
+									tooltip="Product(s): {path: 'caseModel>product_list'} / Scenario: {path:'caseModel>scenario_text'} / Scope: {path: 'caseModel>use_case_text'}">
+								</Text>
+							</VBox>
+						</tb:template>
+					</tb:Column>
+					<!-- Separator -->
+					<tb:Column width="2px">
+						<tb:template>
+							<VBox class="NA" visible="{path:'caseModel>rating_text', formatter:'.formatterMDR6.todayRow'}">
+							</VBox>
+						</tb:template>
+					</tb:Column>
+					<!-- Month Column Definition -->
+					<!-- January -->
+					<tb:Column width="10%" visible="{path: '', formatter:'.formatterMDR6.colHeaderMonth'}">
+						<ObjectIdentifier title="JAN" text=" "/>
+						<tb:template>
+							<core:HTML 
+								class="monthCell"
+								content="{path:'caseModel>january', formatter:'.formatterMDR6.displayDivElement'}">
+							</core:HTML>
+						</tb:template>
+					</tb:Column>
+					<!-- February -->
+					<tb:Column width="10%" visible="{path: '', formatter:'.formatterMDR6.colHeaderMonth'}">
+						<ObjectIdentifier title="FEB" text=" "/>
+						<tb:template>
+							<core:HTML 
+								class="monthCell"
+								content="{path:'caseModel>february', formatter:'.formatterMDR6.displayDivElement'}">
+							</core:HTML>
+						</tb:template>
+					</tb:Column>
+					<!-- March -->
+					<tb:Column width="10%" visible="{path: '', formatter:'.formatterMDR6.colHeaderMonth'}">
+						<ObjectIdentifier title="MAR" text=" "/>
+						<tb:template>
+							<core:HTML 
+								class="monthCell"
+								content="{path:'caseModel>march', formatter:'.formatterMDR6.displayDivElement'}">
+							</core:HTML>
+						</tb:template>
+					</tb:Column>
+					<!-- April -->
+					<tb:Column width="10%" visible="{path: '', formatter:'.formatterMDR6.colHeaderMonth'}">
+						<ObjectIdentifier title="APR" text=" "/>
+						<tb:template>
+							<core:HTML 
+								class="monthCell"
+								content="{path:'caseModel>april', formatter:'.formatterMDR6.displayDivElement'}">
+							</core:HTML>
+						</tb:template>
+					</tb:Column>
+					<!-- May -->
+					<tb:Column width="10%" visible="{path: '', formatter:'.formatterMDR6.colHeaderMonth'}">
+						<ObjectIdentifier title="MAY" text=" "/>
+						<tb:template>
+							<core:HTML 
+								class="monthCell"
+								content="{path:'caseModel>may', formatter:'.formatterMDR6.displayDivElement'}">
+							</core:HTML>
+						</tb:template>
+					</tb:Column>
+					<!-- June -->
+					<tb:Column width="10%" visible="{path: '', formatter:'.formatterMDR6.colHeaderMonth'}">
+						<ObjectIdentifier title="JUN" text=" "/>
+						<tb:template>
+							<core:HTML 
+								class="monthCell"
+								content="{path:'caseModel>june', formatter:'.formatterMDR6.displayDivElement'}">
+							</core:HTML>
+						</tb:template>
+					</tb:Column>
+					<!-- July -->
+					<tb:Column width="10%" visible="{path: '', formatter:'.formatterMDR6.colHeaderMonth'}">
+						<ObjectIdentifier title="JUL" text=" "/>
+						<tb:template>
+							<core:HTML 
+								class="monthCell"
+								content="{path:'caseModel>july', formatter:'.formatterMDR6.displayDivElement'}">
+							</core:HTML>
+						</tb:template>
+					</tb:Column>
+					<!-- August -->
+					<tb:Column width="10%" visible="{path: '', formatter:'.formatterMDR6.colHeaderMonth'}">
+						<ObjectIdentifier title="AUG" text=" "/>
+						<tb:template>
+							<core:HTML 
+								class="monthCell"
+								content="{path:'caseModel>august', formatter:'.formatterMDR6.displayDivElement'}">
+							</core:HTML>
+						</tb:template>
+					</tb:Column>
+					<!-- September -->
+					<tb:Column width="10%" visible="{path: '', formatter:'.formatterMDR6.colHeaderMonth'}">
+						<ObjectIdentifier title="SEP" text=" "/>
+						<tb:template>
+							<core:HTML 
+								class="monthCell"
+								content="{path:'caseModel>september', formatter:'.formatterMDR6.displayDivElement'}">
+							</core:HTML>
+						</tb:template>
+					</tb:Column>
+					<!-- October -->
+					<tb:Column width="10%" visible="{path: '', formatter:'.formatterMDR6.colHeaderMonth'}">
+						<ObjectIdentifier title="OCT" text=" "/>
+						<tb:template>
+							<core:HTML 
+								class="monthCell"
+								content="{path:'caseModel>october', formatter:'.formatterMDR6.displayDivElement'}">
+							</core:HTML>
+						</tb:template>
+					</tb:Column>
+					<!-- November -->
+					<tb:Column width="10%" visible="{path: '', formatter:'.formatterMDR6.colHeaderMonth'}">
+						<ObjectIdentifier title="NOV" text=" "/>
+						<tb:template>
+							<core:HTML 
+								class="monthCell"
+								content="{path:'caseModel>november', formatter:'.formatterMDR6.displayDivElement'}">
+							</core:HTML>
+						</tb:template>
+					</tb:Column>
+					<!-- December -->
+					<tb:Column width="10%" visible="{path: '', formatter:'.formatterMDR6.colHeaderMonth'}">
+						<ObjectIdentifier title="DEC" text=" "/>
+						<tb:template>
+							<core:HTML 
+								class="monthCell"
+								content="{path:'caseModel>december', formatter:'.formatterMDR6.displayDivElement'}">
+							</core:HTML>
+						</tb:template>
+					</tb:Column>
+					<!-- January -->
+					<tb:Column width="10%" visible="{path: '', formatter:'.formatterMDR6.colHeaderMonth'}">
+						<ObjectIdentifier title="JAN" text=" "/>
+						<tb:template>
+							<core:HTML 
+								class="monthCell"
+								content="{path:'caseModel>january', formatter:'.formatterMDR6.displayDivElement'}">
+							</core:HTML>
+						</tb:template>
+					</tb:Column>
+					<!-- February -->
+					<tb:Column width="10%" visible="{path: '', formatter:'.formatterMDR6.colHeaderMonth'}">
+						<ObjectIdentifier title="FEB" text=" "/>
+						<tb:template>
+							<core:HTML 
+								content="{path:'caseModel>february', formatter:'.formatterMDR6.displayDivElement'}">
+							</core:HTML>
+						</tb:template>
+					</tb:Column>
+					<!-- March -->
+					<tb:Column width="10%" visible="{path: '', formatter:'.formatterMDR6.colHeaderMonth'}">
+						<ObjectIdentifier title="MAR" text=" "/>
+						<tb:template>
+							<core:HTML 
+								class="monthCell"
+								content="{path:'caseModel>march', formatter:'.formatterMDR6.displayDivElement'}">
+							</core:HTML>
+						</tb:template>
+					</tb:Column>
+					<!-- April -->
+					<tb:Column width="10%" visible="{path: '', formatter:'.formatterMDR6.colHeaderMonth'}">
+						<ObjectIdentifier title="APR" text=" "/>
+						<tb:template>
+							<core:HTML 
+								class="monthCell"
+								content="{path:'caseModel>april', formatter:'.formatterMDR6.displayDivElement'}">
+							</core:HTML>
+						</tb:template>
+					</tb:Column>
+					<!-- May -->
+					<tb:Column width="10%" visible="{path: '', formatter:'.formatterMDR6.colHeaderMonth'}">
+						<ObjectIdentifier title="MAY" text=" "/>
+						<tb:template>
+							<core:HTML 
+								class="monthCell"
+								content="{path:'caseModel>may', formatter:'.formatterMDR6.displayDivElement'}">
+							</core:HTML>
+						</tb:template>
+					</tb:Column>
+					<!-- June -->
+					<tb:Column width="10%" visible="{path: '', formatter:'.formatterMDR6.colHeaderMonth'}">
+						<ObjectIdentifier title="JUN" text=" "/>
+						<tb:template>
+							<core:HTML 
+								class="monthCell"
+								content="{path:'caseModel>june', formatter:'.formatterMDR6.displayDivElement'}">
+							</core:HTML>
+						</tb:template>
+					</tb:Column>
+				</tb:columns>
+			</tb:Table>
+			<custom:CustomPaginator id="pagerForCardView" visible="{= ${UIModel>/viewCard}}" currentPage="{UIModel>/currentPageForCardView}"
+				numberOfPages="{UIModel>/numberOfPagesForCardView}" page=".onPageChangeForCardView"/>
+		</content>
+	</Page>
+</mvc:View>

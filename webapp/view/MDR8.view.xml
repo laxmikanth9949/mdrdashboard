@@ -1,0 +1,130 @@
+<mvc:View xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:l="sap.ui.layout" xmlns:tb="sap.ui.table" xmlns:f="sap.f" xmlns:grid="sap.ui.layout.cssgrid"
+	xmlns:html="http://www.w3.org/1999/xhtml" xmlns:si="sap.suite.ui.commons.statusindicator" xmlns:custom="corp.sap.mdrdashboards.controls" controllerName="corp.sap.mdrdashboards.controller.MDR8">
+	<Page id="dashboardPage" title="{= 'MDR8 - ' +  ${MDRVersion>/version}}" titleAlignment="Center" showNavButton="false" enableScrolling="false">
+		<content>
+			<VBox class="toolbarH">
+				<Toolbar class="sapUiSmallMarginBottom">
+					<Image
+						class="SAPLogo" 
+						src="{imageModel>/path}/images/SAPLogo.gif" >
+					</Image>
+					<HBox id="titleBox" class="titleBox" width="60%" wrap="Wrap">
+						<core:HTML content="{parts:[{path: 'UIModel>/title'},{path:'UIModel>/runTitle'}], formatter:'.formatter.titleMarquee'}"></core:HTML>
+					</HBox>
+					<ToolbarSpacer/>
+					<VBox height="1.2rem">
+						<Label text="All:" class="numberStyle1">
+							<layoutData>
+								<ToolbarLayoutData shrinkable="false"/>
+							</layoutData>
+						</Label>
+					</VBox>
+					<VBox height="3.8rem">
+						<NumericContent tooltip="Number of all selected Cases" withMargin="false" class="numberStyle2" value="{UIModel>/caseNumber}"/>
+					</VBox>
+					<VBox height="1.2rem">
+						<Label text="R:" class="numberStyle1">
+							<layoutData>
+								<ToolbarLayoutData shrinkable="false"/>
+							</layoutData>
+						</Label>
+					</VBox>
+					<VBox height="3.8rem">
+						<NumericContent tooltip="Number of Cases with Rating RED" withMargin="false" class="numberStyle2" value="{UIModel>/redNumber}" valueColor="Error"/>
+					</VBox>
+					<VBox height="1.2rem">
+						<Label text="Y:" class="numberStyle1">
+							<layoutData>
+								<ToolbarLayoutData shrinkable="false"/>
+							</layoutData>
+						</Label>
+					</VBox>
+					<VBox height="3.8rem">
+						<NumericContent tooltip="Number of Cases with Rating YELLOW" value="{UIModel>/yellowNumber}" class="numberStyle2" withMargin="false" valueColor="Critical"/>
+					</VBox>
+					<VBox height="1.2rem">
+						<Label text="G:" class="numberStyle1">
+							<layoutData>
+								<ToolbarLayoutData shrinkable="false"/>
+							</layoutData>
+						</Label>
+					</VBox>
+					<VBox height="3.8rem">
+						<NumericContent tooltip="Number of Cases with Rating GREEN" value="{UIModel>/greenNumber}" class="numberStyle2" withMargin="false" valueColor="Good"/>
+					</VBox>
+					<!--
+					<VBox height="1.2rem">
+						<Label text="N/A:" class="numberStyle1">
+							<layoutData>
+								<ToolbarLayoutData shrinkable="false"/>
+							</layoutData>
+						</Label>
+					</VBox>
+					<VBox height="3.8rem">
+						<NumericContent tooltip="Number of Cases which could not be assigned to a Region - No Service Organisation maintained in the Case" 
+							value="{UIModel>/casesNotAssigned}"
+							class="numberStyle2" 
+							withMargin="false"/>
+					</VBox>
+					-->
+					<VBox height="0.8rem">
+						<core:Icon class= "refresh" src="sap-icon://synchronize"/>
+					</VBox>
+					<VBox height="1.15rem">
+						<Text class="numberStyle3" tooltip="Last Refresh Time" text="{UIModel>/refreshTime}" />
+					</VBox>
+					<Button class="SAPIcon1" 
+							icon="sap-icon://ppt-attachment" 
+							tooltip="Generate PPT Report for all Cases" 
+							press="download" 
+							ariaLabelledBy="Download"/>
+					<Button class="SAPIcon" 
+							icon="sap-icon://text-align-justified" 
+							tooltip="Switch to MDR7 - Case List"
+							press="openMDR7" 
+							ariaLabelledBy="OpenCaseList1"/>
+					<Button class="SAPIcon" 
+							icon="sap-icon://detail-view"
+							tooltip="Open Dashboard Builder and Analyzer" 
+							press="openDashboardAnalyzer" 
+							ariaLabelledBy="DashboardAnalyzer" 
+							visible="{path:'UIModel>da_test', formatter:'.formatter.dashboardAnalyzerHeader'}"/>							
+					<Button class="SAPIconLast" 
+							icon="sap-icon://question-mark" 
+							tooltip="Click for more Information" 
+							press="openInfoPage" 
+							ariaLabelledBy="Help"/>		
+				</Toolbar>
+			</VBox>
+			<FlexBox id="flexBox" class="sapUiTinyMarginTop">
+				<core:HTML content="{parts:[{path: 'UIModel>/casesAPJ'}, 
+											{path: 'UIModel>/APJ_R'},
+											{path: 'UIModel>/APJ_Y'},
+											{path: 'UIModel>/APJ_G'},
+											{path: 'UIModel>/APJ_N'},
+											{path: 'UIModel>/casesEMEA'},
+											{path: 'UIModel>/EMEA_R'},
+											{path: 'UIModel>/EMEA_Y'},
+											{path: 'UIModel>/EMEA_G'},
+											{path: 'UIModel>/EMEA_N'},
+											{path: 'UIModel>/casesLAC'},
+											{path: 'UIModel>/LAC_R'},
+											{path: 'UIModel>/LAC_Y'},
+											{path: 'UIModel>/LAC_G'},
+											{path: 'UIModel>/LAC_N'},
+											{path: 'UIModel>/casesNA'},
+											{path: 'UIModel>/NA_R'},
+											{path: 'UIModel>/NA_Y'},
+											{path: 'UIModel>/NA_G'},
+											{path: 'UIModel>/NA_N'},
+											{path: 'UIModel>/casesNotAss'},
+											{path: 'UIModel>/NAss_R'},
+											{path: 'UIModel>/NAss_Y'},
+											{path: 'UIModel>/NAss_G'},
+											{path: 'UIModel>/NAss_N'}
+											], formatter:'.formatter.worldmap'}">
+				</core:HTML>
+			</FlexBox>
+		</content>
+	</Page>
+</mvc:View>

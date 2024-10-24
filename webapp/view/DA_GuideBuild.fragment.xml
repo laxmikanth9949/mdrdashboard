@@ -1,0 +1,24 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" displayBlock="true">
+	<Dialog 
+		title="Simple Guide to build your own URL" 
+		id="guideBuild" 
+		verticalScrolling="true" 
+		horizontalScrolling="false" 
+		class="sapUiSizeLarge">
+		<content>
+			<VBox class="sapUiMediumMargin">
+				<FormattedText htmlText="Select the dashboard type for which you would like to create an URL."/>
+				<FormattedText htmlText="A list of the existing dashboards is provided by the value search help."/>
+				<FormattedText htmlText="&lt;br&gt;You can add filter parameters and user parameters to your URL by using the ‘Add Filter’ and ‘Add Parameter’ buttons."/>
+				<FormattedText htmlText="&lt;br&gt;Multiple filters and parameters can be added. For both, filters and parameters, the existing possible options are displayed in a popup."/>
+				<FormattedText htmlText="&lt;br&gt;After selecting a filter or a parameter, a popup to place your input is shown. In this popup, the possible values for the previously selected filters or parameters are displayed, if available. Alternatively, your individual input is required."/>
+				<FormattedText htmlText="&lt;br&gt;Press button ‘Generate URL’ to build the URL composed of the selected dashboard type, the filters and the other parameters."/>
+				<FormattedText htmlText="&lt;br&gt;The URL is displayed in a popup and can be modified here according to your needs."/>
+				<FormattedText htmlText="Here you can also decide to open the URL directly in your browser or not."/>
+			</VBox>
+		</content>
+		<endButton>
+			<Button id="closeButton" text="Close" press="closeGuideBuild"/>
+		</endButton>
+	</Dialog>
+</core:FragmentDefinition>

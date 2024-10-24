@@ -1,0 +1,20 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core">
+	<Dialog id="secondSelectionInputSingle" title="Input Options">
+		<VBox direction="Column" id="inputVbox" alignContent="Center" alignItems="Center" justifyContent="Center" class="sapUiSmallMargin">
+	        <items>
+	            <Label text="Insert the value below:" id="topLabel" design="Bold"/>
+	            <Input
+					id="userInput"
+					type="Text"
+					placeholder="Enter ..."
+					enabled="true"
+					editable="true"/>
+	        </items>
+        </VBox>
+        <beginButton>
+        	<Button
+        		text="OK"
+        		press="handleInputClose"/>
+        </beginButton>
+	</Dialog>
+</core:FragmentDefinition>

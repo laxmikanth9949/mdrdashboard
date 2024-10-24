@@ -1,0 +1,26 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" displayBlock="true">
+	<Dialog 
+		title="Simple Guide to analyze your URL" 
+		id="guideAnalysis" 
+		verticalScrolling="true" 
+		horizontalScrolling="false" 
+		class="sapUiSizeCozy">
+		<content>
+			<VBox class="sapUiMediumMargin">
+				<FormattedText htmlText="Copy the URL you would like to analyze into the input field on the 'Analyze' tab. Alternatively, when you are calling the Dashboard Builder and Analyzer from an MDR dashboard, the URL of this MDR dashboard is copied into the input field. "/>
+				<FormattedText htmlText="&lt;br&gt;Press button 'Submit'."/>
+				<FormattedText htmlText="&lt;br&gt;As a first step, the URL is checked for errors."/>
+				<FormattedText htmlText="&lt;br&gt;In case of errors, an error popup is raised, trying to highlight the improper section of the URL."/>
+				<FormattedText htmlText="Note: This check is quite brief and intended to show only the most relevant errors."/>
+				<FormattedText htmlText="&lt;br&gt;If no errors are shown, the anaylsis results are displayed in two groups: Filters and Parameters."/>
+				<FormattedText htmlText="For both, the filters and the parameters, the operators and the values are displayed."/>
+				<FormattedText htmlText="&lt;br&gt;If you like to withdraw your input, it can be removed at all with button 'Clear'."/>
+				<FormattedText htmlText="&lt;br&gt;Note:"/>
+				<FormattedText htmlText="The display of the results can be switched between a technical view and a more user-friendly view at the bottom of the page."/>
+			</VBox>
+		</content>
+		<endButton>
+			<Button id="closeButton" text="Close" press="closeGuideAnalysis"/>
+		</endButton>
+	</Dialog>
+</core:FragmentDefinition>

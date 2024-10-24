@@ -1,0 +1,45 @@
+<mvc:View xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:l="sap.ui.layout" xmlns:tb="sap.ui.table" xmlns:f="sap.f"
+	xmlns:grid="sap.ui.layout.cssgrid" xmlns:custom="corp.sap.mdrdashboards.controls" async="true"
+	controllerName="corp.sap.mdrdashboards.controller.MDR10">
+	<Page id="MDR10" title="{= 'MDR10 - ' + ${MDRVersion>/version}}" titleAlignment="Center" class="sapUiResponsiveContentPadding">
+		<content>
+			<VBox class="toolbarH">
+				<Toolbar class="sapUiSmallMarginBottom">
+					<Image
+						class="SAPLogo" 
+						src="{imageModel>/path}/images/SAPLogo.gif" >
+					</Image>
+					<HBox id="titleBox" class="titleBox" width="60%" wrap="Wrap">
+						<core:HTML content="{parts:[{path: 'UIModel>/title'},{path:'UIModel>runTitle'}],formatter:'.formatter.titleMarquee'}"></core:HTML>
+					</HBox>
+					<ToolbarSpacer/>
+					<!--<Image id="image" src="https://avatars.wdf.sap.corp/avatar/I348852?s=30@2" class="imageColleague sapMBarChild sapMImg" alt="true"-->
+					<!--	height="1.5em"></Image>-->
+					<Button icon="sap-icon://create-form" tooltip="Create Ticket" press="customerView" width="3em"/>
+					<Button icon="sap-icon://sys-help-2" tooltip="Help" press="helpToDirect" width="3em"/>
+				</Toolbar>
+			</VBox>
+			<OverflowToolbar>
+				<content>
+					<Text id="textForHeader" text="{caseIdModel>/No}"/>
+					<ToolbarSpacer/>
+					<!--<Button id="collapseAll" text="Collapse all" press="onCollapseAllPress"/>-->
+					<!--<Button id="expand" text="Expand all" press="onExpandAllPress"/>-->
+					<core:Icon tooltip="Collapse All" src="sap-icon://drill-up" press="onCollapseAllPress" size="170%"/>
+					<core:Icon tooltip="Expand All" src="sap-icon://drill-down" press="onExpandAllPress" size="170%"/>
+				</content>
+			</OverflowToolbar>
+			<Tree id="Tree" items="{path: 'TreeModel>/'}" busy="true" busyIndicatorDelay="0">
+				<CustomTreeItem id="treeItems">
+					<FlexBox alignItems="Start" width="100%" justifyContent="SpaceBetween">
+						<items>
+							<Link text="{TreeModel>text}" press="pressToDirect" class="sapUiSmallMargin" subtle="true"/>
+							<!--<Text id="TreeTextId" text="{TreeModel>text}" textAlign="Begin" class="sapUiSmallMargin"/>-->
+							<Button text="Show Details" press="handlePopoverPress" ariaLabelledBy="actionButtonLabel"/>
+						</items>
+					</FlexBox>
+				</CustomTreeItem>
+			</Tree>
+		</content>
+	</Page>
+</mvc:View>

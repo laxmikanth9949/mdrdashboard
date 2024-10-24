@@ -1,0 +1,272 @@
+<mvc:View xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:l="sap.ui.layout" xmlns:tb="sap.ui.table" xmlns:f="sap.f"
+	xmlns:grid="sap.ui.layout.cssgrid" xmlns:html="http://www.w3.org/1999/xhtml" xmlns:si="sap.suite.ui.commons.statusindicator"
+	xmlns:custom="corp.sap.mdrdashboards.controls" controllerName="corp.sap.mdrdashboards.controller.MDR6A">
+	<Page id="dashboardPage" title="{= 'MDR6A - ' + ${MDRVersion>/version}}" titleAlignment="Center" showNavButton="false" enableScrolling="false">
+		<content>
+			<!-- Header Bar Definition -->
+			<VBox class="toolbarH">
+				<Toolbar class="sapUiSmallMarginBottom">
+					<Image
+						class="SAPLogo" 
+						src="{imageModel>/path}/images/SAPLogo.gif" >
+					</Image>
+					<HBox id="titleBox" class="titleBox" width="60%" wrap="Wrap">
+						<core:HTML content="{path: 'UIModel>/title', formatter:'.formatterMDR6.title'}"></core:HTML>
+					</HBox>
+					<ToolbarSpacer/>
+					<VBox height="1.2rem">
+						<Label text="All:" class="numberStyle1">
+							<layoutData>
+								<ToolbarLayoutData shrinkable="false"/>
+							</layoutData>
+						</Label>
+					</VBox>
+					<VBox height="3.8rem">
+						<NumericContent tooltip="Number of all selected Q-Gates" withMargin="false" class="numberStyle2" value="{UIModel>/caseNumber}"/>
+					</VBox>
+					<VBox height="1.2rem">
+						<Label text="R:" class="numberStyle1">
+							<layoutData>
+								<ToolbarLayoutData shrinkable="false"/>
+							</layoutData>
+						</Label>
+					</VBox>
+					<VBox height="3.8rem">
+						<NumericContent tooltip="No. of Q-Gates with Rating = 'Hazardous' or 'Very Critical'" withMargin="false" class="numberStyle2" value="{UIModel>/redNumber}" valueColor="Error"/>
+					</VBox>
+					<VBox height="1.2rem">
+						<Label text="Y:" class="numberStyle1">
+							<layoutData>
+								<ToolbarLayoutData shrinkable="false"/>
+							</layoutData>
+						</Label>
+					</VBox>
+					<VBox height="3.8rem">
+						<NumericContent tooltip="No. of Q-Gates with Rating = 'Critical'" value="{UIModel>/yellowNumber}" class="numberStyle2" withMargin="false" valueColor="Critical"/>
+						</VBox>
+					<VBox height="1.2rem">
+						<Label text="G:" class="numberStyle1">
+							<layoutData>
+								<ToolbarLayoutData shrinkable="false"/>
+							</layoutData>
+						</Label>
+					</VBox>
+					<VBox height="3.8rem">
+						<NumericContent tooltip="No. of Q-Gates with Rating = 'OK'" value="{UIModel>/greenNumber}" class="numberStyle2" withMargin="false" valueColor="Good"/>
+					</VBox>
+					<VBox height="0.8rem">
+						<core:Icon class= "refresh" src="sap-icon://synchronize"/>
+					</VBox>
+					<VBox height="1.15rem">
+						<Text class="numberStyle1" tooltip="Last Refresh Time" text="{UIModel>/refreshTime}" />
+					</VBox>
+					<Button class="SAPIcon1" 
+							icon="{= ${UIModel>/pauseFlip} ? 'sap-icon://play' : 'sap-icon://pause'}" 
+							press="pauseFlip"
+							tooltip="Start / Stop Paging"
+							ariaLabelledBy="Pause"/>
+					<Button class="SAPIcon" 
+							icon="sap-icon://ppt-attachment" 
+							tooltip="Generate PPT Report of all Cases" 
+							press="download" 
+							ariaLabelledBy="Download"/>
+					<Button class="SAPIcon" 
+							icon="sap-icon://heatmap-chart"
+							tooltip="Switch between MDR6 and MDR6A"
+							press="openMDR6" 
+							ariaLabelledBy="OpenQ-GateList"/>
+					<Button class="SAPIcon" 
+							icon="sap-icon://text-align-justified" 
+							tooltip="Switch to MDR7 - Case List"
+							press="openMDR7" 
+							ariaLabelledBy="OpenCaseList1"/>
+					<Button class="SAPIcon" 
+							icon="sap-icon://detail-view"
+							tooltip="Open Dashboard Builder and Analyzer" 
+							press="openDashboardAnalyzer" 
+							ariaLabelledBy="DashboardAnalyzer" 
+							visible="{path:'UIModel>da_test', formatter:'.formatterMDR6.dashboardAnalyzerHeader'}"/>							
+					<Button class="SAPIconLast" 
+							icon="sap-icon://question-mark" 
+							tooltip="Click for more Information" 
+							press="openInfoPage" 
+							ariaLabelledBy="Help"/>		
+				</Toolbar>
+			</VBox>
+			<!-- Table Definition -->
+			<tb:Table id="caseTable" rows="{caseModel>/results}" visible="{= !${UIModel>/viewCard}}" visibleRowCount="{UIModel>/numPerPage}"
+				filter=".filters" sort=".sort" minAutoRowCount="2" selectionMode="None">
+				<tb:columns>
+					<!-- Q-Gate Rating -->
+					<tb:Column width="3px" sortProperty="qgate_rating_key" filterProperty="qgate_severity_txt" tooltip="Rating of the Q-Gate" class="firstColumn">
+						<tb:template>
+							<core:HTML content="{parts:[{path:'caseModel>qgate_severity'},
+														{path:'caseModel>qgate_severity_txt'}], formatter:'.formatterMDR6.colorValueMDR6A'}">
+							</core:HTML>
+						</tb:template>
+					</tb:Column>
+					<!-- MCC Workbench -->
+					<!--
+					<tb:Column width="35px" tooltip="Open this Case in MCC Workbench">
+						<tb:template>
+							<core:Icon src="sap-icon://add-activity" press="openMCCWorkbench" tooltip="Open this Case in MCC Workbench"/>
+						</tb:template>
+					</tb:Column>
+					-->
+					<!-- 'More' Menu -->
+					<tb:Column width="35px"  tooltip="More Options, like PPT Generation, etc.">
+						<tb:template>
+							<VBox class="download">
+								<core:Icon class="download" height="30px" src="sap-icon://menu" press="singleCaseDownload" tooltip="More"/>
+							</VBox>
+						</tb:template>
+					</tb:Column>
+					<!-- Reference Customer -->
+					<!--					
+					<tb:Column width="32px" sortProperty="ref_cust" tooltip="Customer is Reference Customer">
+						<tb:template>
+							<VBox class="cell">
+								<Image
+									src="{path:'caseModel>ref_cust', formatter:'.formatterMDR6.referenceCustomer'}"
+									tooltip="Reference Customer">
+								</Image>
+							</VBox>
+						</tb:template>
+					</tb:Column>
+					-->
+					<!-- Customer Name -->
+					<tb:Column width="20%" sortProperty="customer_name" filterProperty="customer_name">
+						<ObjectIdentifier title="CUSTOMER" text="Country"/>
+						<tb:template>
+							<VBox class="cell">
+								<Text text="{parts:[{path:'caseModel>customer_name'},{path:'UIModel>/maskData'}], formatter:'.formatterMDR6.customerNameFormatter'}"
+									tooltip="Customer Name: {parts:[{path:'caseModel>customer_name'},{path:'UIModel>/maskData'}], formatter:'.formatterMDR6.customerNameFormatter'}"
+									class="titleText" maxLines="1">
+								</Text>
+								<Text text="{caseModel>customer_country}" 
+									tooltip="Country: {caseModel>customer_country}"
+									class="text" maxLines="1">
+								</Text>
+							</VBox>
+						</tb:template>
+					</tb:Column>
+					<!-- Q-Gate Name -->
+					<tb:Column width="18%" sortProperty="qgateName" filterProperty="qgateName">
+						<ObjectIdentifier title="Q-GATE NAME" text=" "/>
+						<tb:template>
+							<VBox class="cell">
+								<Text text="{caseModel>qgateName}" 
+									tooltip="Q-Gate Name: {caseModel>qgateName} / Q-Gate Desc.: {parts:[{path:'caseModel>qgateDesc'},{path:'UIModel>/maskData'}], formatter:'.formatterMDR6.description'}"
+									class="titleText" maxLines="1">
+								</Text>
+							</VBox>
+						</tb:template>
+					</tb:Column>
+					<!-- Q-Gate Status -->
+					<tb:Column width="11%" sortProperty="qgateStatusText" filterProperty="qgateStatusText">
+						<ObjectIdentifier title="Q-GATE STATUS" text=" "/>
+						<tb:template>
+							<VBox class="cell">
+								<Text 
+									text="{caseModel>qgateStatusText}" 
+									tooltip="Q-Gate Status: {caseModel>qgateStatusText}"
+									class="titleText" maxLines="1">
+								</Text>
+							</VBox>
+						</tb:template>
+					</tb:Column>
+					<!-- Overdue Icon -->
+					<tb:Column width="45px" tooltip="Indicator that Q-Gate Start and/or Q-Gate End is in the Past">
+						<ObjectIdentifier/>
+						<tb:template>
+							<VBox>
+								<Image
+									class="overdueIcon"
+									tooltip="{parts: [{path: 'caseModel>qgStartDate'}, {path: 'caseModel>qgEndDate'}], formatter:'.formatterMDR6.tooltipOverdueIconMDR6A'}"
+									src="{parts: [{path: 'caseModel>qgStartDate'}, {path: 'caseModel>qgEndDate'}], formatter:'.formatterMDR6.overdueIconMDR6A'}">
+								</Image>
+							</VBox>
+						</tb:template>
+					</tb:Column>
+					<!-- Dates -->
+					<tb:Column width="120px" tooltip="{path:' ', formatter:'.formatterMDR6.dateHeader'}" sortProperty="qgateStartDate" filterProperty="qgStartDate">
+						<ObjectIdentifier title="START DATE" text="End Date"/>
+						<tb:template>
+							<VBox class="cell">
+								<core:HTML
+									content="{parts:[{path: 'caseModel>qgStartDate'}, 
+													 {path: 'caseModel>qgEndDate'}], formatter:'.formatterMDR6.dateMDR6A'}">
+								</core:HTML>
+							</VBox>
+						</tb:template>
+					</tb:Column>
+					<!-- Q-Gate Target Phase -->
+					<tb:Column width="12%" sortProperty="qgateTargetPhase" filterProperty="qgateTargetPhase">
+						<ObjectIdentifier title="TARGET PHASE" text=" "/>
+						<tb:template>
+							<VBox class="cell">
+								<Text text="{caseModel>qgateTargetPhase}" 
+									tooltip="Q-Gate Target Phase: {caseModel>qgateTargetPhase}"
+									class="titleText" maxLines="1">
+								</Text>
+								<Text text=" "></Text>
+							</VBox>
+						</tb:template>
+					</tb:Column>
+					<!-- Case Rating -->
+					<tb:Column width="40px" sortProperty="rating" filterProperty="rating">
+						<ObjectIdentifier title=" " text=" " tooltip="Case Rating"/>
+						<tb:template>
+							<VBox class="cell">
+								<Image
+									class="ratingLED" 
+									tooltip="{parts:[{path:'caseModel>rating'}], formatter:'.formatterMDR6.ratingLEDTooltip'}"
+									src="{parts:[{path:'caseModel>rating'}], formatter:'.formatterMDR6.ratingLED'}">
+								</Image>
+							</VBox>	
+						</tb:template>
+					</tb:Column>
+					<!-- Case Status / Case ID -->
+					<tb:Column width="14%" sortProperty="status_text" filterProperty="status_text">
+						<ObjectIdentifier title="CASE STATUS" text="Case ID"/>
+						<tb:template>
+							<VBox class="cell">
+								<core:HTML
+									content="{parts:[
+												{path: 'caseModel>status_text'},
+												{path: 'caseModel>category_text'},
+												{path: 'caseModel>case_title'},
+												{path: 'caseModel>project_phase_text'},
+												{path: 'UIModel>/layout'}], formatter:'.formatterMDR6.caseStatus'}">
+								</core:HTML>
+								<Link tooltip="Click opens Details of Case {path:'caseModel>case_id'}" 
+									text="{caseModel>case_id}" 
+									class="caseIDLink" 
+									href="{parts:[{path:'UIModel>/sourceIC'}, {path:'caseModel>case_id'}], formatter:'.formatterMDR6.caseLink'}" target="_blank">
+								</Link>
+							</VBox>
+						</tb:template>
+					</tb:Column>
+					<!-- Service Team -->
+					<tb:Column width="21%" visible="{UIModel>/showServiceTeam}" sortProperty="service_team_name" filterProperty="service_team_name">
+						<ObjectIdentifier title="SERVICE TEAM" text="{path:'UIModel>/disp_name', formatter:'.formatterMDR6.colHeaderCustomer'}"/>
+						<tb:template>
+							<VBox class="cell">
+								<Text text="{caseModel>service_team_name}" 
+									tooltip="Service Team Name: {caseModel>service_team_name}" 
+									class="titleText" maxLines="1">
+								</Text>	
+								<Text text="{parts:[{path:'caseModel>processor_person'}, {path:'caseModel>responsible_person'}], formatter:'.formatterMDR6.processor'}"
+									tooltip="{parts:[{path:'caseModel>processor_person'}, {path:'caseModel>responsible_person'}], formatter:'.formatterMDR6.processorMouseover'}"
+									class="text" maxLines="1">
+								</Text>
+							</VBox>
+						</tb:template>
+					</tb:Column>
+				</tb:columns>
+			</tb:Table>
+			<custom:CustomPaginator id="pagerForCardView" visible="{= ${UIModel>/viewCard}}" currentPage="{UIModel>/currentPageForCardView}"
+				numberOfPages="{UIModel>/numberOfPagesForCardView}" page=".onPageChangeForCardView"/>
+		</content>
+	</Page>
+</mvc:View>

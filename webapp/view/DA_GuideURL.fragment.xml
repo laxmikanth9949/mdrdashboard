@@ -1,0 +1,32 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" displayBlock="true">
+	<Dialog 
+		title="Best Practises for Dashboard URLs" 
+		id="guideURL" 
+		contentWidth="900px"
+		verticalScrolling="true" 
+		horizontalScrolling="false"
+		class="sapUiSizeLarge">
+		<content>
+			<VBox class="sapUiMediumMargin">
+				<FormattedText htmlText="Use the reference URL or a preconfigured one from https://go.sap.corp/MCC-MDR as a starting point."/>
+				<FormattedText htmlText="&lt;br&gt;Replace the parameters in the URL with your own values to create a direct URL to 'your' MCC Dashboard."/>
+				<FormattedText htmlText="&lt;br&gt;Available parameters for each dashboard are provided either by the Dashboard Builder and Analyzer or on the documentation pages for each dashboard (button 'More Information' on the right side of the header of each dashboard)."/>
+				<FormattedText htmlText="&lt;br&gt;Often filters use technical names as selection criteria."/>
+				<FormattedText htmlText="To find out the technical names of a field switch on the technical names in CRM WebUI:"/>
+				<FormattedText htmlText="- Personalize (Menu on top of the screen)"/>
+				<FormattedText htmlText="- Settings --> Personalize Settings"/>
+				<FormattedText htmlText="- Dropdown Lists --> Flag 'Show keys in dropdown lists'"/>
+				<FormattedText htmlText="&lt;br&gt;Rules for customized URLs:"/>
+				<FormattedText htmlText="- Filters need to be placed first, followed by parameters."/>
+				<FormattedText htmlText="- In MDR6, MDR6A, MDR7 and MDR8, use the 'service_team' filter when combining service teams with 'OR'."/>
+				<FormattedText htmlText="- In MDR6, MDR6A, MDR7 and MDR8, use the 'service_team_1' and 'service_team_2' filters when combining service teams with 'AND'."/>
+				<FormattedText htmlText="- In MDR6, MDR6A, MDR7 and MDR8, use the 'service_team_2' filter should only be used together with 'service_team_1' filter."/>
+				<FormattedText htmlText="- The time unit of parameters refreshInterval (minutes) and flipInterval (seconds) cannot be changed."/>
+				<FormattedText htmlText="- All URLs can be modified manually after generation."/>
+			</VBox>
+		</content>
+		<endButton>
+			<Button id="closeButton" text="Close" press="closeGuideURL"/>
+		</endButton>
+	</Dialog>
+</core:FragmentDefinition>

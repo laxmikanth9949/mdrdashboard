@@ -1,0 +1,16 @@
+<mvc:View xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" controllerName="corp.sap.mdrdashboards.controller.MDRList"
+	displayBlock="true">
+		<Page title="{i18n>title}" titleAlignment="Center">
+			<content>
+				<List>
+					<items>
+						<StandardListItem 
+						wrapping="true"
+						title="MCC Dashboard Directory" 
+						description="The MCC Dashboard Directory (MDR0) has been retired. Individual dashboards (like MDR2, MDR7, MDR9_NOW, MDR13) can still be opened directly."
+						icon="sap-icon://bbyd-dashboard"/>
+					</items>
+				</List>
+			</content>
+		</Page>
+</mvc:View>

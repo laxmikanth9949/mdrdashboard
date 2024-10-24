@@ -1,0 +1,256 @@
+<mvc:View xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:l="sap.ui.layout" xmlns:tb="sap.ui.table" xmlns:f="sap.f"
+	xmlns:grid="sap.ui.layout.cssgrid" xmlns:html="http://www.w3.org/1999/xhtml" xmlns:si="sap.suite.ui.commons.statusindicator"
+	xmlns:custom="corp/sap/mdrdashboards.controls" controllerName="corp/sap/mdrdashboards.controller.MDR3">
+	<Page id="dashboardPage" title="{= 'MDR3 - ' +  ${MDRVersion>/version}}" titleAlignment="Center" showNavButton="false" enableScrolling="false">
+		<content>
+			<VBox class="toolbarH">
+				<Toolbar class="sapUiSmallMarginBottom">
+					<Image
+						class="SAPLogo" 
+						src="{imageModel>/path}/images/SAPLogo.gif" >
+					</Image>
+					<HBox id="titleBox" class="titleBox" width="60%" wrap="Wrap">
+						<core:HTML content="{path: 'UIModel>/title', formatter:'.formatterMDR3.title'}"></core:HTML>
+					</HBox>
+					<ToolbarSpacer/>
+					<VBox height="1.2rem">
+						<Label text="All:" class="numberStyle1">
+							<layoutData>
+								<ToolbarLayoutData shrinkable="false"/>
+							</layoutData>
+						</Label>
+					</VBox>
+					<VBox height="3.8rem">
+						<NumericContent tooltip="All selected Top/Cross Issues" value="{UIModel>/numberAll}" class="numberStyle2" withMargin="false"/>
+					</VBox>
+					<VBox height="1.2rem">
+						<Label text="R:" class="numberStyle1">
+							<layoutData>
+								<ToolbarLayoutData shrinkable="false"/>
+							</layoutData>
+						</Label>
+					</VBox>
+					<VBox height="3.8rem">
+						<NumericContent tooltip="No. of Top/Cross Issues with Rating Red" value="{UIModel>/numberRatingRed}" class="numberStyle2" withMargin="false" valueColor="Error"/>
+					</VBox>
+					<VBox height="1.2rem">
+						<Label text="Y:" class="numberStyle1">
+							<layoutData>
+								<ToolbarLayoutData shrinkable="false"/>
+							</layoutData>
+						</Label>
+					</VBox>
+					<VBox height="3.8rem">
+						<NumericContent tooltip="No. of Top/Cross Issues with Rating Yellow" value="{UIModel>/numberRatingYellow}" class="numberStyle2" withMargin="false" valueColor="Critical"/>
+					</VBox>
+					<VBox height="1.2rem">
+						<Label text="G:" class="numberStyle1">
+							<layoutData>
+								<ToolbarLayoutData shrinkable="false"/>
+							</layoutData>
+						</Label>
+					</VBox>
+					<VBox height="3.8rem">
+						<NumericContent tooltip="No. of Top/Cross Issues with Rating Green" value="{UIModel>/numberRatingGreen}" class="numberStyle2" withMargin="false" valueColor="Good"/>
+					</VBox>
+					<VBox height="0.8rem">
+						<core:Icon class= "refresh" src="sap-icon://synchronize"/>
+					</VBox>
+					<VBox height="1.1rem">
+						<Text class="numberStyle1" tooltip="Last Refresh Time" text="{UIModel>/refreshTime}" />
+					</VBox>	
+					<Button class="SAPIcon1"	
+							icon="{= ${UIModel>/pauseFlip} ?'sap-icon://play':'sap-icon://pause'}" 
+							press="pauseFlip" 
+							tooltip="Start/Stop Paging" 
+							ariaLabelledBy="Pause"/>
+					<Button class="SAPIcon" 
+							icon="sap-icon://download" 
+							tooltip="Download to Excel File" 
+							press="Download" 
+							ariaLabelledBy="Download"/>
+					<Button class="SAPIcon" 
+							icon="sap-icon://detail-view"
+							tooltip="Open Dashboard Builder and Analyzer" 
+							press="openDashboardAnalyzer" 
+							ariaLabelledBy="DashboardAnalyzer" 
+							visible="{path:'UIModel>da_test', formatter:'.formatterMDR3.dashboardAnalyzerHeader'}"/>		
+					<Button class="SAPIconLast" 
+							icon="sap-icon://question-mark" 
+							tooltip="Click for more Information" 
+							press="openInfoPage" 
+							ariaLabelledBy="Help"/>		
+				</Toolbar>
+			</VBox>
+			<tb:Table 
+				id="activityTable" 
+				rows="{activityModel>/results}" 
+				visible="{= !${UIModel>/viewActivity}}" 
+				visibleRowCount="{UIModel>/numPerPage}"
+				filter=".filters" 
+				sort=".sort" 
+				minAutoRowCount="2" 
+				selectionMode="None">
+				<!-- Column Definition -->
+				<tb:columns>
+					<!-- Rating -->
+					<tb:Column width="1rem" sortProperty="ratingCode" filterProperty="rating_desc" tooltip="Rating">
+						<tb:template>
+							<VBox
+								tooltip="{path:'activityModel>rating_code', formatter:'.formatterMDR3.colorValueTooltip'}">
+								<core:HTML 
+									content="{path:'activityModel>rating_code', formatter:'.formatterMDR3.colorValue'}">
+								</core:HTML>
+							</VBox>
+						</tb:template>
+					</tb:Column>
+					<!-- Reference to Cases -->
+					<tb:Column 
+						width="3.1rem"
+						tooltip="Reference to Customer Cases"
+						sortProperty="refCaseInd" 
+						filterProperty="refCaseInd">
+						<ObjectIdentifier title="REF" text=" "/>
+						<tb:template>
+							<VBox height="40px">
+								<Image 
+									tooltip="Click opens MDR7 Dashboard for Cases assigned to this Issue"
+									class="refLink" 
+									width="1.5rem" 
+									height="1.5rem" 
+									src="{path:'activityModel>TopIssueCases', formatter:'.formatterMDR3.refPicture'}"
+									press=".openMDR7(${path:'activityModel>TopIssueCases'})">
+								</Image>
+							</VBox>
+						</tb:template>
+					</tb:Column>
+					<!-- Customer -->
+					<tb:Column width="{path: ' ', formatter:'.formatterMDR3.customerNameColumnWidth'}" sortProperty="text1" filterProperty="text1">
+						<ObjectIdentifier title="{path: 'text', formatter:'.formatterMDR3.customerSapProductHeader1'}" text=" "/>					
+						<tb:template class="cell">
+							<VBox>
+								<Text text="{activityModel>text1}" 
+									tooltip="{path: 'text', formatter:'.formatterMDR3.customerSapProductTooltip1'}: {activityModel>text1}" 
+									class="titleText"
+									maxLines="1"/>
+								<Text text=" "/>
+							</VBox>
+						</tb:template>
+					</tb:Column>
+					<!-- Issue Description -->
+					<tb:Column width="{path: ' ', formatter:'.formatterMDR3.descriptionColumnWidth'}" sortProperty="description" filterProperty="description">
+						<ObjectIdentifier title="ISSUE DESCRIPTION" text="Priority"/>					
+						<tb:template>
+							<VBox>
+								<Text 
+									text="{parts:[{path:'activityModel>description'},{path:'UIModel>/maskData'}], formatter:'.formatterMDR3.description'}" 
+									tooltip="{parts:[{path:'activityModel>description'}, {path:'activityModel>descriptionlong'},{path:'UIModel>/maskData'}], formatter:'.formatterMDR3.descriptionTooltip'}" 
+									class="titleText" 
+									maxLines="1"/>
+								<Text 
+									text="{activityModel>priority_desc}" 
+									tooltip="Priority: {activityModel>priority_desc}" 
+									class="text" 
+									maxLines="1"/>
+							</VBox>
+						</tb:template>
+					</tb:Column>
+					<!-- Overdue Icon -->
+					<tb:Column 
+						width="2.5rem" 
+						tooltip="{path:' ', formatter:'.formatterMDR3.overdueColTooltip'}"
+						sortProperty="overdueIcon" 
+						filterProperty="overdueIcon">
+						<tb:template>
+							<VBox>
+								<Image 
+									tooltip="Top/Cross Issue is overdue!"
+									class="dueDate" 
+									width="1.5rem" 
+									height="1.5rem" 
+									src="{parts: [{path:'activityModel>overdueIcon'}, {path:'UIModel>/theme'}], formatter:'.formatterMDR3.overdueIcon'}">
+								</Image>
+							</VBox>
+						</tb:template>
+					</tb:Column>
+					<!-- Due Date -->
+					<tb:Column 
+						width="7%" 
+						tooltip="Due Date = Requested End Date"
+						sortProperty="request_end" 
+						filterProperty="dueDate">
+						<ObjectIdentifier title="DUE DATE" text=" "/>					
+						<tb:template>
+							<VBox>
+								<core:HTML
+									content="{parts: [{path: 'activityModel>dueDate'}, {path: 'activityModel>request_end'}, {path: 'activityModel>overdueIcon'}], formatter:'.formatterMDR3.dueDate'}">
+								</core:HTML>
+								<Text text=" "/>
+							</VBox>
+						</tb:template>
+					</tb:Column>
+					<!-- Status -->
+					<tb:Column width="7%" sortProperty="status_desc" filterProperty="status_desc">
+						<ObjectIdentifier title="STATUS" text="Process Type"/>					
+						<tb:template>
+							<VBox>
+								<Text text="{activityModel>status_desc}" tooltip="Status: {activityModel>status_desc}" class="titleText" maxLines="1"/>
+								<Text text="{activityModel>issueTypeText}" tooltip="Process Type: {activityModel>issueTypeText} ({activityModel>process_type})" class="text" maxLines="1"/>
+							</VBox>
+						</tb:template>
+					</tb:Column>
+					<!-- Employee Responsible / Development Owner -->
+					<tb:Column width="12%" sortProperty="agsOwnerSort" filterProperty="agsOwner">
+						<ObjectIdentifier title="EMPLOYEE RESPONSIBLE" text="Development Owner "/>					
+						<tb:template>
+							<VBox>
+								<Text text="{activityModel>agsOwner}" tooltip="Employee Responsible: {activityModel>agsOwner}" class="titleText" maxLines="1"/>
+								<Text text="{activityModel>devOwner}" tooltip="Development Owner: {activityModel>devOwner}" class="text" maxLines="1"/>
+							</VBox>
+						</tb:template>
+					</tb:Column>
+					<!-- Service Team -->
+					<tb:Column width="17%" sortProperty="serviceTeam" filterProperty="serviceTeam" visible="{path: ' ', formatter:'.formatterMDR3.serviceTeamVisibility'}">
+						<ObjectIdentifier title="SERVICE TEAM" text=" "/>					
+						<tb:template>
+							<VBox>
+								<Text text="{activityModel>serviceTeam}" tooltip="Service Team: {activityModel>serviceTeam}" class="titleText" maxLines="1"/>
+								<Text text=" " maxLines="1"/>
+							</VBox>
+						</tb:template>
+					</tb:Column>
+					<!-- SAP Product -->
+					<tb:Column width="{path: ' ', formatter:'.formatterMDR3.productColumnWidth'}" sortProperty="text2" filterProperty="text2">
+						<ObjectIdentifier title="{path: 'text', formatter:'.formatterMDR3.customerSapProductHeader2'}" text=" "/>					
+						<tb:template>
+							<VBox>
+								<Text text="{activityModel>text2}" 
+									tooltip="{path: 'text', formatter:'.formatterMDR3.customerSapProductTooltip2'}: {activityModel>text2}" 
+									class="titleText" 
+									maxLines="1"/>
+								<Text text=" " maxLines="1"/>
+							</VBox>
+						</tb:template>
+					</tb:Column>
+					<!-- Issue ID -->
+					<tb:Column width="6%" sortProperty="top_issue_id" filterProperty="top_issue_id">
+						<ObjectIdentifier title="ISSUE ID" text=" "/>					
+						<tb:template>
+							<VBox>
+								<Link text="{activityModel>top_issue_id}" 
+									class="caseIDLink"  
+									tooltip="Click opens Issue {activityModel>top_issue_id}" 
+									href="{parts:[{path:'UIModel>/sourceIC'}, {path:'activityModel>top_issue_id'}], formatter:'.formatterMDR3.topIssueLink'}" 
+									target="_blank">
+								</Link>
+								<Text text=" " maxLines="1"/>
+							</VBox>
+						</tb:template>
+					</tb:Column>
+				</tb:columns>
+			</tb:Table>
+			<custom:CustomPaginator id="pagerForCardView" visible="{= ${UIModel>/viewActivity}}" currentPage="{UIModel>/currentPageForCardView}"
+				numberOfPages="{UIModel>/numberOfPagesForCardView}" page=".onPageChangeForCardView"/>
+		</content>
+	</Page>
+</mvc:View>

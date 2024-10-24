@@ -1,0 +1,317 @@
+<mvc:View xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:l="sap.ui.layout" xmlns:tb="sap.ui.table" xmlns:f="sap.f"
+	xmlns:grid="sap.ui.layout.cssgrid" xmlns:html="http://www.w3.org/1999/xhtml" xmlns:si="sap.suite.ui.commons.statusindicator"
+	xmlns:custom="corp/sap/mdrdashboards.controls" controllerName="corp/sap/mdrdashboards.controller.MDR4">
+	<Page id="dashboardPage" title="{= 'MDR4 - ' +  ${MDRVersion>/version}}" titleAlignment="Center" showNavButton="false" enableScrolling="false">
+		<content>
+			<VBox class="toolbarH">
+				<Toolbar class="sapUiSmallMarginBottom">
+					<Image
+						class="SAPLogo" 
+						src="{imageModel>/path}/images/SAPLogo.gif" >
+					</Image>
+					<HBox id="titleBox" class="titleBox" width="60%" wrap="Wrap">
+						<core:HTML content="{path: 'UIModel>/title', formatter:'.formatterMDR4.title'}"></core:HTML>
+					</HBox>
+					<ToolbarSpacer/>
+					<VBox height="1.2rem">
+						<Label text="All:" class="numberStyle1">
+							<layoutData>
+								<ToolbarLayoutData shrinkable="false"/>
+							</layoutData>
+						</Label>
+					</VBox>
+					<VBox height="3.8rem">
+						<NumericContent tooltip="All Service Orders" value="{UIModel>/numberAll}" class="numberStyle2" withMargin="false"/>
+					</VBox>
+					<VBox height="1.2rem">
+						<Label text="R:" class="numberStyle1">
+							<layoutData>
+								<ToolbarLayoutData shrinkable="false"/>
+							</layoutData>
+						</Label>
+					</VBox>
+					<VBox height="3.8rem">
+						<NumericContent tooltip="No. of Service Orders with Rating Red" value="{UIModel>/numberRatingRed}" class="numberStyle2" withMargin="false" valueColor="Error"/>
+					</VBox>
+					<VBox height="1.2rem">
+						<Label text="Y:" class="numberStyle1">
+							<layoutData>
+								<ToolbarLayoutData shrinkable="false"/>
+							</layoutData>
+						</Label>
+					</VBox>
+					<VBox height="3.8rem">
+						<NumericContent tooltip="No. of Service Orders with Rating Yellow" value="{UIModel>/numberRatingYellow}" class="numberStyle2" withMargin="false" valueColor="Critical"/>
+					</VBox>
+					<VBox height="1.2rem">
+						<Label text="G:" class="numberStyle1">
+							<layoutData>
+								<ToolbarLayoutData shrinkable="false"/>
+							</layoutData>
+						</Label>
+					</VBox>
+					<VBox height="3.8rem">
+						<NumericContent tooltip="No. of Service Orders with Rating Green" value="{UIModel>/numberRatingGreen}" class="numberStyle2" withMargin="false" valueColor="Good"/>
+					</VBox>
+					<core:Icon class= "refresh" src="sap-icon://synchronize"/>
+					<VBox height="1.2rem">
+						<Text class="numberStyle1" tooltip="Last Refresh Time" text="{UIModel>/refreshTime}" />
+					</VBox>
+					<Button class="SAPIcon1"	
+							icon="{= ${UIModel>/pauseFlip} ?'sap-icon://play':'sap-icon://pause'}" 
+							press="pauseFlip" 
+							tooltip="Start/Stop Paging" 
+							ariaLabelledBy="Pause"/>
+					<Button class="SAPIcon" 
+							icon="sap-icon://detail-view"
+							tooltip="Open Dashboard Builder and Analyzer" 
+							press="openDashboardAnalyzer" 
+							ariaLabelledBy="DashboardAnalyzer" 
+							visible="{path:'UIModel>da_test', formatter:'.formatterMDR4.dashboardAnalyzerHeader'}"/>
+					<Button class="SAPIconLast" 
+							icon="sap-icon://question-mark" 
+							tooltip="Click for more Information" 
+							press="openInfoPage" 
+							ariaLabelledBy="Help"/>		
+				</Toolbar>
+			</VBox>
+			<tb:Table 
+				id="activityTable" 
+				rows="{activityModel>/results}" 
+				visible="{= !${UIModel>/viewActivity}}" 
+				visibleRowCount="{UIModel>/numPerPage}"
+				filter=".filters" 
+				sort=".sort" 
+				minAutoRowCount="2" 
+				selectionMode="None">
+				<!-- Column Definition -->
+				<tb:columns>
+					<!-- Rating -->
+					<tb:Column width="20px" tooltip="Rating" sortProperty="ratingCode" filterProperty="ratingText">
+						<ObjectIdentifier title=" " text=" "/>
+						<tb:template>
+							<VBox tooltip="{path:'activityModel>Rating', formatter:'.formatterMDR4.colorValueTooltip'}">
+							<core:HTML 
+								content="{path:'activityModel>Rating', formatter:'.formatterMDR4.colorValue'}">
+							</core:HTML>
+							</VBox>
+						</tb:template>
+					</tb:Column>
+					<!-- Reference to Cases -->
+					<tb:Column width="40px" sortProperty="refCaseInd" filterProperty="refCaseInd">
+						<ObjectIdentifier title=" " text="{path:'', formatter:'.formatterMDR4.noTextHeader'}" tooltip="Reference to Case"/>
+						<tb:template>
+							<VBox height="32px">
+								<Image 
+									tooltip="Service Order related to Case {activityModel>CaseId} - Click on Icon for Details"
+									class="refLink" 
+									width="1.5rem" 
+									height="1.5em" 
+									src="{path:'activityModel>CaseId' , formatter:'.formatterMDR4.caseRef'}"
+									press=".openMDR7(${path:'activityModel>CaseId'})">
+								</Image>
+							</VBox>
+						</tb:template>
+					</tb:Column>
+					
+					<!-- Customer / Country -->
+					<tb:Column width="15%" sortProperty="CustomerName" filterProperty="CustomerName">
+						<ObjectIdentifier title="CUSTOMER" text="{path:'', formatter:'.formatterMDR4.customerHeader'}"/>					
+						<tb:template class="cell">
+							<VBox class="outerCell">
+								<VBox class="innerCell">
+									<Text text="{parts:[{path:'activityModel>CustomerName'},{path:'UIModel>/maskData'}], formatter:'.formatterMDR4.maskCustomerName'}" 
+										tooltip="Customer Name: {parts:[{path:'activityModel>CustomerName'},{path:'UIModel>/maskData'}], formatter:'.formatterMDR4.maskCustomerName'}" 
+										class="titleText"
+										maxLines="2"/>
+								</VBox>
+								<Text text="{activityModel>Country}"
+									tooltip="Country: {activityModel>Country}" 
+									class="text"
+									maxLines="1"/>
+							</VBox>
+						</tb:template>
+					</tb:Column>
+					<!-- Service Product -->
+					<tb:Column width="15%" sortProperty="MainProductName" filterProperty="MainProductName">
+						<ObjectIdentifier title="SERVICE PRODUCT" text="{path:'', formatter:'.formatterMDR4.servProdHeader'}"/>					
+						<tb:template class="cell">
+							<VBox class="outerCell">
+								<VBox class="innerCell">
+									<Text text="{activityModel>MainProductName}" 
+										tooltip="Service Product of Item 10: {activityModel>MainProductName}" 
+										class="titleText"
+										maxLines="2"/>
+								</VBox>	
+								<Text text="" class="text" maxLines="1"/>
+							</VBox>
+						</tb:template>
+					</tb:Column>
+					<!-- Service Item Product -->
+					<tb:Column width="15%" sortProperty="SessProductName" filterProperty="SessProductName">
+						<ObjectIdentifier title="SERVICE ITEM PRODUCT" text="{path:'', formatter:'.formatterMDR4.noTextHeader'}"/>					
+						<tb:template class="cell">
+							<VBox class="outerCell">
+								<VBox class="innerCell">
+									<Text text="{activityModel>SessProductName}" 
+										tooltip="Service Item Product: {activityModel>SessProductName}" 
+										class="titleText"
+										maxLines="2"/>
+								</VBox>		
+								<Text text="" class="text" maxLines="1"/>
+							</VBox>
+						</tb:template>
+					</tb:Column>
+					<!-- Dates 1 -->
+					<tb:Column width="11%" sortProperty="RequestedDeliveryDate" filterProperty="recDelDate">
+						<ObjectIdentifier 
+							title="REQ. DEL. DATE" 
+							tooltip="{path:'', formatter:'.formatterMDR4.dateHeader1Tooltip'}"
+							text="{path:'', formatter:'.formatterMDR4.dateHeader1'}"/>					
+						<tb:template class="cell">
+							<VBox>
+								<HBox>
+									<Text 
+										class="dateBox1Bold"
+										text="Req. Del.:" 
+										tooltip="Requested Delivery Date: {path:'activityModel>recDelDate'}"
+										maxLines="1">
+									</Text>		
+									<Text 
+										class="dateBox2Bold"
+										text="{path:'activityModel>recDelDate'}" 
+										tooltip="Requested Delivery Date: {path:'activityModel>recDelDate'}"
+										maxLines="1">
+									</Text>	
+								</HBox>
+								<HBox>
+									<Text 
+										class="dateBox1"
+										text="Req. Start:" 
+										tooltip="Required Start Date: {path:'activityModel>reqStartDate'}"
+										maxLines="1">
+									</Text>		
+									<Text 
+										class="dateBox2"
+										text="{path:'activityModel>reqStartDate'}" 
+										tooltip="Required Start Date: {path:'activityModel>reqStartDate'}"
+										maxLines="1">
+									</Text>	
+								</HBox>
+								<HBox>
+									<Text 
+										class="dateBox1"
+										text="Req. End:" 
+										tooltip="Required End Date: {path:'activityModel>reqEndDate'}"
+										maxLines="1">
+									</Text>		
+									<Text 
+										class="dateBox2"
+										text="{path:'activityModel>reqEndDate'}" 
+										tooltip="Required End Date: {path:'activityModel>reqEndDate'}"
+										maxLines="1">
+									</Text>		
+								</HBox>
+							</VBox>
+						</tb:template>
+					</tb:Column>
+					<!-- Dates 2 -->
+					<tb:Column width="11%" sortProperty="SessionDate" filterProperty="sessionDate">
+						<ObjectIdentifier 
+							title="SESSION DATE" 
+							tooltip="{path:'', formatter:'.formatterMDR4.dateHeader2Tooltip'}"
+							text="{path:'', formatter:'.formatterMDR4.dateHeader2'}"/>					
+						<tb:template class="cell">
+							<VBox>
+								<HBox>
+									<Text 
+										class="dateBox0Bold"
+										text="Session:" 
+										tooltip="Session Date: {path:'activityModel>sessionDate'}"
+										maxLines="1">
+									</Text>
+									<Text 
+										class="dateBox2Bold"
+										text="{path:'activityModel>sessionDate'}" 
+										tooltip="Session Date: {path:'activityModel>sessionDate'}"
+										maxLines="1">
+									</Text>	
+								</HBox>
+								<HBox>
+									<Text 
+										class="dateBox0"
+										text="GoLive:" 
+										tooltip="Going Live Date: {path:'activityModel>goliveDate'}"
+										maxLines="1">
+									</Text>
+									<Text 
+										class="dateBox2"
+										text="{path:'activityModel>goliveDate'}" 
+										tooltip="Going Live Date: {path:'activityModel>goliveDate'}"
+										maxLines="1">
+									</Text>	
+								</HBox>
+								<Text text="" class="text" maxLines="1"/>
+							</VBox>
+						</tb:template>
+					</tb:Column>
+					<!-- Status -->
+					<tb:Column width="12%" sortProperty="SessUserStatus" filterProperty="">
+						<ObjectIdentifier title="STATUS" text="{path:'', formatter:'.formatterMDR4.status'}"/>					
+						<tb:template class="cell">
+							<VBox class="outerCell">
+								<VBox class="innerCell">
+									<Text text="{activityModel>SessUserStatus}" 
+										tooltip="Status of Service Order Item {activityModel>serviceOrderKey}: {activityModel>SessUserStatus}" 
+										class="titleText"
+										maxLines="2"/>
+								</VBox>	
+								<Text text="" class="text" maxLines="1"/>
+							</VBox>
+						</tb:template>
+					</tb:Column>
+					<!-- Service Team / Employee Responsible -->
+					<tb:Column width="15%" sortProperty="ServiceTeamName" filterProperty="ServiceTeamName">
+						<ObjectIdentifier title="SERVICE TEAM NAME" text="{path:'', formatter:'.formatterMDR4.servTeamHeader'}"/>					
+						<tb:template class="cell">
+							<VBox class="outerCell">
+								<VBox class="innerCell">
+									<Text 
+										text="{activityModel>ServiceTeamName}" 
+										tooltip="Service Team ID: {activityModel>ServiceTeamId} / Service Team Name: {activityModel>ServiceTeamName} " 
+										class="titleText"
+										maxLines="2"/>
+								</VBox>	
+								<Text 
+									text="{activityModel>EmployeeResponsibleName}" 
+									tooltip="Employee Responsible: {activityModel>EmployeeResponsibleName}" 
+									class="text"
+									maxLines="1"/>	
+								</VBox>
+						</tb:template>
+					</tb:Column>
+					<!-- Service Order ID -->
+					<tb:Column width="10%" sortProperty="serviceOrderKey" filterProperty="">
+						<ObjectIdentifier title="SERVICE ORDER" text="{path:'', formatter:'.formatterMDR4.servOrderHeader'}"/>					
+						<tb:template class="cell">
+							<VBox>
+								<Link 
+									text="{activityModel>serviceOrderKey}" 
+									tooltip="Click opens Service Order {path:'activityModel>ServiceOrderId'}"
+									class="caseIDLink1" 
+									href="{parts:[{path:'UIModel>/sourceIC'}, {path:'activityModel>ServiceOrderId'}], formatter:'.formatterMDR4.linkToServiceOrder'}" 
+									target="_blank">
+								</Link>
+								<Text text="" class="text" maxLines="1"/>
+								<Text text="" class="text" maxLines="1"/>
+							</VBox>
+						</tb:template>
+					</tb:Column>
+					
+				</tb:columns>
+			</tb:Table>
+			<custom:CustomPaginator id="pagerForCardView" visible="{= ${UIModel>/viewActivity}}" currentPage="{UIModel>/currentPageForCardView}"
+				numberOfPages="{UIModel>/numberOfPagesForCardView}" page=".onPageChangeForCardView"/>
+		</content>
+	</Page>
+</mvc:View>

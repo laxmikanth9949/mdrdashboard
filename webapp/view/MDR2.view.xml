@@ -1,0 +1,466 @@
+<mvc:View xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:l="sap.ui.layout" xmlns:tb="sap.ui.table" xmlns:f="sap.f"
+	xmlns:grid="sap.ui.layout.cssgrid" xmlns:html="http://www.w3.org/1999/xhtml" xmlns:si="sap.suite.ui.commons.statusindicator"
+	xmlns:u="sap.ui.unified" 
+	xmlns:custom="corp/sap/mdrdashboards.controls" controllerName="corp/sap/mdrdashboards.controller.MDR2">
+	<Page id="dashboardPage" title="{= 'MDR2 - ' +  ${MDRVersion>/version}}" titleAlignment="Center" showNavButton="false" enableScrolling="false">
+		<content>
+			<VBox class="toolbarH">
+				<Toolbar class="sapUiSmallMarginBottom">
+					<Image
+						class="SAPLogo" 
+						src="{imageModel>/path}/images/SAPLogo.gif" >
+					</Image>
+					<HBox id="titleBox" class="titleBox" width="60%" wrap="Wrap">
+						<core:HTML content="{path: 'UIModel>/title', formatter:'.formatterMDR2.title'}"></core:HTML>
+					</HBox>
+					<ToolbarSpacer/>
+					<VBox height="1.2rem">
+						<Label text="All:" class="numberStyle1">
+							<layoutData>
+								<ToolbarLayoutData shrinkable="false"/>
+							</layoutData>
+						</Label>
+					</VBox>
+					<VBox height="3.75rem">
+						<NumericContent tooltip="All selected Activities" withMargin="false" class="numberStyle2" value="{UIModel>/activityNumber}"/>
+					</VBox>
+					<VBox height="1.2rem">
+						<Label text="VH:" class="numberStyle1">
+							<layoutData>
+								<ToolbarLayoutData shrinkable="false"/>
+							</layoutData>
+						</Label>
+					</VBox>
+					<VBox height="3.75rem">
+						<NumericContent tooltip="Activities with Priority Very High" withMargin="false" class="numberStyle2" value="{UIModel>/redNumber}" valueColor="Error"/>
+					</VBox>
+					<VBox height="1.2rem">
+						<Label text="H:" class="numberStyle1">
+							<layoutData>
+								<ToolbarLayoutData shrinkable="false"/>
+							</layoutData>
+						</Label>
+					</VBox>
+					<VBox height="3.75rem">
+						<NumericContent tooltip="Activities with Priority High" value="{UIModel>/yellowNumber}" class="numberStyle2" withMargin="false" valueColor="Critical"/>
+					</VBox>
+					<Image
+						class="overdueIconHeader"
+						width="1.5rem" 
+						height="1.5rem" 
+						tooltip="Number of overdue Activities"
+						src="{parts: [{path:'UIModel>/theme'}], formatter:'.formatterMDR2.overdueIconHeader'}">
+					</Image>
+					<VBox height="1.2rem">
+						<Label class="numberStyle1" text=":">
+							<layoutData>
+								<ToolbarLayoutData shrinkable="false"/>
+							</layoutData>
+						</Label>
+					</VBox>
+					<VBox height="3.75rem">
+						<NumericContent tooltip="Number of overdue Activities" withMargin="false" class="numberStyle2" value="{UIModel>/overdueNumber}"/>
+					</VBox>
+					<VBox height="0.8rem">
+						<core:Icon class= "refresh" src="sap-icon://synchronize"/>
+					</VBox>
+					<VBox height="1.1rem">
+						<Text class="numberStyle1" tooltip="Last Refresh Time" text="{UIModel>/refreshTime}" />
+					</VBox>
+					<Button class="SAPIcon1"	
+							icon="{= ${UIModel>/pauseFlip} ?'sap-icon://play':'sap-icon://pause'}" 
+							press="pauseFlip" 
+							tooltip="Start/Stop Paging" 
+							ariaLabelledBy="Pause"/>
+					<Button class="SAPIcon" 
+							icon="sap-icon://download" 
+							tooltip="Download to Excel File" 
+							press="Download" 
+							ariaLabelledBy="Download"/>	
+					<Button class="SAPIcon" 
+							icon="sap-icon://detail-view"
+							tooltip="Open Dashboard Builder and Analyzer" 
+							press="openDashboardAnalyzer" 
+							ariaLabelledBy="DashboardAnalyzer" 
+							visible="{path:'UIModel>da_test', formatter:'.formatterMDR2.dashboardAnalyzerHeader'}"/>						
+					<Button class="SAPIconLast" 
+							icon="sap-icon://question-mark" 
+							tooltip="Click for more Information" 
+							press="openInfoPage" 
+							ariaLabelledBy="Help"/>		
+				</Toolbar>
+			</VBox>
+			<tb:Table 
+				id="activityTable" 
+				rows="{activityModel>/results}" 
+				visible="{= !${UIModel>/viewActivity}}" 
+				visibleRowCount="{UIModel>/numPerPage}"
+				filter=".filterActivity" 
+				sort=".sort" 
+				minAutoRowCount="2" 
+				selectionMode="None">
+				<!-- Column Definition -->
+				<tb:columns>
+					<!-- Priority -->
+					<tb:Column 
+						width="{path:' ', formatter:'.formatterMDR2.priority'}" 
+						tooltip="Priority"
+						sortProperty="prioKey" 
+						filterProperty="priority">
+						<tb:template>
+							<VBox
+								tooltip="{path:'activityModel>activity_priority', formatter:'.formatterMDR2.colorValueTooltip'}">
+								<core:HTML 
+									content="{path:'activityModel>activity_priority', formatter:'.formatterMDR2.colorValue'}">
+								</core:HTML>
+							</VBox>
+						</tb:template>
+					</tb:Column>
+					<!-- Reference to (Escalation) Cases -->
+					<tb:Column 
+						width="40px" 
+						tooltip="Icon indicates Activity Reference to (Escalation) Cases"
+						sortProperty="refCaseInd" 
+						filterProperty="refCaseInd">
+						<tb:template>
+							<VBox height="40px">
+								<Image 
+									tooltip="{path:'activityModel>ActivityCases', formatter:'.formatterMDR2.caseRefMDR2Tooltip'}"
+									class="refLink" 
+									width="1.5rem" 
+									height="1.5rem" 
+									src="{path:'activityModel>ActivityCases', formatter:'.formatterMDR2.caseRefMDR2'}"
+									press=".openMDR7(${path:'activityModel>ActivityCases'})">
+								</Image>
+							</VBox>
+						</tb:template>
+					</tb:Column>
+					<!-- Customer -->
+					<tb:Column 
+						sortProperty="customer_name" 
+						filterProperty="customer_name" 
+						id="customer_name"
+						tooltip="Customer Name / Global Ultimate Maintenance Attribute / SAP Product"
+						showSortMenuEntry="true" >
+						<ObjectIdentifier title="CUSTOMER NAME" text="GU Maint. Attribute / SAP Product"/>
+						<tb:template>
+							<VBox>
+								<Text 
+									text="{parts:[{path:'activityModel>customer_name'},{path:'UIModel>/maskData'}], formatter:'.formatterMDR2.customerNameFormatter'}" 
+									tooltip="Customer Name: {parts:[{path:'activityModel>customer_name'},{path:'UIModel>/maskData'}], formatter:'.formatterMDR2.customerNameFormatter'}" 
+									class="titleText" 
+									maxLines="1">
+								</Text>
+								<core:HTML 
+									content="{parts:[{path:'activityModel>customer_category'},{path:'activityModel>ActMainProductVersion'}], formatter:'.formatterMDR2.GUMaintAttr'}">
+								</core:HTML>
+							</VBox>
+						</tb:template>
+						<tb:menu>
+							<u:Menu ariaLabelledBy="customer_name">
+								<u:items>
+									<u:MenuItem
+										text="Sort Ascending"
+										select="onCustomSort"
+										icon="sap-icon://sort-ascending"
+										/>
+									<u:MenuItem
+										text="Sort Descending"
+										select="onCustomSort"
+										icon="sap-icon://sort-descending"
+										/>
+									<u:MenuTextFieldItem
+										value=""
+										label="Filter"
+										select="onCustomSearchFilter"
+										icon="sap-icon://filter"
+										/>
+								</u:items>
+							</u:Menu>
+						</tb:menu>
+					</tb:Column>
+					<!-- Description -->
+					<tb:Column sortProperty="activity_description" filterProperty="activity_description">
+					<!--<ObjectIdentifier title="DESCRIPTION" text="Category / Result / Reason"/>-->
+						<ObjectIdentifier title="DESCRIPTION" text="{path:'text', formatter:'.formatterMDR2.categoryReasonResultHeaderFormatter'}"/>
+						<tb:template>
+							<VBox>
+								<Text 
+									text="{parts:[{path:'activityModel>activity_description'},{path:'UIModel>/maskData'}], formatter:'.formatterMDR2.descriptionFormatter'}" 
+									tooltip="Description: {parts:[{path:'activityModel>activity_description'}, {path:'UIModel>/maskData'}], formatter:'.formatterMDR2.descriptionFormatter'} " 
+									class="titleText" 
+									maxLines="1">
+								</Text>
+								<Text 
+									text="{parts:[{path:'activityModel>activity_cat_desc'},{path:'activityModel>activity_result_text'},{path:'activityModel>activity_reason_text'}], formatter:'.formatterMDR2.categoryReasonResultFormatter'}" 
+									tooltip="Category: {activityModel>activity_cat_desc} / Result: {activityModel>activity_result_text} / Reason: {activityModel>activity_reason_text}"
+									maxLines="1">
+								</Text>
+							</VBox>
+						</tb:template>
+					</tb:Column>
+					<!-- Overdue Icon -->
+					<tb:Column 
+						width="45px" 
+						tooltip="Indicator for overdue Activities"
+						sortProperty="overdueIcon" 
+						filterProperty="overdueIcon">
+						<tb:template>
+							<VBox>
+								<Image 
+									tooltip="Activity is overdue !! - Due Date (Planned Date To) is: {path:'activityModel>activity_planned_date_to', type: 'sap.ui.model.type.Date', formatOptions: {pattern: 'dd MMM yyyy'}}"
+									class="dueDate" 
+									width="1.5rem" 
+									height="1.5rem" 
+									src="{parts: [{path:'activityModel>activity_planned_date_to'}, {path:'activityModel>activity_status'}, {path:'UIModel>/theme'}], formatter:'.formatterMDR2.overdueIcon'}">
+								</Image>
+							</VBox>
+						</tb:template>
+					</tb:Column>
+					<!-- GoLive Date / Creation Date -->
+					<tb:Column width="130px" sortProperty="date" filterProperty="dateString">
+						<ObjectIdentifier title="{path: 'text', formatter:'.formatterMDR2.dateDisplay'}" text="Creation Date "/>
+						<tb:template>
+							<VBox>
+								<core:HTML
+									content="{parts: [{path: 'activityModel>activity_golive_date', type: 'sap.ui.model.type.Date', formatOptions: {pattern: 'dd MMM yyyy'}}, 
+														{path: 'activityModel>activity_planned_date_to', type: 'sap.ui.model.type.Date', formatOptions: {pattern: 'dd MMM yyyy'}}, 
+														{path: 'activityModel>date'}, 
+														{path: 'activityModel>activity_create_date', type: 'sap.ui.model.type.Date', formatOptions: {pattern: 'dd MMM yyyy'}}], 
+												formatter:'.formatterMDR2.activityDate'}">
+								</core:HTML>
+							</VBox>
+						</tb:template>
+					</tb:Column>
+					<!-- Rating -->
+					<tb:Column width="80px" sortProperty="activity_rating_i" filterProperty="activity_rating">
+					<ObjectIdentifier title="RATING" text=" "/>
+						<tb:template>
+							<VBox>
+								<Image 
+									class="ratingLED" 
+									tooltip="{parts:[{path:'activityModel>activity_rating'}], formatter:'.formatterMDR2.ratingLEDTooltip'}"
+									src="{parts:[{path:'activityModel>activity_rating'}], formatter:'.formatterMDR2.ratingLED'}">
+								</Image>
+								<Text text=" "></Text>
+							</VBox>
+						</tb:template>
+					</tb:Column>
+					<!-- Status -->
+					<tb:Column width="10%" sortProperty="activity_status_desc" filterProperty="statusFilter" id="activity_status_desc">
+						<ObjectIdentifier title="STATUS" text=" "/>
+						<tb:template>
+							<VBox>
+								<Text text="{activityModel>activity_status_desc}" tooltip="Status: {activityModel>activity_status} - {activityModel>activity_status_desc}" class="titleText" maxLines="1"></Text>
+								<Text text=" "></Text>
+							</VBox>
+						</tb:template>
+						<tb:menu>
+							<u:Menu ariaLabelledBy="activity_status_desc">
+								<u:items>
+									<u:MenuItem
+										text="Sort Ascending"
+										select="onCustomSort"
+										icon="sap-icon://sort-ascending"
+										/>
+									<u:MenuItem
+										text="Sort Descending"
+										select="onCustomSort"
+										icon="sap-icon://sort-descending"
+										/>
+									<u:MenuTextFieldItem
+										value=""
+										label="Filter"
+										select="onCustomSearchFilter"
+										icon="sap-icon://filter"
+										/>
+								</u:items>
+							</u:Menu>
+						</tb:menu>
+					</tb:Column>
+					<!-- Product Version -->
+					<tb:Column 
+						id="activity_product_version"
+						width="{path:' ', formatter:'.formatterMDR2.productVersion'}" 
+						sortProperty="ActMainProductVersion" 
+						filterProperty="ActMainProductVersion">
+						<ObjectIdentifier title="{path:'', formatter:'.formatterMDR2.pv'}"  text="{path:'', formatter:'.formatterMDR2.pvID'}"/>
+						<tb:template>
+							<VBox>
+								<Text 
+									text="{activityModel>ActMainProductVersion}" 
+									tooltip="Product Version: {activityModel>ActMainProductVersion}" 
+									class="titleText" 
+									maxLines="1"/>
+								<Text 
+									text="{activityModel>ActMainProductVersionID}" 
+									tooltip="Product Version ID: {activityModel>ActMainProductVersionID}" 
+									class="text" 
+									maxLines="1"/>
+							</VBox>
+						</tb:template>
+					</tb:Column>	
+					<!-- Employee Responsible -->
+					<tb:Column width="10%" sortProperty="fullName" filterProperty="activity_person_name" id="activity_person_name">
+						<ObjectIdentifier title="EMPLOYEE RESP." text=" "/>
+						<tb:template>
+							<VBox tooltip="Employee Responsible: {path:'activityModel>activity_person_name'} / Activity created by: {parts:[{path:'activityModel>activity_created_by'},	{path:'UIModel>/maskData'}], 
+																																			formatter:'.formatterMDR2.customerNameFormatter'}">
+								<core:HTML 
+									content="{path:'activityModel>activity_person_name', formatter:'.formatterMDR2.activityPersName'}" class="titleText">
+								</core:HTML>
+								<Text text=" "></Text>
+							</VBox>
+						</tb:template>
+						<tb:menu>
+							<u:Menu ariaLabelledBy="activity_person_name">
+								<u:items>
+									<u:MenuItem
+										text="Sort Ascending"
+										select="onCustomSort"
+										icon="sap-icon://sort-ascending"
+										/>
+									<u:MenuItem
+										text="Sort Descending"
+										select="onCustomSort"
+										icon="sap-icon://sort-descending"
+										/>
+									<u:MenuTextFieldItem
+										value=""
+										label="Filter"
+										select="onCustomSearchFilter"
+										icon="sap-icon://filter"
+										/>
+								</u:items>
+							</u:Menu>
+						</tb:menu>
+					</tb:Column>
+					<!-- Service Team -->
+					<tb:Column 
+						id="activity_service_team_name"
+						width="{path:' ', formatter:'.formatterMDR2.serviceTeam'}" 
+						sortProperty="activity_service_team_name" 
+						filterProperty="activity_service_team_name">
+						<ObjectIdentifier title="{path:'', formatter:'.formatterMDR2.serviceTeamColHeader'}"  text=" "/>
+						<tb:template>
+							<VBox>
+								<Text 
+									text="{activityModel>activity_service_team_name}" 
+									tooltip="Service Team: {activityModel>activity_service_team_name}" 
+									class="titleText" 
+									maxLines="1"/>
+								<Text text=""></Text>
+							</VBox>
+						</tb:template>
+						<tb:menu>
+							<u:Menu ariaLabelledBy="activity_service_team_name">
+								<u:items>
+									<u:MenuItem
+										text="Sort Ascending"
+										select="onCustomSort"
+										icon="sap-icon://sort-ascending"
+										/>
+									<u:MenuItem
+										text="Sort Descending"
+										select="onCustomSort"
+										icon="sap-icon://sort-descending"
+										/>
+									<u:MenuTextFieldItem
+										value=""
+										label="Filter"
+										select="onCustomSearchFilter"
+										icon="sap-icon://filter"
+										/>
+								</u:items>
+							</u:Menu>
+						</tb:menu>
+					</tb:Column>
+					<!-- Country -->
+					<tb:Column  width="{path:' ', formatter:'.formatterMDR2.country'}" sortProperty="country" filterProperty="country" id="country">
+						<ObjectIdentifier title="{path:' ', formatter:'.formatterMDR2.countryColHeader'}" text=" "/>
+						<tb:template>
+							<VBox>
+								<Text text="{activityModel>country}" tooltip="{activityModel>country}" class="titleText" maxLines="1"></Text>
+								<Text text=" "></Text>
+							</VBox>
+						</tb:template>
+						<tb:menu>
+							<u:Menu ariaLabelledBy="country">
+								<u:items>
+									<u:MenuItem
+										text="Sort Ascending"
+										select="onCustomSort"
+										icon="sap-icon://sort-ascending"
+										/>
+									<u:MenuItem
+										text="Sort Descending"
+										select="onCustomSort"
+										icon="sap-icon://sort-descending"
+										/>
+									<u:MenuTextFieldItem
+										value=""
+										label="Filter"
+										select="onCustomSearchFilter"
+										icon="sap-icon://filter"
+										/>
+								</u:items>
+							</u:Menu>
+						</tb:menu>
+					</tb:Column>
+					<!-- Market Unit -->
+					<tb:Column width="{path:' ', formatter:'.formatterMDR2.marketUnit'}" sortProperty="market_unit_desc" filterProperty="market_unit_desc" id="market_unit">
+						<ObjectIdentifier title="{path:' ', formatter:'.formatterMDR2.marketUnitColHeader'}" text=" "/>
+						<tb:template>
+							<VBox>
+								<Text text="{activityModel>market_unit_desc}" tooltip="Market Unit Key: {activityModel>market_unit}" class="titleText" maxLines="1"></Text>
+								<Text text=" "></Text>
+							</VBox>
+						</tb:template>
+					</tb:Column>
+					<!-- Activity ID / Message Component -->
+					<tb:Column 
+						width="135px" 
+						tooltip="Activity ID / Component of related Incident"
+						sortProperty="activityID" 
+						filterProperty="activityID">
+						<ObjectIdentifier title="ID" text="Component"/>
+						<tb:template>
+							<VBox>
+								<Link 
+									tooltip="Activity Process Type: {activityModel>activity_process_type} - {activityModel>activity_process_type_description}"
+									text="{activityModel>activity_id}" 
+									class="caseIDLink"
+									href="{parts:[{path:'UIModel>/sourceIC'}, {path:'activityModel>activity_id'}, {path:'activityModel>activity_category'}], formatter:'.formatterMDR2.activityLink'}"
+									target="_blank"></Link>
+								<Text text="{activityModel>activity_product_component}" 
+									tooltip="Component: {activityModel>activity_product_component}"
+									class="text"
+									maxLines="1"></Text>
+							</VBox>
+						</tb:template>
+					</tb:Column>
+					<!-- Delivery Unit -->
+					<tb:Column 
+						width="75px" 
+						tooltip="Delivery Unit"
+						sortProperty="delUnitText" 
+						filterProperty="delUnitText">
+						<ObjectIdentifier title="D.UNIT" text=" "/>
+						<tb:template>
+							<Image 
+								class="delUnit"
+								width="50px"
+								height="30px"
+								src="{parts:[{path:'activityModel>activity_delivery_unit'},{path:'UIModel>/theme'}], formatter:'.formatterMDR2.DelUnitIcon'}"
+								tooltip="{path:'activityModel>activity_delivery_unit', formatter:'.formatterMDR2.DelUnitText'}"
+								densityAware="false">
+							</Image>
+						</tb:template>
+					</tb:Column>
+				</tb:columns>
+			</tb:Table>
+			<custom:CustomPaginator id="pagerForCardView" visible="{= ${UIModel>/viewActivity}}" currentPage="{UIModel>/currentPageForCardView}"
+				numberOfPages="{UIModel>/numberOfPagesForCardView}" page=".onPageChangeForCardView"/>
+		</content>
+	</Page>
+</mvc:View>

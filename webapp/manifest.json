@@ -1,0 +1,413 @@
+{
+    "_version": "1.12.0",
+    "sap.cloud": {
+        "service": "mccdashboardrepository",
+        "public": true
+    },
+    "sap.app": {
+        "_version": "1.3.0",
+        "id": "corp.sap.mdrdashboards",
+        "type": "application",
+        "i18n": "i18n/i18n.properties",
+        "applicationVersion": {
+            "version": "24.3.8"
+        },
+        "title": "{{appTitle}}",
+        "description": "{{appDescription}}",
+        "resources": "resources.json",
+        "ach": "ach",
+        "crossNavigation": {
+            "inbounds": {
+                "intent1": {
+                    "signature": {
+                        "parameters": {},
+                        "additionalParameters": "allowed"
+                    },
+                    "semanticObject": "comsapsapsignup",
+                    "action": "display",
+                    "title": "MCC Dashboard Repository",
+                    "subTitle": "Display individual Dashboards"
+                }
+            }
+        },
+        "sourceTemplate": {
+            "id": "ui5template.basicSAPUI5ApplicationProject",
+            "version": "1.38.11"
+        },
+        "dataSources": {
+            "icpService": {
+                "uri": "apim/ic/sap/opu/odata/sap/ZS_AGS_DASHBOARDS_SRV",
+                "type": "OData",
+                "settings": {
+                    "odataVersion": "2.0",
+                    "localUri": "localService/metadata.xml"
+                }
+            },
+            "bcpService13": {
+                "uri": "apim/bc/sap/opu/odata/svc/COM_DASHBOARD_GET_SRV",
+                "type": "OData",
+                "settings": {
+                    "odataVersion": "2.0",
+                    "localUri": "localService/COM_DASHBOARD_GET_SRV/metadata.xml"
+                }
+            },
+            "_templates": {
+                "uri": "model/da_templates.json",
+                "type": "JSON"
+            },
+            "_filters": {
+                "uri": "model/da_filters.json",
+                "type": "JSON"
+            },
+            "_parameters": {
+                "uri": "model/da_parameters.json",
+                "type": "JSON"
+            },
+            "_dashboards": {
+                "uri": "model/da_dashboards.json",
+                "type": "JSON"
+            }
+        }
+    },
+    "sap.ui": {
+        "_version": "1.3.0",
+        "technology": "UI5",
+        "icons": {
+            "icon": "",
+            "favIcon": "",
+            "phone": "",
+            "phone@2": "",
+            "tablet": "",
+            "tablet@2": ""
+        },
+        "deviceTypes": {
+            "desktop": true,
+            "tablet": true,
+            "phone": true
+        },
+        "supportedThemes": [
+            "sap_belize"
+        ]
+    },
+    "sap.ui5": {
+        "config": {
+            "reportingId": "MDR Dashboards",
+            "reportingHosts": [
+                "mccdashboardrepository.cfapps.eu10-004.hana.ondemand.com",
+                "sapit-customersupport-prod-kestrel.launchpad.cfapps.eu10.hana.ondemand.com",
+                "sapit-home-prod-004.launchpad.cfapps.eu10.hana.ondemand.com",
+                "mdrdashboards-sapitcloud.dispatcher.hana.ondemand.com",
+                "fiorilaunchpad.sap.com"
+            ],
+            "appName": "MDR Dashboards",
+            "fullWidth": true
+        },
+        "_version": "1.2.0",
+        "rootView": {
+            "viewName": "corp.sap.mdrdashboards.view.App",
+            "type": "XML",
+            "async": true,
+            "id": "app"
+        },
+        "dependencies": {
+            "minUI5Version": "1.62.0",
+            "libs": {
+                "sap.ui.layout": {},
+                "sap.ui.core": {},
+                "sap.m": {}
+            }
+        },
+        "contentDensities": {
+            "compact": true,
+            "cozy": true
+        },
+        "models": {
+            "i18n": {
+                "type": "sap.ui.model.resource.ResourceModel",
+                "settings": {
+                    "bundleName": "corp.sap.mdrdashboards.i18n.i18n"
+                }
+            },
+            "": {
+                "type": "sap.ui.model.odata.v2.ODataModel",
+                "dataSource": "icpService",
+                "settings": {
+                    "defaultBindingMode": "TwoWay",
+                    "defaultCountMode": "InlineRepeat",
+                    "refreshAfterChange": false,
+                    "tokenHandling": true,
+                    "disableHeadRequestForToken": true,
+                    "defaultOperationMode": "Server",
+                    "metadataUrlParams": {
+                        "sap-value-list": "none",
+                        "sap-language": "en"
+                    },
+                    "serviceUrlParams": {
+                        "sap-language": "en"
+                    },
+                    "headers": {
+                        "AppIdentifier": "FiZyusTKckAGBGC6VR5jAfCfuJAjuiNZ",
+                        "Cache-Control": "no-cache, no-store, must-revalidate",
+                        "accept-language": "en"
+                    }
+                }
+            },
+            "complaintModel": {
+                "dataSource": "bcpService13",
+                "settings": {
+                    "headers": {
+                        "AppIdentifier": "FiZyusTKckAGBGC6VR5jAfCfuJAjuiNZ",
+                        "Cache-Control": "no-cache, no-store, must-revalidate",
+                        "accept-language": "en"
+                    }
+                }
+            },
+            "templates": {
+                "type": "sap.ui.model.json.JSONModel",
+                "dataSource": "_templates"
+            },
+            "filters": {
+                "type": "sap.ui.model.json.JSONModel",
+                "dataSource": "_filters"
+            },
+            "parameters": {
+                "type": "sap.ui.model.json.JSONModel",
+                "dataSource": "_parameters"
+            },
+            "dashboards": {
+                "type": "sap.ui.model.json.JSONModel",
+                "dataSource": "_dashboards"
+            }
+        },
+        "resources": {
+            "css": [
+                {
+                    "uri": "css/style.css"
+                }
+            ]
+        },
+        "routing": {
+            "config": {
+                "routerClass": "sap.m.routing.Router",
+                "viewType": "XML",
+                "transition": "slide",
+                "async": true,
+                "viewPath": "corp.sap.mdrdashboards.view",
+                "clearControlAggregation": false,
+                "bypassed": {
+                    "target": ["TargetMDRList"]
+                }
+            },
+            "routes": [
+                {
+                    "name": "RouteMDRList",
+                    "pattern": "",
+                    "target": "TargetMDRList"
+                },
+                {
+                    "name": "MDR0_home",
+                    "pattern": "MDR0/home",
+                    "target": [
+                        "TargetMDRList"
+                    ]
+                },
+                {
+                    "name": "MDR2",
+                    "pattern": "MDR2",
+                    "greedy": false,
+                    "target": "MDR2"
+                },
+                {
+                    "name": "MDR3",
+                    "pattern": "MDR3",
+                    "greedy": false,
+                    "target": "MDR3"
+                },
+                {
+                    "name": "MDR4",
+                    "pattern": "MDR4",
+                    "greedy": false,
+                    "target": "MDR4"
+                },
+                {
+                    "name": "MDR5",
+                    "pattern": "MDR5",
+                    "greedy": false,
+                    "target": "MDR6"
+                },
+                {
+                    "name": "MDR6",
+                    "pattern": "MDR6",
+                    "greedy": false,
+                    "target": "MDR6"
+                },
+                {
+                    "name": "MDR6A",
+                    "pattern": "MDR6A",
+                    "greedy": false,
+                    "target": "MDR6A"
+                },
+                {
+                    "name": "MDR7",
+                    "pattern": "MDR7",
+                    "greedy": false,
+                    "target": "MDR7"
+                },
+                {
+                    "name": "MDR8",
+                    "pattern": "MDR8",
+                    "greedy": false,
+                    "target": "MDR8"
+                },
+                {
+                    "name": "MDR9_NOW",
+                    "pattern": "MDR9_NOW",
+                    "greedy": false,
+                    "target": "MDR9_SNOW"
+                },
+                {
+                    "name": "MDR10",
+                    "pattern": "MDR10/{caseId}",
+                    "greedy": false,
+                    "target": "MDR10"
+                },
+                {
+                    "name": "MDR13",
+                    "pattern": "MDR13",
+                    "greedy": false,
+                    "target": "MDR13"
+                },
+                {
+                    "name": "DA",
+                    "pattern": ":?query:",
+                    "greedy": false,
+                    "target": "Home"
+                },
+                {
+                    "name": "App",
+                    "pattern": ":?query:",
+                    "greedy": false,
+                    "target": "App"
+                },
+                {
+                    "name": "Home",
+                    "pattern": "home",
+                    "target": "Home"
+                },
+                {
+                    "name": "Analyze",
+                    "pattern": "analyze",
+                    "target": "Analyze"
+                },
+                {
+                    "name": "Build",
+                    "pattern": "build",
+                    "target": "Build"
+                }
+            ],
+            "targets": {
+                "TargetMDRList": {
+                    "viewType": "XML",
+                    "clearControlAggregation": false,
+                    "viewId": "MDRList",
+                    "viewName": "MDRList",
+                    "controlAggregation": "pages",
+                    "controlId": "app"
+                },
+                "MDR2": {
+                    "viewType": "XML",
+                    "viewName": "MDR2",
+                    "controlAggregation": "pages",
+                    "controlId": "app"
+                },
+                "MDR3": {
+                    "viewType": "XML",
+                    "viewName": "MDR3",
+                    "controlAggregation": "pages",
+                    "controlId": "app"
+                },
+                "MDR4": {
+                    "viewType": "XML",
+                    "viewName": "MDR4",
+                    "controlAggregation": "pages",
+                    "controlId": "app"
+                },
+                "MDR5": {
+                    "viewType": "XML",
+                    "viewName": "MDR5",
+                    "controlAggregation": "pages",
+                    "controlId": "app"
+                },
+                "MDR6": {
+                    "viewType": "XML",
+                    "viewName": "MDR6",
+                    "controlAggregation": "pages",
+                    "controlId": "app"
+                },
+                "MDR6A": {
+                    "viewType": "XML",
+                    "viewName": "MDR6A",
+                    "controlAggregation": "pages",
+                    "controlId": "app"
+                },
+                "MDR7": {
+                    "viewType": "XML",
+                    "viewName": "MDR7",
+                    "controlAggregation": "pages",
+                    "controlId": "app"
+                },
+                "MDR8": {
+                    "viewType": "XML",
+                    "viewName": "MDR8",
+                    "controlAggregation": "pages",
+                    "controlId": "app"
+                },
+                "MDR9_SNOW": {
+                    "viewType": "XML",
+                    "viewName": "MDR9_SNOW",
+                    "controlAggregation": "pages",
+                    "controlId": "app"
+                },
+                "MDR10": {
+                    "viewType": "XML",
+                    "viewName": "MDR10",
+                    "controlAggregation": "pages",
+                    "controlId": "app"
+                },
+                "MDR13": {
+                    "viewType": "XML",
+                    "viewName": "MDR13",
+                    "controlAggregation": "pages",
+                    "controlId": "app"
+                },
+                "App": {
+                    "viewPath": "corp.sap.mdrdashboards.view",
+                    "viewName": "DA_App",
+                    "controlId": "app",
+                    "controlAggregation": "pages"
+                },
+                "Home": {
+                    "parent": "App",
+                    "viewPath": "corp.sap.mdrdashboards.view",
+                    "viewName": "DA_Overview",
+                    "controlId": "homeTab",
+                    "controlAggregation": "content"
+                },
+                "Analyze": {
+                    "parent": "App",
+                    "viewPath": "corp.sap.mdrdashboards.view",
+                    "viewName": "DA_Analyze",
+                    "controlId": "analyzeTab",
+                    "controlAggregation": "content"
+                },
+                "Build": {
+                    "parent": "App",
+                    "viewPath": "corp.sap.mdrdashboards.view",
+                    "viewName": "DA_Build",
+                    "controlId": "buildTab",
+                    "controlAggregation": "content"
+                }
+            }
+        }
+    }
+}

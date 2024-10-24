@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+	    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>MCC Dashboard Repository</title>
+		<script id="sap-ui-bootstrap"
+			src="https://ui5.sap.com/1.120.1/resources/sap-ui-core.js"
+			data-sap-ui-theme="sap_belize"
+			data-sap-ui-libs="sap.f, sap.m, sap.ui.table, sap.ui.commons, sap.ui.core, sap.ui.layout"
+			data-sap-ui-resourceroots='{"corp.sap.mdrdashboards": "./"}'
+			data-sap-ui-compatVersion="edge"
+			data-sap-ui-oninit="module:sap/ui/core/ComponentSupport"
+			data-sap-ui-async="true">
+		</script>
+		<script>
+			sap.ui.getCore().attachInit(function() {
+				new sap.m.Shell({
+					appWidthLimited:false,
+					app: new sap.ui.core.ComponentContainer({
+						height : "100%",
+						name : "corp.sap.mdrdashboards"
+					})
+				}).placeAt("content");
+			});
+		</script>
+	</head>
+	<body class="sapUiBody" id="content">
+	</body>
+</html>
